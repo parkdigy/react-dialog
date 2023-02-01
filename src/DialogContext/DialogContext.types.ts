@@ -5,7 +5,6 @@ import { ConfirmDialogProps } from '../ConfirmDialog';
 export interface DialogRequireProps {
   onShow(): void;
   onClose(): void;
-  [key: string]: any;
 }
 
 export type PushDialog<P extends DialogRequireProps = never, U extends P = P> = (
