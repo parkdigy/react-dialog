@@ -143,7 +143,7 @@ var StyledDialogContent = material.styled(material.DialogContent)(templateObject
 var StyledDialogActions = material.styled(material.DialogActions)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding-left: 20px;\n  padding-right: 15px;\n"], ["\n  padding-left: 20px;\n  padding-right: 15px;\n"])));
 var templateObject_1, templateObject_2, templateObject_3;var Dialog = React__default["default"].forwardRef(function (_a, ref) {
     // ID --------------------------------------------------------------------------------------------------------------
-    var commandsRef = _a.commandsRef, content = _a.content, color = _a.color, initTitleIcon = _a.titleIcon, title = _a.title, initTitleProps = _a.titleProps, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, onRequestClose = _a.onRequestClose, onClose = _a.onClose, otherProps = __rest(_a, ["commandsRef", "content", "color", "titleIcon", "title", "titleProps", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose"]);
+    var commandsRef = _a.commandsRef, content = _a.content, color = _a.color, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, onRequestClose = _a.onRequestClose, onClose = _a.onClose, otherProps = __rest(_a, ["commandsRef", "content", "color", "titleIcon", "title", "titleProps", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose"]);
     var id = React.useId();
     // Theme -----------------------------------------------------------------------------------------------------------
     var theme = material.useTheme();
@@ -155,15 +155,9 @@ var templateObject_1, templateObject_2, templateObject_3;var Dialog = React__def
     var titleIcon = useAutoUpdateState(React.useCallback(function () {
         return initTitleIcon === null || initTitleIcon === void 0 ? void 0 : initTitleIcon.replace(/[A-Z]/g, function (letter, idx) { return "".concat(idx > 0 ? '_' : '').concat(letter.toLowerCase()); });
     }, [initTitleIcon]))[0];
-    var backgroundColor = useAutoUpdateState(React.useCallback(function () {
-        return theme.palette[color || 'primary'].main;
-    }, [color]))[0];
     var textColor = useAutoUpdateState(React.useCallback(function () {
         return theme.palette[color || 'primary'].contrastText;
     }, [color]))[0];
-    var titleProps = useAutoUpdateState(React.useCallback(function () {
-        return __assign(__assign({}, initTitleProps), { style: __assign({ backgroundColor: backgroundColor, color: textColor }, initTitleProps === null || initTitleProps === void 0 ? void 0 : initTitleProps.style) });
-    }, [initTitleProps, backgroundColor, textColor]))[0];
     // Effect ----------------------------------------------------------------------------------------------------------
     React.useEffect(function () {
         if (onShow)
@@ -261,7 +255,7 @@ var templateObject_1, templateObject_2, templateObject_3;var Dialog = React__def
         }
     }, [autoClose, onRequestClose, close]);
     // Render ----------------------------------------------------------------------------------------------------------
-    return (React__default["default"].createElement(StyledDialog, __assign({ open: open, "aria-labelledby": titleId, onClose: handleClose }, otherProps),
+    return (React__default["default"].createElement(StyledDialog, __assign({ className: "color-".concat(color), open: open, "aria-labelledby": titleId, onClose: handleClose }, otherProps),
         title && (React__default["default"].createElement(StyledDialogTitle, __assign({}, titleProps),
             (titleIcon || title) && (React__default["default"].createElement(material.Box, { style: { display: 'flex', fontSize: '17px' } },
                 titleIcon && (React__default["default"].createElement(material.Box, { style: { display: 'flex', alignItems: 'center', marginRight: 7 } },

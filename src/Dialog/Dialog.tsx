@@ -18,7 +18,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
       color,
       titleIcon: initTitleIcon,
       title,
-      titleProps: initTitleProps,
+      titleProps,
       actions,
       hideClose,
       autoClose,
@@ -53,29 +53,11 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
         return initTitleIcon?.replace(/[A-Z]/g, (letter, idx) => `${idx > 0 ? '_' : ''}${letter.toLowerCase()}`);
       }, [initTitleIcon])
     );
-    const [backgroundColor] = useAutoUpdateState<string>(
-      useCallback(() => {
-        return theme.palette[color || 'primary'].main;
-      }, [color])
-    );
 
     const [textColor] = useAutoUpdateState<string>(
       useCallback(() => {
         return theme.palette[color || 'primary'].contrastText;
       }, [color])
-    );
-
-    const [titleProps] = useAutoUpdateState<Props['titleProps']>(
-      useCallback(() => {
-        return {
-          ...initTitleProps,
-          style: {
-            backgroundColor,
-            color: textColor,
-            ...initTitleProps?.style,
-          },
-        };
-      }, [initTitleProps, backgroundColor, textColor])
     );
 
     // Effect ----------------------------------------------------------------------------------------------------------
@@ -187,7 +169,13 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
     // Render ----------------------------------------------------------------------------------------------------------
 
     return (
-      <StyledDialog open={open} aria-labelledby={titleId} onClose={handleClose} {...otherProps}>
+      <StyledDialog
+        className={`color-${color}`}
+        open={open}
+        aria-labelledby={titleId}
+        onClose={handleClose}
+        {...otherProps}
+      >
         {title && (
           <StyledDialogTitle {...titleProps}>
             {(titleIcon || title) && (

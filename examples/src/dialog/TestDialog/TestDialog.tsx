@@ -28,7 +28,7 @@ const TestDialog: React.FC<TestDialogProps> = ({ onShow, onClose }) => {
       }
       actions={
         <>
-          <DialogActionButton>asdf</DialogActionButton>
+          <DialogActionButton onClick={() => dialogRef.current?.close()}>Close</DialogActionButton>
         </>
       }
       autoClose

@@ -47,7 +47,7 @@ const alias = {
   '#dialog': path.resolve(__dirname, 'src/dialog'),
 };
 if (!isLibProduction) {
-  alias['react-dialog'] = path.resolve(__dirname, '../src');
+  alias['@pdg/react-dialog'] = path.resolve(__dirname, '../src');
 }
 
 //--------------------------------------------------------------------------------------------------------------------
