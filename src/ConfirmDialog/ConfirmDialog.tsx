@@ -98,19 +98,19 @@ const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
 
     const handleShow = useCallback(() => {
       if (onShow) onShow();
-    }, [onShow, commands]);
+    }, [onShow]);
 
     const handleClose = useCallback(() => {
       if (onClose) onClose();
-    }, [onClose, commands]);
+    }, [onClose]);
 
     const handleCancelClick = useCallback(() => {
       if (onCancel) onCancel(commands);
-    }, []);
+    }, [commands, onCancel]);
 
     const handleConfirmClick = useCallback(() => {
       if (onConfirm) onConfirm(commands);
-    }, [onConfirm, commands, close]);
+    }, [onConfirm, commands]);
 
     // Render ----------------------------------------------------------------------------------------------------------
 

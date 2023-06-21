@@ -57,13 +57,14 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
     const [textColor] = useAutoUpdateState<string>(
       useCallback(() => {
         return theme.palette[color || 'primary'].contrastText;
-      }, [color])
+      }, [theme, color])
     );
 
     // Effect ----------------------------------------------------------------------------------------------------------
 
     useEffect(() => {
       if (onShow) onShow();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Function - close -------------------------------------------------------------------------------------------------
@@ -73,7 +74,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
       setTimeout(() => {
         if (onClose) onClose();
       }, theme.transitions.duration.leavingScreen);
-    }, [onClose]);
+    }, [onClose, theme]);
 
     const scrollToTop = useCallback(() => {
       contentRef.current?.scrollTo({ top: 0 });

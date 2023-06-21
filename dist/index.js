@@ -157,11 +157,12 @@ var templateObject_1, templateObject_2, templateObject_3;var Dialog = React__def
     }, [initTitleIcon]))[0];
     var textColor = useAutoUpdateState(React.useCallback(function () {
         return theme.palette[color || 'primary'].contrastText;
-    }, [color]))[0];
+    }, [theme, color]))[0];
     // Effect ----------------------------------------------------------------------------------------------------------
     React.useEffect(function () {
         if (onShow)
             onShow();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     // Function - close -------------------------------------------------------------------------------------------------
     var close = React.useCallback(function () {
@@ -170,7 +171,7 @@ var templateObject_1, templateObject_2, templateObject_3;var Dialog = React__def
             if (onClose)
                 onClose();
         }, theme.transitions.duration.leavingScreen);
-    }, [onClose]);
+    }, [onClose, theme]);
     var scrollToTop = React.useCallback(function () {
         var _a;
         (_a = contentRef.current) === null || _a === void 0 ? void 0 : _a.scrollTo({ top: 0 });
@@ -429,19 +430,19 @@ AlertDialog.defaultProps = AlertDialogDefaultProps;var ConfirmDialogDefaultProps
     var handleShow = React.useCallback(function () {
         if (onShow)
             onShow();
-    }, [onShow, commands]);
+    }, [onShow]);
     var handleClose = React.useCallback(function () {
         if (onClose)
             onClose();
-    }, [onClose, commands]);
+    }, [onClose]);
     var handleCancelClick = React.useCallback(function () {
         if (onCancel)
             onCancel(commands);
-    }, []);
+    }, [commands, onCancel]);
     var handleConfirmClick = React.useCallback(function () {
         if (onConfirm)
             onConfirm(commands);
-    }, [onConfirm, commands, close]);
+    }, [onConfirm, commands]);
     // Render ----------------------------------------------------------------------------------------------------------
     return (React__default["default"].createElement(Dialog, __assign({ ref: dialogRef, color: color, escapeClose: true, style: style, onShow: handleShow, onClose: handleClose, onRequestClose: handleCancelClick }, props, { actions: React__default["default"].createElement(React__default["default"].Fragment, null,
             React__default["default"].createElement(DialogActionButton, __assign({ variant: 'text' }, cancelButtonProps, { onClick: handleCancelClick }),
@@ -461,7 +462,7 @@ ConfirmDialog.defaultProps = ConfirmDialogDefaultProps;var DialogContextProvider
         dialogIds[id] = dialog;
         if (onShow)
             onShow(id);
-    }, []);
+    }, [dialogIds]);
     var handleClose = React.useCallback(function (id, onClose) {
         var dialog = dialogIds[id];
         if (dialog) {
@@ -498,7 +499,7 @@ ConfirmDialog.defaultProps = ConfirmDialogDefaultProps;var DialogContextProvider
         setDialogs(function (dialogs) {
             return __spreadArray(__spreadArray([], dialogs, true), [dialog], false);
         });
-    }, []);
+    }, [handleClose, handleShow]);
     // Function - confirmDialog ------------------------------------------------------------------------------------------
     var confirmDialog = React.useCallback(function (props) {
         dialogKeyRef.current += 1;
@@ -512,7 +513,7 @@ ConfirmDialog.defaultProps = ConfirmDialogDefaultProps;var DialogContextProvider
         setDialogs(function (dialogs) {
             return __spreadArray(__spreadArray([], dialogs, true), [dialog], false);
         });
-    }, []);
+    }, [handleClose, handleShow]);
     // Function - pushDialog ---------------------------------------------------------------------------------------------
     var pushDialog = React.useCallback(function (dialogComponent, props) {
         dialogKeyRef.current += 1;
@@ -525,11 +526,11 @@ ConfirmDialog.defaultProps = ConfirmDialogDefaultProps;var DialogContextProvider
         setDialogs(function (dialogs) {
             return __spreadArray(__spreadArray([], dialogs, true), [dialog], false);
         });
-    }, []);
+    }, [handleClose, handleShow]);
     // State - value -----------------------------------------------------------------------------------------------------
     var value = useAutoUpdateState(DialogContextDefaultValue, React.useCallback(function () {
         return { pushDialog: pushDialog, alertDialog: alertDialog, confirmDialog: confirmDialog };
-    }, [alertDialog]))[0];
+    }, [alertDialog, confirmDialog, pushDialog]))[0];
     // Render ----------------------------------------------------------------------------------------------------------
     return (React__default["default"].createElement(DialogContext.Provider, { value: value },
         children,

@@ -23,10 +23,13 @@ const DialogContextProvider: React.FC<Props> = ({ children }) => {
 
   // Event Handler ---------------------------------------------------------------------------------------------------
 
-  const handleShow = useCallback((dialog: JSX.Element, id: string, onShow?: (id: string) => void) => {
-    dialogIds[id] = dialog;
-    if (onShow) onShow(id);
-  }, []);
+  const handleShow = useCallback(
+    (dialog: JSX.Element, id: string, onShow?: (id: string) => void) => {
+      dialogIds[id] = dialog;
+      if (onShow) onShow(id);
+    },
+    [dialogIds]
+  );
 
   const handleClose = useCallback(
     (id: string, onClose?: (id: string) => void) => {
@@ -52,84 +55,93 @@ const DialogContextProvider: React.FC<Props> = ({ children }) => {
 
   // Function - alertDialog --------------------------------------------------------------------------------------------
 
-  const alertDialog = useCallback((props: AlertDialogProps) => {
-    dialogKeyRef.current += 1;
+  const alertDialog = useCallback(
+    (props: AlertDialogProps) => {
+      dialogKeyRef.current += 1;
 
-    const { onShow, onClose, ...otherProps } = props;
+      const { onShow, onClose, ...otherProps } = props;
 
-    let dialogId: string;
+      let dialogId: string;
 
-    const dialog = (
-      <AlertDialog
-        ref={(commands: AlertDialogCommands) => {
-          if (commands) {
-            dialogId = commands.getId();
-          }
-        }}
-        key={dialogKeyRef.current}
-        {...otherProps}
-        onShow={() => {
-          handleShow(dialog, dialogId, onShow);
-        }}
-        onClose={() => {
-          handleClose(dialogId, onClose);
-        }}
-      />
-    );
+      const dialog = (
+        <AlertDialog
+          ref={(commands: AlertDialogCommands) => {
+            if (commands) {
+              dialogId = commands.getId();
+            }
+          }}
+          key={dialogKeyRef.current}
+          {...otherProps}
+          onShow={() => {
+            handleShow(dialog, dialogId, onShow);
+          }}
+          onClose={() => {
+            handleClose(dialogId, onClose);
+          }}
+        />
+      );
 
-    setDialogs((dialogs) => {
-      return [...dialogs, dialog];
-    });
-  }, []);
+      setDialogs((dialogs) => {
+        return [...dialogs, dialog];
+      });
+    },
+    [handleClose, handleShow]
+  );
 
   // Function - confirmDialog ------------------------------------------------------------------------------------------
 
-  const confirmDialog = useCallback((props: ConfirmDialogProps) => {
-    dialogKeyRef.current += 1;
+  const confirmDialog = useCallback(
+    (props: ConfirmDialogProps) => {
+      dialogKeyRef.current += 1;
 
-    const { onShow, onClose, ...otherProps } = props;
+      const { onShow, onClose, ...otherProps } = props;
 
-    let dialogId: string;
+      let dialogId: string;
 
-    const dialog = (
-      <ConfirmDialog
-        ref={(commands: ConfirmDialogCommands) => {
-          if (commands) {
-            dialogId = commands.getId();
-          }
-        }}
-        key={dialogKeyRef.current}
-        {...otherProps}
-        onShow={() => handleShow(dialog, dialogId, onShow)}
-        onClose={() => handleClose(dialogId, onClose)}
-      />
-    );
+      const dialog = (
+        <ConfirmDialog
+          ref={(commands: ConfirmDialogCommands) => {
+            if (commands) {
+              dialogId = commands.getId();
+            }
+          }}
+          key={dialogKeyRef.current}
+          {...otherProps}
+          onShow={() => handleShow(dialog, dialogId, onShow)}
+          onClose={() => handleClose(dialogId, onClose)}
+        />
+      );
 
-    setDialogs((dialogs) => {
-      return [...dialogs, dialog];
-    });
-  }, []);
+      setDialogs((dialogs) => {
+        return [...dialogs, dialog];
+      });
+    },
+    [handleClose, handleShow]
+  );
 
   // Function - pushDialog ---------------------------------------------------------------------------------------------
 
-  const pushDialog = useCallback<PushDialog>((dialogComponent, props?) => {
-    dialogKeyRef.current += 1;
-    const dialogId = `dig_${dialogKeyRef.current}`;
-    const dialog = React.createElement<DialogRequireProps>(dialogComponent as any, {
-      key: dialogKeyRef.current,
-      ...props,
-      onShow: () => {
-        handleShow(dialog, dialogId, props?.onShow);
-      },
-      onClose: () => {
-        handleClose(dialogId, props?.onClose);
-      },
-    });
+  const pushDialog = useCallback<PushDialog>(
+    (dialogComponent, props?) => {
+      dialogKeyRef.current += 1;
+      const dialogId = `dig_${dialogKeyRef.current}`;
+      const dialog = React.createElement<DialogRequireProps>(dialogComponent as any, {
+        key: dialogKeyRef.current,
+        ...props,
+        onShow: () => {
+          handleShow(dialog, dialogId, props?.onShow);
+        },
+        onClose: () => {
+          handleClose(dialogId, props?.onClose);
+        },
+      });
 
-    setDialogs((dialogs) => {
-      return [...dialogs, dialog];
-    });
-  }, []);
+      setDialogs((dialogs) => {
+        return [...dialogs, dialog];
+      });
+    },
+    [handleClose, handleShow]
+  );
 
   // State - value -----------------------------------------------------------------------------------------------------
 
@@ -137,7 +149,7 @@ const DialogContextProvider: React.FC<Props> = ({ children }) => {
     DialogContextDefaultValue,
     useCallback((): DialogContextValue => {
       return { pushDialog, alertDialog, confirmDialog };
-    }, [alertDialog])
+    }, [alertDialog, confirmDialog, pushDialog])
   );
 
   // Render ----------------------------------------------------------------------------------------------------------

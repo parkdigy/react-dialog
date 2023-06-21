@@ -6,7 +6,7 @@ module.exports = {
     commonjs: true,
   },
   parser: '@typescript-eslint/parser',
-  plugins: ['react'],
+  plugins: ['react', 'react-hooks'],
   settings: {
     react: {
       createClass: 'createReactClass',
@@ -24,6 +24,8 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['warn'],
     'no-useless-constructor': ['warn'],
     'react/no-unused-state': ['warn'],
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'error',
     'react/state-in-constructor': ['error', 'always'],
     'react/no-deprecated': ['error'],
     'no-plusplus': ['error'],

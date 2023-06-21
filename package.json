@@ -1,7 +1,7 @@
 {
   "name": "@pdg/react-dialog",
   "title": "React Dialog",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React Dialog",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -39,8 +39,8 @@
   "peerDependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@mui/icons-material": "^5.10.0",
-    "@mui/material": "^5.10.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.5",
     "@types/react": "^17.0.0 || ^18.0.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0"
