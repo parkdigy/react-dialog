@@ -10,6 +10,7 @@ import {
 import { useAutoUpdateState } from '@pdg/react-hook';
 import { AlertDialog, AlertDialogCommands, AlertDialogProps } from '../AlertDialog';
 import { ConfirmDialog, ConfirmDialogCommands, ConfirmDialogProps } from '../ConfirmDialog';
+import DialogErrorBoundary from '../DialogErrorBoundary';
 
 const DialogContextProvider: React.FC<Props> = ({ children }) => {
   // Ref -------------------------------------------------------------------------------------------------------------
@@ -122,19 +123,22 @@ const DialogContextProvider: React.FC<Props> = ({ children }) => {
   // Function - pushDialog ---------------------------------------------------------------------------------------------
 
   const pushDialog = useCallback<PushDialog>(
-    (dialogComponent, props?) => {
+    (dialogComponent, props?, onErrorBoundary?) => {
       dialogKeyRef.current += 1;
       const dialogId = `dig_${dialogKeyRef.current}`;
-      const dialog = React.createElement<DialogRequireProps>(dialogComponent as any, {
-        key: dialogKeyRef.current,
-        ...props,
-        onShow: () => {
-          handleShow(dialog, dialogId, props?.onShow);
-        },
-        onClose: () => {
-          handleClose(dialogId, props?.onClose);
-        },
-      });
+      const dialog = (
+        <DialogErrorBoundary key={dialogKeyRef.current} onError={onErrorBoundary}>
+          {React.createElement<DialogRequireProps>(dialogComponent as any, {
+            ...props,
+            onShow: () => {
+              handleShow(dialog, dialogId, props?.onShow);
+            },
+            onClose: () => {
+              handleClose(dialogId, props?.onClose);
+            },
+          })}
+        </DialogErrorBoundary>
+      );
 
       setDialogs((dialogs) => {
         return [...dialogs, dialog];

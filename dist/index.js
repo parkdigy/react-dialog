@@ -450,7 +450,65 @@ AlertDialog.defaultProps = AlertDialogDefaultProps;var ConfirmDialogDefaultProps
             React__default["default"].createElement(DialogActionButton, __assign({ variant: 'text', color: color }, confirmButtonProps, { onClick: handleConfirmClick }), confirmButtonLabel)) })));
 });
 ConfirmDialog.displayName = 'ConfirmDialog';
-ConfirmDialog.defaultProps = ConfirmDialogDefaultProps;var DialogContextProvider = function (_a) {
+ConfirmDialog.defaultProps = ConfirmDialogDefaultProps;var DialogErrorBoundaryDefaultProps = {};class ErrorBoundary extends React.Component {
+    displayName = "ReactUseErrorBoundary";
+    componentDidCatch(...args) {
+        this.setState({});
+        this.props.onError(...args);
+    }
+    render() {
+        return this.props.children;
+    }
+}
+const noop = () => false;
+const errorBoundaryContext = React.createContext({
+    componentDidCatch: { current: undefined },
+    error: undefined,
+    setError: noop,
+});
+function ErrorBoundaryContext({ children, }) {
+    const [error, setError] = React.useState();
+    const componentDidCatch = React.useRef();
+    const ctx = React.useMemo(() => ({
+        componentDidCatch,
+        error,
+        setError,
+    }), [error]);
+    return (React__default["default"].createElement(errorBoundaryContext.Provider, { value: ctx },
+        React__default["default"].createElement(ErrorBoundary, { error: error, onError: (error, errorInfo) => {
+                setError(error);
+                componentDidCatch.current?.(error, errorInfo);
+            } }, children)));
+}
+ErrorBoundaryContext.displayName = "ReactUseErrorBoundaryContext";
+function withErrorBoundary(WrappedComponent) {
+    function WithErrorBoundary(props) {
+        return (React__default["default"].createElement(ErrorBoundaryContext, null,
+            React__default["default"].createElement(WrappedComponent, { key: "WrappedComponent", ...props })));
+    }
+    WithErrorBoundary.displayName = `WithErrorBoundary(${WrappedComponent.displayName ?? WrappedComponent.name ?? "Component"})`;
+    return WithErrorBoundary;
+}
+function useErrorBoundary(componentDidCatch) {
+    const ctx = React.useContext(errorBoundaryContext);
+    ctx.componentDidCatch.current = componentDidCatch;
+    const resetError = React.useCallback(() => {
+        ctx.setError(undefined);
+    }, []);
+    return [ctx.error, resetError];
+}var ErrorCatcher = withErrorBoundary(function (_a) {
+    var children = _a.children, onError = _a.onError;
+    useErrorBoundary(function (error, errorInfo) {
+        onError && onError(error, errorInfo);
+    });
+    return children;
+});
+var DialogErrorBoundary = function (_a) {
+    var onError = _a.onError, children = _a.children;
+    return React__default["default"].createElement(ErrorCatcher, { onError: onError }, children);
+};
+DialogErrorBoundary.displayName = 'DialogErrorBoundary';
+DialogErrorBoundary.defaultProps = DialogErrorBoundaryDefaultProps;var DialogContextProvider = function (_a) {
     // Ref -------------------------------------------------------------------------------------------------------------
     var children = _a.children;
     var dialogKeyRef = React.useRef(0);
@@ -515,14 +573,14 @@ ConfirmDialog.defaultProps = ConfirmDialogDefaultProps;var DialogContextProvider
         });
     }, [handleClose, handleShow]);
     // Function - pushDialog ---------------------------------------------------------------------------------------------
-    var pushDialog = React.useCallback(function (dialogComponent, props) {
+    var pushDialog = React.useCallback(function (dialogComponent, props, onErrorBoundary) {
         dialogKeyRef.current += 1;
         var dialogId = "dig_".concat(dialogKeyRef.current);
-        var dialog = React__default["default"].createElement(dialogComponent, __assign(__assign({ key: dialogKeyRef.current }, props), { onShow: function () {
+        var dialog = (React__default["default"].createElement(DialogErrorBoundary, { key: dialogKeyRef.current, onError: onErrorBoundary }, React__default["default"].createElement(dialogComponent, __assign(__assign({}, props), { onShow: function () {
                 handleShow(dialog, dialogId, props === null || props === void 0 ? void 0 : props.onShow);
             }, onClose: function () {
                 handleClose(dialogId, props === null || props === void 0 ? void 0 : props.onClose);
-            } }));
+            } }))));
         setDialogs(function (dialogs) {
             return __spreadArray(__spreadArray([], dialogs, true), [dialog], false);
         });
@@ -535,13 +593,20 @@ ConfirmDialog.defaultProps = ConfirmDialogDefaultProps;var DialogContextProvider
     return (React__default["default"].createElement(DialogContext.Provider, { value: value },
         children,
         dialogs));
-};function useDialog(dialogComponent) {
+};var _default = {};
+function setDialogDefault(value) {
+    _default = value;
+}
+function getDialogDefault() {
+    return _default;
+}function useDialog(dialogComponent) {
     var value = React.useContext(DialogContext);
     if (value === undefined) {
         throw new Error('useDialog should be used within DialogContext.Provider');
     }
-    return React.useCallback(function (props) {
-        value.pushDialog(dialogComponent, props);
+    return React.useCallback(function (props, onErrorBoundary) {
+        var dialogDefault = getDialogDefault();
+        value.pushDialog(dialogComponent, props, onErrorBoundary || dialogDefault.onBoundaryError);
     }, [value, dialogComponent]);
 }function useAlertDialog() {
     var value = React.useContext(DialogContext);
@@ -555,4 +620,4 @@ ConfirmDialog.defaultProps = ConfirmDialogDefaultProps;var DialogContextProvider
         throw new Error('useConfirmDialog should be used within DialogContext.Provider');
     }
     return value.confirmDialog;
-}exports.Dialog=Dialog;exports.DialogActionButton=DialogActionButton;exports.DialogContextProvider=DialogContextProvider;exports.DialogDefaultProps=DialogDefaultProps;exports.useAlertDialog=useAlertDialog;exports.useConfirmDialog=useConfirmDialog;exports.useDialog=useDialog;//# sourceMappingURL=index.js.map
+}exports.Dialog=Dialog;exports.DialogActionButton=DialogActionButton;exports.DialogContextProvider=DialogContextProvider;exports.DialogDefaultProps=DialogDefaultProps;exports.getDialogDefault=getDialogDefault;exports.setDialogDefault=setDialogDefault;exports.useAlertDialog=useAlertDialog;exports.useConfirmDialog=useConfirmDialog;exports.useDialog=useDialog;//# sourceMappingURL=index.js.map
