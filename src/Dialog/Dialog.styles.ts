@@ -1,6 +1,12 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton, styled } from '@mui/material';
 
-export const StyledDialog = styled(Dialog)``;
+export const StyledDialog = styled(Dialog)`
+  &.Dialog-full-height {
+    > .MuiDialog-container > .MuiDialog-paper {
+      height: 100vh;
+    }
+  }
+`;
 
 export const StyledDialogTitle = styled(DialogTitle)(() => ({
   position: 'relative',
@@ -17,7 +23,10 @@ export const StyleDialogTitleCloseButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.grey[500],
 }));
 
-export const StyledDialogContent = styled(DialogContent)``;
+export const StyledDialogContent = styled(DialogContent)`
+  flex: 1;
+  flex-direction: column;
+`;
 
 export const StyledDialogActions = styled(DialogActions)`
   padding-left: 20px;

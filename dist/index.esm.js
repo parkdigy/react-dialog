@@ -122,7 +122,7 @@ var DialogContextDefaultValue = {
     confirmButtonLabel: '확인',
 };var DialogDefaultProps = {
     color: 'primary',
-};var StyledDialog = styled(Dialog$1)(templateObject_1 || (templateObject_1 = __makeTemplateObject([""], [""])));
+};var StyledDialog = styled(Dialog$1)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n"], ["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n"])));
 var StyledDialogTitle = styled(DialogTitle)(function () { return ({
     position: 'relative',
     paddingRight: 60,
@@ -139,9 +139,66 @@ var StyleDialogTitleCloseButton = styled(IconButton)(function (_a) {
         color: theme.palette.grey[500],
     });
 });
-var StyledDialogContent = styled(DialogContent)(templateObject_2 || (templateObject_2 = __makeTemplateObject([""], [""])));
+var StyledDialogContent = styled(DialogContent)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1;\n  flex-direction: column;\n"], ["\n  flex: 1;\n  flex-direction: column;\n"])));
 var StyledDialogActions = styled(DialogActions)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding-left: 20px;\n  padding-right: 15px;\n"], ["\n  padding-left: 20px;\n  padding-right: 15px;\n"])));
-var templateObject_1, templateObject_2, templateObject_3;var Dialog = React.forwardRef(function (_a, ref) {
+var templateObject_1, templateObject_2, templateObject_3;var classnames = {exports: {}};/*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/
+
+(function (module) {
+	/* global define */
+
+	(function () {
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames() {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					if (arg.length) {
+						var inner = classNames.apply(null, arg);
+						if (inner) {
+							classes.push(inner);
+						}
+					}
+				} else if (argType === 'object') {
+					if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes('[native code]')) {
+						classes.push(arg.toString());
+						continue;
+					}
+
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (module.exports) {
+			classNames.default = classNames;
+			module.exports = classNames;
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+} (classnames));
+
+var classNames = classnames.exports;var Dialog = React.forwardRef(function (_a, ref) {
     // ID --------------------------------------------------------------------------------------------------------------
     var commandsRef = _a.commandsRef, content = _a.content, color = _a.color, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, onRequestClose = _a.onRequestClose, onClose = _a.onClose, otherProps = __rest(_a, ["commandsRef", "content", "color", "titleIcon", "title", "titleProps", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose"]);
     var id = useId();
@@ -256,7 +313,7 @@ var templateObject_1, templateObject_2, templateObject_3;var Dialog = React.forw
         }
     }, [autoClose, onRequestClose, close]);
     // Render ----------------------------------------------------------------------------------------------------------
-    return (React.createElement(StyledDialog, __assign({ className: "color-".concat(color), open: open, "aria-labelledby": titleId, onClose: handleClose }, otherProps),
+    return (React.createElement(StyledDialog, __assign({ className: classNames("color-".concat(color), fullHeight && 'Dialog-full-height'), open: open, "aria-labelledby": titleId, onClose: handleClose }, otherProps),
         title && (React.createElement(StyledDialogTitle, __assign({}, titleProps),
             (titleIcon || title) && (React.createElement(Box, { style: { display: 'flex', fontSize: '17px' } },
                 titleIcon && (React.createElement(Box, { style: { display: 'flex', alignItems: 'center', marginRight: 7 } },
@@ -265,7 +322,6 @@ var templateObject_1, templateObject_2, templateObject_3;var Dialog = React.forw
             !hideClose && (React.createElement(StyleDialogTitleCloseButton, { className: 'dialog-close-btn', "aria-label": 'close', style: { color: textColor }, onClick: handleCloseClick },
                 React.createElement(Icon, null, "close"))))),
         React.createElement(StyledDialogContent, { ref: contentRef, style: {
-                height: fullHeight ? '100vh' : undefined,
                 paddingBottom: actions ? 15 : undefined,
             } }, content),
         actions && React.createElement(StyledDialogActions, null, actions)));

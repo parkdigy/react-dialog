@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
-import { TestDialog, TestDialogProps } from '#dialog';
+import { TestDialog } from '#dialog';
 import { Button, Grid, Typography } from '@mui/material';
-import { useAlertDialog, useConfirmDialog, useDialog, ConfirmDialogCommands } from '@pdg/react-dialog';
+import { useAlertDialog, useConfirmDialog, useDialog, ConfirmDialogCommands } from '../../../../src';
 
 const Home = () => {
   const alertDialog = useAlertDialog();
   const confirmDialog = useConfirmDialog();
-  const testDialog = useDialog<TestDialogProps>(TestDialog);
+  const testDialog = useDialog(TestDialog);
 
   // Function --------------------------------------------------------------------------------------------------------
 

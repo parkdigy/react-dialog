@@ -9,12 +9,14 @@ const TestDialog: React.FC<TestDialogProps> = ({ onShow, onClose }) => {
   return (
     <Dialog
       ref={dialogRef}
+      maxWidth='md'
       titleIcon='dashboard'
       title='테스트 입니다'
+      fullWidth
       fullHeight
       content={
         <div>
-          {new Array(20).fill(0).map((v, idx) => (
+          {new Array(50).fill(0).map((v, idx) => (
             <div key={idx}>This is Test Dialog.</div>
           ))}
           <Button

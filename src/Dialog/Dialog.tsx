@@ -9,6 +9,7 @@ import {
   StyledDialogActions,
 } from './Dialog.styles';
 import { useAutoUpdateState } from '@pdg/react-hook';
+import classNames from 'classnames';
 
 const Dialog = React.forwardRef<DialogCommands, Props>(
   (
@@ -171,7 +172,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
 
     return (
       <StyledDialog
-        className={`color-${color}`}
+        className={classNames(`color-${color}`, fullHeight && 'Dialog-full-height')}
         open={open}
         aria-labelledby={titleId}
         onClose={handleClose}
@@ -204,7 +205,6 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
         <StyledDialogContent
           ref={contentRef}
           style={{
-            height: fullHeight ? '100vh' : undefined,
             paddingBottom: actions ? 15 : undefined,
           }}
         >
