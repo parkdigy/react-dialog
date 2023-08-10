@@ -1,7 +1,7 @@
 {
   "name": "@pdg/react-dialog",
   "title": "React Dialog",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "React Dialog",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",

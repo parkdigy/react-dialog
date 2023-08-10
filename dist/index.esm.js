@@ -139,7 +139,7 @@ var StyleDialogTitleCloseButton = styled(IconButton)(function (_a) {
         color: theme.palette.grey[500],
     });
 });
-var StyledDialogContent = styled(DialogContent)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1;\n  flex-direction: column;\n"], ["\n  flex: 1;\n  flex-direction: column;\n"])));
+var StyledDialogContent = styled(DialogContent)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"], ["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"])));
 var StyledDialogActions = styled(DialogActions)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding-left: 20px;\n  padding-right: 15px;\n"], ["\n  padding-left: 20px;\n  padding-right: 15px;\n"])));
 var templateObject_1, templateObject_2, templateObject_3;var classnames = {exports: {}};/*!
 	Copyright (c) 2018 Jed Watson.

@@ -25,6 +25,7 @@ export const StyleDialogTitleCloseButton = styled(IconButton)(({ theme }) => ({
 
 export const StyledDialogContent = styled(DialogContent)`
   flex: 1;
+  display: flex;
   flex-direction: column;
 `;
 
