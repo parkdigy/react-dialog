@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import menu from './menu.json';
 import { theme } from './DefaultLayout.types';
 import MainRouter from '../../router';
-import { DialogContextProvider } from '@pdg/react-dialog';
+import { DialogContextProvider } from '../../../../src';
 
 const DefaultLayout = () => {
   const navigate = useNavigate();

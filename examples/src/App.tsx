@@ -3,7 +3,7 @@ import './init';
 import React, { ErrorInfo } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { DefaultLayout } from './layout';
-import { setDialogDefault } from '@pdg/react-dialog';
+import { setDialogDefault } from '../../src';
 
 import './sass/index.scss';
 

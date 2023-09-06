@@ -3,7 +3,7 @@ import { ButtonProps } from '@mui/material';
 import { DialogCommands, DialogProps } from '../Dialog';
 export interface AlertDialogCommands extends Omit<DialogCommands, 'scrollToTop'> {
 }
-export declare type AlertDialogCommandsRefFunction = (commands: AlertDialogCommands | undefined) => void;
+export type AlertDialogCommandsRefFunction = (commands: AlertDialogCommands | undefined) => void;
 export interface AlertDialogProps extends Omit<DialogProps, 'commandsRef' | 'actions' | 'autoClose' | 'backdropClose' | 'escapeClose' | 'onRequestClose'> {
     commandsRef?: React.MutableRefObject<AlertDialogCommands | undefined> | AlertDialogCommandsRefFunction;
     confirmButtonLabel?: ReactNode;

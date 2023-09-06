@@ -1,4 +1,4 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:true});var React=require('react'),material=require('@mui/material');function _interopDefaultLegacy(e){return e&&typeof e==='object'&&'default'in e?e:{'default':e}}var React__default=/*#__PURE__*/_interopDefaultLegacy(React);/******************************************************************************
+'use strict';var React=require('react'),material=require('@mui/material');/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -12,6 +12,8 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
+/* global Reflect, Promise, SuppressedError, Symbol */
+
 
 var __assign = function() {
     __assign = Object.assign || function __assign(t) {
@@ -49,7 +51,11 @@ function __spreadArray(to, from, pack) {
 function __makeTemplateObject(cooked, raw) {
     if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
     return cooked;
-}/* eslint-disable */
+}
+typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};/* eslint-disable */
 var DialogContextDefaultValue = {
     pushDialog: function () { },
     alertDialog: function () { },
@@ -141,7 +147,9 @@ var StyleDialogTitleCloseButton = material.styled(material.IconButton)(function 
 });
 var StyledDialogContent = material.styled(material.DialogContent)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"], ["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"])));
 var StyledDialogActions = material.styled(material.DialogActions)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding-left: 20px;\n  padding-right: 15px;\n"], ["\n  padding-left: 20px;\n  padding-right: 15px;\n"])));
-var templateObject_1, templateObject_2, templateObject_3;var classnames = {exports: {}};/*!
+var templateObject_1, templateObject_2, templateObject_3;function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}var classnames = {exports: {}};/*!
 	Copyright (c) 2018 Jed Watson.
 	Licensed under the MIT License (MIT), see
 	http://jedwatson.github.io/classnames
@@ -195,10 +203,11 @@ var templateObject_1, templateObject_2, templateObject_3;var classnames = {expor
 		} else {
 			window.classNames = classNames;
 		}
-	}());
+	}()); 
 } (classnames));
 
-var classNames = classnames.exports;var Dialog = React__default["default"].forwardRef(function (_a, ref) {
+var classnamesExports = classnames.exports;
+var classNames = /*@__PURE__*/getDefaultExportFromCjs(classnamesExports);var Dialog = React.forwardRef(function (_a, ref) {
     // ID --------------------------------------------------------------------------------------------------------------
     var commandsRef = _a.commandsRef, content = _a.content, color = _a.color, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, onRequestClose = _a.onRequestClose, onClose = _a.onClose, otherProps = __rest(_a, ["commandsRef", "content", "color", "titleIcon", "title", "titleProps", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose"]);
     var id = React.useId();
@@ -313,18 +322,18 @@ var classNames = classnames.exports;var Dialog = React__default["default"].forwa
         }
     }, [autoClose, onRequestClose, close]);
     // Render ----------------------------------------------------------------------------------------------------------
-    return (React__default["default"].createElement(StyledDialog, __assign({ className: classNames("color-".concat(color), fullHeight && 'Dialog-full-height'), open: open, "aria-labelledby": titleId, onClose: handleClose }, otherProps),
-        title && (React__default["default"].createElement(StyledDialogTitle, __assign({}, titleProps),
-            (titleIcon || title) && (React__default["default"].createElement(material.Box, { style: { display: 'flex', fontSize: '17px' } },
-                titleIcon && (React__default["default"].createElement(material.Box, { style: { display: 'flex', alignItems: 'center', marginRight: 7 } },
-                    React__default["default"].createElement(material.Icon, { style: { fontSize: '22px' } }, titleIcon))),
-                title && React__default["default"].createElement(material.Box, { style: { display: 'flex', alignItems: 'center' } }, title))),
-            !hideClose && (React__default["default"].createElement(StyleDialogTitleCloseButton, { className: 'dialog-close-btn', "aria-label": 'close', style: { color: textColor }, onClick: handleCloseClick },
-                React__default["default"].createElement(material.Icon, null, "close"))))),
-        React__default["default"].createElement(StyledDialogContent, { ref: contentRef, style: {
+    return (React.createElement(StyledDialog, __assign({ className: classNames("color-".concat(color), fullHeight && 'Dialog-full-height'), open: open, "aria-labelledby": titleId, onClose: handleClose }, otherProps),
+        title && (React.createElement(StyledDialogTitle, __assign({}, titleProps),
+            (titleIcon || title) && (React.createElement(material.Box, { style: { display: 'flex', fontSize: '17px' } },
+                titleIcon && (React.createElement(material.Box, { style: { display: 'flex', alignItems: 'center', marginRight: 7 } },
+                    React.createElement(material.Icon, { style: { fontSize: '22px' } }, titleIcon))),
+                title && React.createElement(material.Box, { style: { display: 'flex', alignItems: 'center' } }, title))),
+            !hideClose && (React.createElement(StyleDialogTitleCloseButton, { className: 'dialog-close-btn', "aria-label": 'close', style: { color: textColor }, onClick: handleCloseClick },
+                React.createElement(material.Icon, null, "close"))))),
+        React.createElement(StyledDialogContent, { ref: contentRef, style: {
                 paddingBottom: actions ? 15 : undefined,
             } }, content),
-        actions && React__default["default"].createElement(StyledDialogActions, null, actions)));
+        actions && React.createElement(StyledDialogActions, null, actions)));
 });
 Dialog.displayName = 'Dialog';
 Dialog.defaultProps = DialogDefaultProps;var DEFAULT_STYLE = {
@@ -344,8 +353,8 @@ var DialogActionButton = function (_a) {
         }
     }, [initStyle]))[0];
     // Render ----------------------------------------------------------------------------------------------------------
-    return React__default["default"].createElement(material.Button, __assign({ variant: variant || 'text', style: style }, otherProps));
-};var AlertDialog = React__default["default"].forwardRef(function (_a, ref) {
+    return React.createElement(material.Button, __assign({ variant: variant || 'text', style: style }, otherProps));
+};var AlertDialog = React.forwardRef(function (_a, ref) {
     // Ref -------------------------------------------------------------------------------------------------------------
     var initStyle = _a.style, commandsRef = _a.commandsRef, confirmButtonLabel = _a.confirmButtonLabel, confirmButtonProps = _a.confirmButtonProps, onShow = _a.onShow, onClose = _a.onClose, props = __rest(_a, ["style", "commandsRef", "confirmButtonLabel", "confirmButtonProps", "onShow", "onClose"]);
     var dialogRef = React.useRef(null);
@@ -414,14 +423,14 @@ var DialogActionButton = function (_a) {
             onClose();
     }, [onClose]);
     // Render ----------------------------------------------------------------------------------------------------------
-    return (React__default["default"].createElement(Dialog, __assign({ ref: dialogRef, autoClose: true, escapeClose: true, style: style, onShow: handleShow, onClose: handleClose }, props, { actions: React__default["default"].createElement(DialogActionButton, __assign({ variant: 'text' }, confirmButtonProps, { onClick: close }), confirmButtonLabel) })));
+    return (React.createElement(Dialog, __assign({ ref: dialogRef, autoClose: true, escapeClose: true, style: style, onShow: handleShow, onClose: handleClose }, props, { actions: React.createElement(DialogActionButton, __assign({ variant: 'text' }, confirmButtonProps, { onClick: close }), confirmButtonLabel) })));
 });
 AlertDialog.displayName = 'AlertDialog';
 AlertDialog.defaultProps = AlertDialogDefaultProps;var ConfirmDialogDefaultProps = {
     color: 'primary',
     confirmButtonLabel: '확인',
     cancelButtonLabel: '취소',
-};var ConfirmDialog = React__default["default"].forwardRef(function (_a, ref) {
+};var ConfirmDialog = React.forwardRef(function (_a, ref) {
     // Ref -------------------------------------------------------------------------------------------------------------
     var initStyle = _a.style, commandsRef = _a.commandsRef, color = _a.color, confirmButtonLabel = _a.confirmButtonLabel, confirmButtonProps = _a.confirmButtonProps, cancelButtonLabel = _a.cancelButtonLabel, cancelButtonProps = _a.cancelButtonProps, onShow = _a.onShow, onClose = _a.onClose, onConfirm = _a.onConfirm, onCancel = _a.onCancel, props = __rest(_a, ["style", "commandsRef", "color", "confirmButtonLabel", "confirmButtonProps", "cancelButtonLabel", "cancelButtonProps", "onShow", "onClose", "onConfirm", "onCancel"]);
     var dialogRef = React.useRef(null);
@@ -500,10 +509,10 @@ AlertDialog.defaultProps = AlertDialogDefaultProps;var ConfirmDialogDefaultProps
             onConfirm(commands);
     }, [onConfirm, commands]);
     // Render ----------------------------------------------------------------------------------------------------------
-    return (React__default["default"].createElement(Dialog, __assign({ ref: dialogRef, color: color, escapeClose: true, style: style, onShow: handleShow, onClose: handleClose, onRequestClose: handleCancelClick }, props, { actions: React__default["default"].createElement(React__default["default"].Fragment, null,
-            React__default["default"].createElement(DialogActionButton, __assign({ variant: 'text' }, cancelButtonProps, { onClick: handleCancelClick }),
-                React__default["default"].createElement(material.Typography, { fontSize: 'inherit', style: { color: '#6f6f6f' } }, cancelButtonLabel)),
-            React__default["default"].createElement(DialogActionButton, __assign({ variant: 'text', color: color }, confirmButtonProps, { onClick: handleConfirmClick }), confirmButtonLabel)) })));
+    return (React.createElement(Dialog, __assign({ ref: dialogRef, color: color, escapeClose: true, style: style, onShow: handleShow, onClose: handleClose, onRequestClose: handleCancelClick }, props, { actions: React.createElement(React.Fragment, null,
+            React.createElement(DialogActionButton, __assign({ variant: 'text' }, cancelButtonProps, { onClick: handleCancelClick }),
+                React.createElement(material.Typography, { fontSize: 'inherit', style: { color: '#6f6f6f' } }, cancelButtonLabel)),
+            React.createElement(DialogActionButton, __assign({ variant: 'text', color: color }, confirmButtonProps, { onClick: handleConfirmClick }), confirmButtonLabel)) })));
 });
 ConfirmDialog.displayName = 'ConfirmDialog';
 ConfirmDialog.defaultProps = ConfirmDialogDefaultProps;var DialogErrorBoundaryDefaultProps = {};class ErrorBoundary extends React.Component {
@@ -530,8 +539,8 @@ function ErrorBoundaryContext({ children, }) {
         error,
         setError,
     }), [error]);
-    return (React__default["default"].createElement(errorBoundaryContext.Provider, { value: ctx },
-        React__default["default"].createElement(ErrorBoundary, { error: error, onError: (error, errorInfo) => {
+    return (React.createElement(errorBoundaryContext.Provider, { value: ctx },
+        React.createElement(ErrorBoundary, { error: error, onError: (error, errorInfo) => {
                 setError(error);
                 componentDidCatch.current?.(error, errorInfo);
             } }, children)));
@@ -539,8 +548,8 @@ function ErrorBoundaryContext({ children, }) {
 ErrorBoundaryContext.displayName = "ReactUseErrorBoundaryContext";
 function withErrorBoundary(WrappedComponent) {
     function WithErrorBoundary(props) {
-        return (React__default["default"].createElement(ErrorBoundaryContext, null,
-            React__default["default"].createElement(WrappedComponent, { key: "WrappedComponent", ...props })));
+        return (React.createElement(ErrorBoundaryContext, null,
+            React.createElement(WrappedComponent, { key: "WrappedComponent", ...props })));
     }
     WithErrorBoundary.displayName = `WithErrorBoundary(${WrappedComponent.displayName ?? WrappedComponent.name ?? "Component"})`;
     return WithErrorBoundary;
@@ -561,7 +570,7 @@ function useErrorBoundary(componentDidCatch) {
 });
 var DialogErrorBoundary = function (_a) {
     var onError = _a.onError, children = _a.children;
-    return React__default["default"].createElement(ErrorCatcher, { onError: onError }, children);
+    return React.createElement(ErrorCatcher, { onError: onError }, children);
 };
 DialogErrorBoundary.displayName = 'DialogErrorBoundary';
 DialogErrorBoundary.defaultProps = DialogErrorBoundaryDefaultProps;var DialogContextProvider = function (_a) {
@@ -601,7 +610,7 @@ DialogErrorBoundary.defaultProps = DialogErrorBoundaryDefaultProps;var DialogCon
         dialogKeyRef.current += 1;
         var onShow = props.onShow, onClose = props.onClose, otherProps = __rest(props, ["onShow", "onClose"]);
         var dialogId;
-        var dialog = (React__default["default"].createElement(AlertDialog, __assign({ ref: function (commands) {
+        var dialog = (React.createElement(AlertDialog, __assign({ ref: function (commands) {
                 if (commands) {
                     dialogId = commands.getId();
                 }
@@ -619,7 +628,7 @@ DialogErrorBoundary.defaultProps = DialogErrorBoundaryDefaultProps;var DialogCon
         dialogKeyRef.current += 1;
         var onShow = props.onShow, onClose = props.onClose, otherProps = __rest(props, ["onShow", "onClose"]);
         var dialogId;
-        var dialog = (React__default["default"].createElement(ConfirmDialog, __assign({ ref: function (commands) {
+        var dialog = (React.createElement(ConfirmDialog, __assign({ ref: function (commands) {
                 if (commands) {
                     dialogId = commands.getId();
                 }
@@ -632,7 +641,7 @@ DialogErrorBoundary.defaultProps = DialogErrorBoundaryDefaultProps;var DialogCon
     var pushDialog = React.useCallback(function (dialogComponent, props, onErrorBoundary) {
         dialogKeyRef.current += 1;
         var dialogId = "dig_".concat(dialogKeyRef.current);
-        var dialog = (React__default["default"].createElement(DialogErrorBoundary, { key: dialogKeyRef.current, onError: onErrorBoundary }, React__default["default"].createElement(dialogComponent, __assign(__assign({}, props), { onShow: function () {
+        var dialog = (React.createElement(DialogErrorBoundary, { key: dialogKeyRef.current, onError: onErrorBoundary }, React.createElement(dialogComponent, __assign(__assign({}, props), { onShow: function () {
                 handleShow(dialog, dialogId, props === null || props === void 0 ? void 0 : props.onShow);
             }, onClose: function () {
                 handleClose(dialogId, props === null || props === void 0 ? void 0 : props.onClose);
@@ -646,7 +655,7 @@ DialogErrorBoundary.defaultProps = DialogErrorBoundaryDefaultProps;var DialogCon
         return { pushDialog: pushDialog, alertDialog: alertDialog, confirmDialog: confirmDialog };
     }, [alertDialog, confirmDialog, pushDialog]))[0];
     // Render ----------------------------------------------------------------------------------------------------------
-    return (React__default["default"].createElement(DialogContext.Provider, { value: value },
+    return (React.createElement(DialogContext.Provider, { value: value },
         children,
         dialogs));
 };var _default = {};

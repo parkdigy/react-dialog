@@ -9,7 +9,8 @@ export interface DialogCommands {
 
 export type DialogCommandsRefFunction = (commands: DialogCommands | undefined) => void;
 
-export interface DialogProps extends Omit<_DialogProps, 'ref' | 'open' | 'title' | 'aria-labelledby' | 'onClose'> {
+export interface DialogProps
+  extends Omit<_DialogProps, 'ref' | 'open' | 'title' | 'aria-labelledby' | 'content' | 'onClose'> {
   commandsRef?: React.MutableRefObject<DialogCommands | undefined> | DialogCommandsRefFunction;
   content: ReactNode;
   color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';

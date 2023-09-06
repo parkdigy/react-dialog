@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Dialog, DialogCommands, DialogActionButton } from '@pdg/react-dialog';
+import { Dialog, DialogCommands, DialogActionButton } from '../../../../src';
 import { TestDialogProps } from './TestDialog.types';
 import { Button } from '@mui/material';
 
