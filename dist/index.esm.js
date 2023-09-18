@@ -209,7 +209,7 @@ var templateObject_1, templateObject_2, templateObject_3;function getDefaultExpo
 var classnamesExports = classnames.exports;
 var classNames = /*@__PURE__*/getDefaultExportFromCjs(classnamesExports);var Dialog = React.forwardRef(function (_a, ref) {
     // ID --------------------------------------------------------------------------------------------------------------
-    var commandsRef = _a.commandsRef, content = _a.content, color = _a.color, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, onRequestClose = _a.onRequestClose, onClose = _a.onClose, otherProps = __rest(_a, ["commandsRef", "content", "color", "titleIcon", "title", "titleProps", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose"]);
+    var commandsRef = _a.commandsRef, content = _a.content, color = _a.color, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, subTitle = _a.subTitle, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, onRequestClose = _a.onRequestClose, onClose = _a.onClose, otherProps = __rest(_a, ["commandsRef", "content", "color", "titleIcon", "title", "titleProps", "subTitle", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose"]);
     var id = useId();
     // Theme -----------------------------------------------------------------------------------------------------------
     var theme = useTheme();
@@ -327,7 +327,11 @@ var classNames = /*@__PURE__*/getDefaultExportFromCjs(classnamesExports);var Dia
             (titleIcon || title) && (React.createElement(Box, { style: { display: 'flex', fontSize: '17px' } },
                 titleIcon && (React.createElement(Box, { style: { display: 'flex', alignItems: 'center', marginRight: 7 } },
                     React.createElement(Icon, { style: { fontSize: '22px' } }, titleIcon))),
-                title && React.createElement(Box, { style: { display: 'flex', alignItems: 'center' } }, title))),
+                title && (React.createElement(Box, { style: { display: 'flex', alignItems: 'center' } },
+                    title,
+                    subTitle && React.createElement("div", { className: 'Dialog-SubTitle' },
+                        "\u00A0-\u00A0",
+                        subTitle))))),
             !hideClose && (React.createElement(StyleDialogTitleCloseButton, { className: 'dialog-close-btn', "aria-label": 'close', style: { color: textColor }, onClick: handleCloseClick },
                 React.createElement(Icon, null, "close"))))),
         React.createElement(StyledDialogContent, { ref: contentRef, style: {

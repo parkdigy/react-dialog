@@ -20,6 +20,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
       titleIcon: initTitleIcon,
       title,
       titleProps,
+      subTitle,
       actions,
       hideClose,
       autoClose,
@@ -187,7 +188,12 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
                     <Icon style={{ fontSize: '22px' }}>{titleIcon}</Icon>
                   </Box>
                 )}
-                {title && <Box style={{ display: 'flex', alignItems: 'center' }}>{title}</Box>}
+                {title && (
+                  <Box style={{ display: 'flex', alignItems: 'center' }}>
+                    {title}
+                    {subTitle && <div className='Dialog-SubTitle'>&nbsp;-&nbsp;{subTitle}</div>}
+                  </Box>
+                )}
               </Box>
             )}
             {!hideClose && (

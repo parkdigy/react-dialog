@@ -16,7 +16,8 @@ const Home = () => {
 
   const handleAlertDialogClick = useCallback(() => {
     alertDialog({
-      title: '제목입니다',
+      title: 'Title',
+      subTitle: 'Sub Title',
       content: '오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
       onShow() {
         ll('alertDialog show');
@@ -30,7 +31,8 @@ const Home = () => {
   const handleConfirmDialogClick = useCallback(() => {
     confirmDialog({
       color: 'error',
-      title: '제목입니다',
+      title: 'Title',
+      subTitle: 'Sub Title',
       content: <Typography color='error'>오류가 발생했습니다. 다시 시도하시겠습니까?</Typography>,
       onShow() {
         ll('confirmDialog show');

@@ -17,6 +17,7 @@ export interface DialogProps
   titleIcon?: string;
   title?: ReactNode;
   titleProps?: Partial<Omit<DialogTitleProps, 'children'>>;
+  subTitle?: ReactNode;
   actions?: ReactNode;
   hideClose?: boolean;
   autoClose?: boolean;
