@@ -1,4 +1,4 @@
-import React,{createContext,useState,useRef,useCallback,useEffect,useId,useLayoutEffect,useContext,useMemo,Component}from'react';import {styled,Dialog as Dialog$1,DialogTitle,IconButton,DialogContent,DialogActions,useTheme,Box,Icon,Button,Typography}from'@mui/material';/******************************************************************************
+import React,{createContext,useId,useRef,useState,useCallback,useEffect,useLayoutEffect,useContext,useMemo,Component}from'react';import {useAutoUpdateState}from'@pdg/react-hook';import {styled,Dialog as Dialog$1,DialogTitle,IconButton,DialogContent,DialogActions,useTheme,Box,Icon,Button,Typography}from'@mui/material';/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -61,69 +61,7 @@ var DialogContextDefaultValue = {
     alertDialog: function () { },
     confirmDialog: function () { },
 };
-/* eslint-enable */var DialogContext = createContext(DialogContextDefaultValue);function useFirstSkipEffect(effect, deps) {
-    var firstRef = useRef(true);
-    useEffect(function () {
-        if (firstRef.current) {
-            firstRef.current = false;
-        }
-        else {
-            effect();
-        }
-    }, deps);
-}var isSame = function (v1, v2) {
-    if (v1 === v2)
-        return true;
-    if (typeof v1 !== typeof v2)
-        return false;
-    if (v1 == null || v2 == null)
-        return false;
-    if (Array.isArray(v1) && Array.isArray(v2)) {
-        if (v1.length !== v2.length)
-            return false;
-        for (var i = 0; i < v1.length; i += 1) {
-            if (v1[i] !== v2[i])
-                return false;
-        }
-    }
-    else {
-        return v1 === v2;
-    }
-    return true;
-};function useAutoUpdateState(p1, p2) {
-    var state = typeof p1 === 'function' ? undefined : p1;
-    var finalStateCallback = typeof p1 === 'function' ? p1 : p2;
-    var _a = useState(0), setUpdateKey = _a[1];
-    var _initState = useState(function () {
-        return finalStateCallback ? finalStateCallback(state) : state;
-    })[0];
-    var _state = useRef(_initState);
-    var forceUpdate = useCallback(function () {
-        setUpdateKey(function (updateKey) { return updateKey + 1; });
-    }, []);
-    useFirstSkipEffect(function () {
-        var newState = finalStateCallback ? finalStateCallback(state) : state;
-        if (!isSame(newState, _state.current)) {
-            _state.current = newState;
-            forceUpdate();
-        }
-    }, [state]);
-    useFirstSkipEffect(function () {
-        var newState = finalStateCallback ? finalStateCallback(_state.current) : _state.current;
-        if (!isSame(newState, _state.current)) {
-            _state.current = newState;
-            forceUpdate();
-        }
-    }, [finalStateCallback]);
-    var setState = useCallback(function (newState) {
-        var finalNewState = typeof newState === 'function' ? newState(_state.current) : newState;
-        if (!isSame(_state.current, finalNewState)) {
-            _state.current = finalNewState;
-            forceUpdate();
-        }
-    }, []);
-    return [_state.current, setState];
-}var AlertDialogDefaultProps = {
+/* eslint-enable */var DialogContext = createContext(DialogContextDefaultValue);var AlertDialogDefaultProps = {
     color: 'primary',
     confirmButtonLabel: '확인',
 };var DialogDefaultProps = {
@@ -147,67 +85,7 @@ var StyleDialogTitleCloseButton = styled(IconButton)(function (_a) {
 });
 var StyledDialogContent = styled(DialogContent)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"], ["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"])));
 var StyledDialogActions = styled(DialogActions)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding-left: 20px;\n  padding-right: 15px;\n"], ["\n  padding-left: 20px;\n  padding-right: 15px;\n"])));
-var templateObject_1, templateObject_2, templateObject_3;function getDefaultExportFromCjs (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}var classnames = {exports: {}};/*!
-	Copyright (c) 2018 Jed Watson.
-	Licensed under the MIT License (MIT), see
-	http://jedwatson.github.io/classnames
-*/
-
-(function (module) {
-	/* global define */
-
-	(function () {
-
-		var hasOwn = {}.hasOwnProperty;
-
-		function classNames() {
-			var classes = [];
-
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-
-				var argType = typeof arg;
-
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					if (arg.length) {
-						var inner = classNames.apply(null, arg);
-						if (inner) {
-							classes.push(inner);
-						}
-					}
-				} else if (argType === 'object') {
-					if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes('[native code]')) {
-						classes.push(arg.toString());
-						continue;
-					}
-
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-
-			return classes.join(' ');
-		}
-
-		if (module.exports) {
-			classNames.default = classNames;
-			module.exports = classNames;
-		} else {
-			window.classNames = classNames;
-		}
-	}()); 
-} (classnames));
-
-var classnamesExports = classnames.exports;
-var classNames = /*@__PURE__*/getDefaultExportFromCjs(classnamesExports);var Dialog = React.forwardRef(function (_a, ref) {
+var templateObject_1, templateObject_2, templateObject_3;var Dialog = React.forwardRef(function (_a, ref) {
     // ID --------------------------------------------------------------------------------------------------------------
     var commandsRef = _a.commandsRef, content = _a.content, color = _a.color, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, subTitle = _a.subTitle, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, onRequestClose = _a.onRequestClose, onClose = _a.onClose, otherProps = __rest(_a, ["commandsRef", "content", "color", "titleIcon", "title", "titleProps", "subTitle", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose"]);
     var id = useId();
@@ -322,7 +200,7 @@ var classNames = /*@__PURE__*/getDefaultExportFromCjs(classnamesExports);var Dia
         }
     }, [autoClose, onRequestClose, close]);
     // Render ----------------------------------------------------------------------------------------------------------
-    return (React.createElement(StyledDialog, __assign({ className: classNames("color-".concat(color), fullHeight && 'Dialog-full-height'), open: open, "aria-labelledby": titleId, onClose: handleClose }, otherProps),
+    return (React.createElement(StyledDialog, __assign({ className: "color-".concat(color, " ").concat(fullHeight ? 'Dialog-full-height' : ''), open: open, "aria-labelledby": titleId, onClose: handleClose }, otherProps),
         title && (React.createElement(StyledDialogTitle, __assign({}, titleProps),
             (titleIcon || title) && (React.createElement(Box, { style: { display: 'flex', fontSize: '17px' } },
                 titleIcon && (React.createElement(Box, { style: { display: 'flex', alignItems: 'center', marginRight: 7 } },
