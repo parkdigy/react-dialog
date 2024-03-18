@@ -2,7 +2,7 @@
   "name": "@pdg/react-dialog",
   "title": "React Dialog",
   "type": "module",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "React Dialog",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -43,8 +43,8 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.13",
     "@mui/material": "^5.15.13",
-    "@types/react": "^17.0.0 || ^18.0.0",
     "@pdg/react-hook": "^1.0.5",
+    "@types/react": "^17.0.0 || ^18.0.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0"
   },
