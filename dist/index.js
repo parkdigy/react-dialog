@@ -567,4 +567,4 @@ function getDialogDefault() {
         throw new Error('useConfirmDialog should be used within DialogContext.Provider');
     }
     return value.confirmDialog;
-}exports.Dialog=Dialog;exports.DialogActionButton=DialogActionButton;exports.DialogContextProvider=DialogContextProvider;exports.DialogDefaultProps=DialogDefaultProps;exports.getDialogDefault=getDialogDefault;exports.setDialogDefault=setDialogDefault;exports.useAlertDialog=useAlertDialog;exports.useConfirmDialog=useConfirmDialog;exports.useDialog=useDialog;//# sourceMappingURL=index.js.map
+}exports.Dialog=Dialog;exports.DialogActionButton=DialogActionButton;exports.DialogContextProvider=DialogContextProvider;exports.DialogDefaultProps=DialogDefaultProps;exports.getDialogDefault=getDialogDefault;exports.setDialogDefault=setDialogDefault;exports.useAlertDialog=useAlertDialog;exports.useConfirmDialog=useConfirmDialog;exports.useDialog=useDialog;

@@ -567,4 +567,4 @@ function getDialogDefault() {
         throw new Error('useConfirmDialog should be used within DialogContext.Provider');
     }
     return value.confirmDialog;
-}export{Dialog,DialogActionButton,DialogContextProvider,DialogDefaultProps,getDialogDefault,setDialogDefault,useAlertDialog,useConfirmDialog,useDialog};//# sourceMappingURL=index.esm.js.map
+}export{Dialog,DialogActionButton,DialogContextProvider,DialogDefaultProps,getDialogDefault,setDialogDefault,useAlertDialog,useConfirmDialog,useDialog};
