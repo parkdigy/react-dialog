@@ -1,4 +1,4 @@
-import React, { CSSProperties, useCallback } from 'react';
+import React, { CSSProperties, useMemo } from 'react';
 import { Button } from '@mui/material';
 import { DialogActionButtonProps } from './DialogActionButton.types';
 import { useAutoUpdateState } from '@pdg/react-hook';
@@ -12,15 +12,7 @@ const DEFAULT_STYLE: CSSProperties = {
 const DialogActionButton: React.FC<DialogActionButtonProps> = ({ variant, style: initStyle, ...otherProps }) => {
   // State -----------------------------------------------------------------------------------------------------------
 
-  const [style] = useAutoUpdateState<CSSProperties>(
-    useCallback(() => {
-      if (initStyle) {
-        return { DEFAULT_STYLE, ...initStyle };
-      } else {
-        return DEFAULT_STYLE;
-      }
-    }, [initStyle])
-  );
+  const [style] = useAutoUpdateState<CSSProperties>(useMemo(() => ({ ...DEFAULT_STYLE, ...initStyle }), [initStyle]));
 
   // Render ----------------------------------------------------------------------------------------------------------
 

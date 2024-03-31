@@ -1,4 +1,4 @@
-import React,{createContext,useId,useRef,useState,useCallback,useEffect,useLayoutEffect,useContext,useMemo,Component}from'react';import {useAutoUpdateState}from'@pdg/react-hook';import {styled,Dialog as Dialog$1,DialogTitle,IconButton,DialogContent,DialogActions,useTheme,Box,Icon,Button,Typography}from'@mui/material';/******************************************************************************
+import React,{createContext,useId,useRef,useState,useMemo,useEffect,useCallback,useLayoutEffect,useContext,Component}from'react';import {useAutoUpdateState}from'@pdg/react-hook';import {styled,Dialog as Dialog$1,DialogTitle,IconButton,DialogContent,DialogActions,useTheme,Box,Icon,Button,Typography}from'@mui/material';/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -96,12 +96,8 @@ var templateObject_1, templateObject_2, templateObject_3;var Dialog = React.forw
     // State -----------------------------------------------------------------------------------------------------------
     var _b = useState(true), open = _b[0], setOpen = _b[1];
     var titleId = useState("dialog-title-".concat(id))[0];
-    var titleIcon = useAutoUpdateState(useCallback(function () {
-        return initTitleIcon === null || initTitleIcon === void 0 ? void 0 : initTitleIcon.replace(/[A-Z]/g, function (letter, idx) { return "".concat(idx > 0 ? '_' : '').concat(letter.toLowerCase()); });
-    }, [initTitleIcon]))[0];
-    var textColor = useAutoUpdateState(useCallback(function () {
-        return theme.palette[color || 'primary'].contrastText;
-    }, [theme, color]))[0];
+    var titleIcon = useAutoUpdateState(useMemo(function () { return initTitleIcon === null || initTitleIcon === void 0 ? void 0 : initTitleIcon.replace(/[A-Z]/g, function (letter, idx) { return "".concat(idx > 0 ? '_' : '').concat(letter.toLowerCase()); }); }, [initTitleIcon]))[0];
+    var textColor = useAutoUpdateState(useMemo(function () { return theme.palette[color || 'primary'].contrastText; }, [theme, color]))[0];
     // Effect ----------------------------------------------------------------------------------------------------------
     useEffect(function () {
         if (onShow)
@@ -121,7 +117,7 @@ var templateObject_1, templateObject_2, templateObject_3;var Dialog = React.forw
         (_a = contentRef.current) === null || _a === void 0 ? void 0 : _a.scrollTo({ top: 0 });
     }, [contentRef]);
     // State - commands ------------------------------------------------------------------------------------------------
-    var commands = useAutoUpdateState(useCallback(function () { return ({
+    var commands = useAutoUpdateState(useMemo(function () { return ({
         getId: function () { return id; },
         close: close,
         scrollToTop: scrollToTop,
@@ -226,14 +222,7 @@ Dialog.defaultProps = DialogDefaultProps;var DEFAULT_STYLE = {
 var DialogActionButton = function (_a) {
     // State -----------------------------------------------------------------------------------------------------------
     var variant = _a.variant, initStyle = _a.style, otherProps = __rest(_a, ["variant", "style"]);
-    var style = useAutoUpdateState(useCallback(function () {
-        if (initStyle) {
-            return __assign({ DEFAULT_STYLE: DEFAULT_STYLE }, initStyle);
-        }
-        else {
-            return DEFAULT_STYLE;
-        }
-    }, [initStyle]))[0];
+    var style = useAutoUpdateState(useMemo(function () { return (__assign(__assign({}, DEFAULT_STYLE), initStyle)); }, [initStyle]))[0];
     // Render ----------------------------------------------------------------------------------------------------------
     return React.createElement(Button, __assign({ variant: variant || 'text', style: style }, otherProps));
 };var AlertDialog = React.forwardRef(function (_a, ref) {
@@ -241,9 +230,10 @@ var DialogActionButton = function (_a) {
     var initStyle = _a.style, commandsRef = _a.commandsRef, confirmButtonLabel = _a.confirmButtonLabel, confirmButtonProps = _a.confirmButtonProps, onShow = _a.onShow, onClose = _a.onClose, props = __rest(_a, ["style", "commandsRef", "confirmButtonLabel", "confirmButtonProps", "onShow", "onClose"]);
     var dialogRef = useRef(null);
     // State -----------------------------------------------------------------------------------------------------------
-    var style = useAutoUpdateState(useCallback(function () {
-        return { zIndex: 1399, initStyle: initStyle };
-    }, [initStyle]))[0];
+    var style = useAutoUpdateState(useMemo(function () { return ({
+        zIndex: 1399,
+        initStyle: initStyle,
+    }); }, [initStyle]))[0];
     // Function - close --------------------------------------------------------------------------------------------------
     var getId = useCallback(function () {
         var _a;
@@ -254,7 +244,7 @@ var DialogActionButton = function (_a) {
         (_a = dialogRef.current) === null || _a === void 0 ? void 0 : _a.close();
     }, [dialogRef]);
     // State - commands --------------------------------------------------------------------------------------------------
-    var commands = useAutoUpdateState(useCallback(function () { return ({
+    var commands = useAutoUpdateState(useMemo(function () { return ({
         getId: getId,
         close: close,
     }); }, [getId, close]))[0];
@@ -317,9 +307,7 @@ AlertDialog.defaultProps = AlertDialogDefaultProps;var ConfirmDialogDefaultProps
     var initStyle = _a.style, commandsRef = _a.commandsRef, color = _a.color, confirmButtonLabel = _a.confirmButtonLabel, confirmButtonProps = _a.confirmButtonProps, cancelButtonLabel = _a.cancelButtonLabel, cancelButtonProps = _a.cancelButtonProps, onShow = _a.onShow, onClose = _a.onClose, onConfirm = _a.onConfirm, onCancel = _a.onCancel, props = __rest(_a, ["style", "commandsRef", "color", "confirmButtonLabel", "confirmButtonProps", "cancelButtonLabel", "cancelButtonProps", "onShow", "onClose", "onConfirm", "onCancel"]);
     var dialogRef = useRef(null);
     // State -----------------------------------------------------------------------------------------------------------
-    var style = useAutoUpdateState(useCallback(function () {
-        return { zIndex: 1399, initStyle: initStyle };
-    }, [initStyle]))[0];
+    var style = useAutoUpdateState(useMemo(function () { return ({ zIndex: 1399, initStyle: initStyle }); }, [initStyle]))[0];
     // Function - close --------------------------------------------------------------------------------------------------
     var getId = useCallback(function () {
         var _a;
@@ -330,12 +318,10 @@ AlertDialog.defaultProps = AlertDialogDefaultProps;var ConfirmDialogDefaultProps
         (_a = dialogRef.current) === null || _a === void 0 ? void 0 : _a.close();
     }, [dialogRef]);
     // State - commands --------------------------------------------------------------------------------------------------
-    var commands = useAutoUpdateState(useCallback(function () {
-        return {
-            getId: getId,
-            close: close,
-        };
-    }, [getId, close]))[0];
+    var commands = useAutoUpdateState(useMemo(function () { return ({
+        getId: getId,
+        close: close,
+    }); }, [getId, close]))[0];
     // Commands ----------------------------------------------------------------------------------------------------------
     useLayoutEffect(function () {
         if (ref) {

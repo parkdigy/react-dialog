@@ -1,4 +1,4 @@
-import React, { useCallback, useLayoutEffect, useRef } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { AlertDialogCommands, AlertDialogProps as Props, AlertDialogDefaultProps } from './AlertDialog.types';
 import { Dialog, DialogCommands } from '../Dialog';
 import { useAutoUpdateState } from '@pdg/react-hook';
@@ -13,9 +13,13 @@ const AlertDialog = React.forwardRef<AlertDialogCommands, Props>(
     // State -----------------------------------------------------------------------------------------------------------
 
     const [style] = useAutoUpdateState<Props['style']>(
-      useCallback(() => {
-        return { zIndex: 1399, initStyle };
-      }, [initStyle])
+      useMemo(
+        () => ({
+          zIndex: 1399,
+          initStyle,
+        }),
+        [initStyle]
+      )
     );
 
     // Function - close --------------------------------------------------------------------------------------------------
@@ -31,7 +35,7 @@ const AlertDialog = React.forwardRef<AlertDialogCommands, Props>(
     // State - commands --------------------------------------------------------------------------------------------------
 
     const [commands] = useAutoUpdateState<AlertDialogCommands>(
-      useCallback(
+      useMemo(
         () => ({
           getId,
           close,

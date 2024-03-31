@@ -1,4 +1,4 @@
-import React, { useCallback, useLayoutEffect, useRef } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { ConfirmDialogCommands, ConfirmDialogProps as Props, ConfirmDialogDefaultProps } from './ConfirmDialog.types';
 import { Dialog, DialogCommands } from '../Dialog';
 import { DialogActionButton } from '../DialogActionButton';
@@ -29,11 +29,7 @@ const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
 
     // State -----------------------------------------------------------------------------------------------------------
 
-    const [style] = useAutoUpdateState<Props['style']>(
-      useCallback(() => {
-        return { zIndex: 1399, initStyle };
-      }, [initStyle])
-    );
+    const [style] = useAutoUpdateState<Props['style']>(useMemo(() => ({ zIndex: 1399, initStyle }), [initStyle]));
 
     // Function - close --------------------------------------------------------------------------------------------------
 
@@ -48,12 +44,13 @@ const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
     // State - commands --------------------------------------------------------------------------------------------------
 
     const [commands] = useAutoUpdateState<ConfirmDialogCommands>(
-      useCallback(() => {
-        return {
+      useMemo(
+        () => ({
           getId,
           close,
-        };
-      }, [getId, close])
+        }),
+        [getId, close]
+      )
     );
 
     // Commands ----------------------------------------------------------------------------------------------------------

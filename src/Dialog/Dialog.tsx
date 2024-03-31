@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTheme, Icon, Box } from '@mui/material';
 import { DialogProps as Props, DialogDefaultProps, DialogCommands } from './Dialog.types';
 import {
@@ -50,15 +50,14 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
     const [open, setOpen] = useState(true);
     const [titleId] = useState(`dialog-title-${id}`);
     const [titleIcon] = useAutoUpdateState<string | undefined>(
-      useCallback(() => {
-        return initTitleIcon?.replace(/[A-Z]/g, (letter, idx) => `${idx > 0 ? '_' : ''}${letter.toLowerCase()}`);
-      }, [initTitleIcon])
+      useMemo(
+        () => initTitleIcon?.replace(/[A-Z]/g, (letter, idx) => `${idx > 0 ? '_' : ''}${letter.toLowerCase()}`),
+        [initTitleIcon]
+      )
     );
 
     const [textColor] = useAutoUpdateState<string>(
-      useCallback(() => {
-        return theme.palette[color || 'primary'].contrastText;
-      }, [theme, color])
+      useMemo(() => theme.palette[color || 'primary'].contrastText, [theme, color])
     );
 
     // Effect ----------------------------------------------------------------------------------------------------------
@@ -84,7 +83,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
     // State - commands ------------------------------------------------------------------------------------------------
 
     const [commands] = useAutoUpdateState<DialogCommands>(
-      useCallback(
+      useMemo(
         () => ({
           getId: () => id,
           close,
