@@ -8,7 +8,15 @@ const RootRoutes = () => {
 
   return (
     <Routes>
-      <Route path='/' element={<Home />} />
+      <Route
+        path={`${rootPath}*`}
+        element={
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='*' element={<Navigate to={rootPath} />} />
+          </Routes>
+        }
+      />
       <Route path='*' element={<Navigate to={rootPath} />} />
     </Routes>
   );
