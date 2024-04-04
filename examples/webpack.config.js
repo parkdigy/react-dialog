@@ -10,7 +10,6 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const CopyPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const { SourceMapDevToolPlugin } = require('webpack');
-const PackageJson = require('../package.json');
 /* eslint-enable */
 
 /********************************************************************************************************************
