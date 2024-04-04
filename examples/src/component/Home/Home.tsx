@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { TestDialog } from '#dialog';
+import { TestDialog } from '@dialog';
 import { Button, Grid, Typography } from '@mui/material';
 import { useAlertDialog, useConfirmDialog, useDialog, ConfirmDialogCommands } from '../../../../src';
 

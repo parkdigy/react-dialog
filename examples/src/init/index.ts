@@ -13,6 +13,11 @@ declare global {
     [K in keyof T]: T[K];
   };
   function getName(prefix: string, resetSeq?: boolean): string;
+
+  // eslint-disable-next-line no-var
+  var isEnvDevelopment: boolean;
+  // eslint-disable-next-line no-var
+  var isEnvProduction: boolean;
 }
 
 globalThis.ll = function (message?: any, ...optionalParams: any[]) {
@@ -57,5 +62,8 @@ globalThis.getName = (prefix: string, resetSeq?: boolean): string => {
   nameSeq += 1;
   return `${prefix}_${nameSeq}`;
 };
+
+globalThis.isEnvDevelopment = (window as any).$$AppConfig.env === 'development';
+globalThis.isEnvProduction = (window as any).$$AppConfig.env === 'production';
 
 export {};

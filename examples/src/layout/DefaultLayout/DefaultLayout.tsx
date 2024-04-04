@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import * as AdminLayout from '@pdg/react-admin-layout';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,21 @@ import { DialogContextProvider } from '../../../../src';
 
 const DefaultLayout = () => {
   const navigate = useNavigate();
+
+  //--------------------------------------------------------------------------------------------------------------------
+
+  const finalMenu = useMemo(
+    () =>
+      menu.map((info) => ({
+        ...info,
+        uri: !info.uri ? info.uri : isEnvProduction ? `/react-dialog${info.uri}` : info.uri,
+        // items: info.items?.map((subInfo) => ({
+        //   ...subInfo,
+        //   uri: !subInfo.uri ? subInfo.uri : isEnvProduction ? `/react-dialog{subInfo.uri}` : subInfo.uri,
+        // })),
+      })),
+    []
+  );
 
   //--------------------------------------------------------------------------------------------------------------------
 
@@ -24,7 +39,7 @@ const DefaultLayout = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <DialogContextProvider>
-        <AdminLayout.DefaultLayout logo='react-dialog' menu={menu} onMenuClick={handleMenuClick}>
+        <AdminLayout.DefaultLayout logo='react-dialog' menu={finalMenu} onMenuClick={handleMenuClick}>
           <MainRouter />
         </AdminLayout.DefaultLayout>
       </DialogContextProvider>
