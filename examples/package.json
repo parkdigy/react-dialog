@@ -16,7 +16,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.13",
     "@mui/material": "^5.15.13",
-    "@pdg/react-admin-layout": "^1.0.28",
+    "@pdg/react-admin-layout": "^1.0.29",
     "@pdg/react-hook": "^1.0.16",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
     "@soda/friendly-errors-webpack-plugin": "^1.8.1",
