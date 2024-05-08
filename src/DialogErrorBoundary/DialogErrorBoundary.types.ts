@@ -4,5 +4,3 @@ export interface DialogErrorBoundaryProps {
   children: ReactElement;
   onError?(error: unknown, errorInfo: ErrorInfo): void;
 }
-
-export const DialogErrorBoundaryDefaultProps = {};

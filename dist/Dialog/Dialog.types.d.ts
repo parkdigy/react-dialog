@@ -24,4 +24,3 @@ export interface DialogProps extends Omit<_DialogProps, 'ref' | 'open' | 'title'
     onRequestClose?(): void;
     onClose?(): void;
 }
-export declare const DialogDefaultProps: Pick<DialogProps, 'color'>;

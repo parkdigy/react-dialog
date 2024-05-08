@@ -9,4 +9,3 @@ export interface AlertDialogProps extends Omit<DialogProps, 'commandsRef' | 'act
     confirmButtonLabel?: ReactNode;
     confirmButtonProps?: Omit<ButtonProps, 'children' | 'onClick'>;
 }
-export declare const AlertDialogDefaultProps: Pick<AlertDialogProps, 'color' | 'confirmButtonLabel'>;

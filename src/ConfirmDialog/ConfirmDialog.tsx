@@ -1,5 +1,5 @@
 import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
-import { ConfirmDialogCommands, ConfirmDialogProps as Props, ConfirmDialogDefaultProps } from './ConfirmDialog.types';
+import { ConfirmDialogCommands, ConfirmDialogProps as Props } from './ConfirmDialog.types';
 import { Dialog, DialogCommands } from '../Dialog';
 import { DialogActionButton } from '../DialogActionButton';
 import { useAutoUpdateState } from '@pdg/react-hook';
@@ -10,10 +10,10 @@ const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
     {
       style: initStyle,
       commandsRef,
-      color,
-      confirmButtonLabel,
+      color = 'primary',
+      confirmButtonLabel = '확인',
       confirmButtonProps,
-      cancelButtonLabel,
+      cancelButtonLabel = '취소',
       cancelButtonProps,
       onShow,
       onClose,
@@ -139,6 +139,5 @@ const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
 );
 
 ConfirmDialog.displayName = 'ConfirmDialog';
-ConfirmDialog.defaultProps = ConfirmDialogDefaultProps;
 
 export default ConfirmDialog;

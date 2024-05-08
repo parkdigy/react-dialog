@@ -1,5 +1,5 @@
 import React, { ErrorInfo, ReactElement } from 'react';
-import { DialogErrorBoundaryProps as Props, DialogErrorBoundaryDefaultProps } from './DialogErrorBoundary.types';
+import { DialogErrorBoundaryProps as Props } from './DialogErrorBoundary.types';
 import { useErrorBoundary, withErrorBoundary } from 'react-use-error-boundary';
 
 const ErrorCatcher = withErrorBoundary(
@@ -17,6 +17,5 @@ const DialogErrorBoundary: React.FC<Props> = ({ onError, children }) => {
 };
 
 DialogErrorBoundary.displayName = 'DialogErrorBoundary';
-DialogErrorBoundary.defaultProps = DialogErrorBoundaryDefaultProps;
 
 export default DialogErrorBoundary;

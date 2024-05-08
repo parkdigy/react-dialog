@@ -15,8 +15,3 @@ export interface AlertDialogProps
   confirmButtonLabel?: ReactNode;
   confirmButtonProps?: Omit<ButtonProps, 'children' | 'onClick'>;
 }
-
-export const AlertDialogDefaultProps: Pick<AlertDialogProps, 'color' | 'confirmButtonLabel'> = {
-  color: 'primary',
-  confirmButtonLabel: '확인',
-};

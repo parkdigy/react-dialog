@@ -1,11 +1,23 @@
 import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
-import { AlertDialogCommands, AlertDialogProps as Props, AlertDialogDefaultProps } from './AlertDialog.types';
+import { AlertDialogCommands, AlertDialogProps as Props } from './AlertDialog.types';
 import { Dialog, DialogCommands } from '../Dialog';
 import { useAutoUpdateState } from '@pdg/react-hook';
 import { DialogActionButton } from '../DialogActionButton';
 
 const AlertDialog = React.forwardRef<AlertDialogCommands, Props>(
-  ({ style: initStyle, commandsRef, confirmButtonLabel, confirmButtonProps, onShow, onClose, ...props }, ref) => {
+  (
+    {
+      color = 'primary',
+      style: initStyle,
+      commandsRef,
+      confirmButtonLabel = '확인',
+      confirmButtonProps,
+      onShow,
+      onClose,
+      ...props
+    },
+    ref
+  ) => {
     // Ref -------------------------------------------------------------------------------------------------------------
 
     const dialogRef = useRef<DialogCommands>(null);
@@ -97,6 +109,7 @@ const AlertDialog = React.forwardRef<AlertDialogCommands, Props>(
     return (
       <Dialog
         ref={dialogRef}
+        color={color}
         autoClose
         escapeClose
         style={style}
@@ -114,6 +127,5 @@ const AlertDialog = React.forwardRef<AlertDialogCommands, Props>(
 );
 
 AlertDialog.displayName = 'AlertDialog';
-AlertDialog.defaultProps = AlertDialogDefaultProps;
 
 export default AlertDialog;

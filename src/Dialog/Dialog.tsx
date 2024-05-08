@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTheme, Icon, Box } from '@mui/material';
-import { DialogProps as Props, DialogDefaultProps, DialogCommands } from './Dialog.types';
+import { DialogProps as Props, DialogCommands } from './Dialog.types';
 import {
   StyledDialog,
   StyledDialogTitle,
@@ -15,7 +15,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
     {
       commandsRef,
       content,
-      color,
+      color = 'primary',
       titleIcon: initTitleIcon,
       title,
       titleProps,
@@ -221,6 +221,5 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
 );
 
 Dialog.displayName = 'Dialog';
-Dialog.defaultProps = DialogDefaultProps;
 
 export default Dialog;

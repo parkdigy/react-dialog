@@ -13,4 +13,3 @@ export interface ConfirmDialogProps extends Omit<DialogProps, 'commandsRef' | 'a
     onConfirm?(commands: ConfirmDialogCommands): void;
     onCancel?(commands: ConfirmDialogCommands): void;
 }
-export declare const ConfirmDialogDefaultProps: Pick<ConfirmDialogProps, 'color' | 'confirmButtonLabel' | 'cancelButtonLabel'>;

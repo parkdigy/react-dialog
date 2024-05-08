@@ -28,7 +28,3 @@ export interface DialogProps
   onRequestClose?(): void;
   onClose?(): void;
 }
-
-export const DialogDefaultProps: Pick<DialogProps, 'color'> = {
-  color: 'primary',
-};

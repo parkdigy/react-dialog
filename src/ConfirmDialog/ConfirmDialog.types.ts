@@ -19,10 +19,3 @@ export interface ConfirmDialogProps
   onConfirm?(commands: ConfirmDialogCommands): void;
   onCancel?(commands: ConfirmDialogCommands): void;
 }
-
-export const ConfirmDialogDefaultProps: Pick<ConfirmDialogProps, 'color' | 'confirmButtonLabel' | 'cancelButtonLabel'> =
-  {
-    color: 'primary',
-    confirmButtonLabel: '확인',
-    cancelButtonLabel: '취소',
-  };
