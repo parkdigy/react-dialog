@@ -2,7 +2,7 @@
   "name": "@pdg/react-dialog",
   "title": "React Dialog",
   "type": "module",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "React Dialog",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -45,6 +45,7 @@
     "@mui/icons-material": "^5.15.17",
     "@mui/material": "^5.15.17",
     "@pdg/react-hook": "^1.0.18",
+    "@pdg/util": "^1.0.22",
     "@types/react": "^17.0.0 || ^18.0.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0"
