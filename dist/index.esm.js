@@ -1,4 +1,4 @@
-import React,{createContext,useId,useRef,useState,useMemo,useEffect,useCallback,useLayoutEffect,useContext,Component}from'react';import {useAutoUpdateState}from'@pdg/react-hook';import {styled,Dialog as Dialog$1,DialogTitle,IconButton,DialogContent,DialogActions,useTheme,Box,Icon,Button,Typography}from'@mui/material';/******************************************************************************
+import React,{createContext,useId,useRef,useState,useEffect,useCallback,useMemo,useLayoutEffect,useContext,Component}from'react';import {styled,Dialog as Dialog$1,DialogTitle,IconButton,DialogContent,DialogActions,useTheme,Box,Icon,Button,Typography}from'@mui/material';import {useForwardRef}from'@pdg/react-hook';/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -61,7 +61,7 @@ var DialogContextDefaultValue = {
     alertDialog: function () { },
     confirmDialog: function () { },
 };
-/* eslint-enable */var DialogContext = createContext(DialogContextDefaultValue);var StyledDialog = styled(Dialog$1)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n"], ["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n"])));
+/* eslint-enable */var DialogContext = createContext(DialogContextDefaultValue);var StyledDialog = styled(Dialog$1)(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n"], ["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n"])));
 var StyledDialogTitle = styled(DialogTitle)(function () { return ({
     position: 'relative',
     paddingRight: 60,
@@ -80,26 +80,39 @@ var StyleDialogTitleCloseButton = styled(IconButton)(function (_a) {
 });
 var StyledDialogContent = styled(DialogContent)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"], ["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"])));
 var StyledDialogActions = styled(DialogActions)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding-left: 20px;\n  padding-right: 15px;\n"], ["\n  padding-left: 20px;\n  padding-right: 15px;\n"])));
-var templateObject_1, templateObject_2, templateObject_3;var Dialog = React.forwardRef(function (_a, ref) {
-    // ID --------------------------------------------------------------------------------------------------------------
-    var commandsRef = _a.commandsRef, content = _a.content, _b = _a.color, color = _b === void 0 ? 'primary' : _b, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, subTitle = _a.subTitle, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, onRequestClose = _a.onRequestClose, onClose = _a.onClose, otherProps = __rest(_a, ["commandsRef", "content", "color", "titleIcon", "title", "titleProps", "subTitle", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose"]);
+var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.forwardRef(function (_a, ref) {
+    /********************************************************************************************************************
+     * ID
+     * ******************************************************************************************************************/
+    var content = _a.content, _b = _a.color, color = _b === void 0 ? 'primary' : _b, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, subTitle = _a.subTitle, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, onRequestClose = _a.onRequestClose, onClose = _a.onClose, onCommands = _a.onCommands, otherProps = __rest(_a, ["content", "color", "titleIcon", "title", "titleProps", "subTitle", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose", "onCommands"]);
     var id = useId();
-    // Theme -----------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Use
+     * ******************************************************************************************************************/
     var theme = useTheme();
-    // Ref -------------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Ref
+     * ******************************************************************************************************************/
     var contentRef = useRef(null);
-    // State -----------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * State
+     * ******************************************************************************************************************/
     var _c = useState(true), open = _c[0], setOpen = _c[1];
-    var titleId = useState("dialog-title-".concat(id))[0];
-    var titleIcon = useAutoUpdateState(useMemo(function () { return initTitleIcon === null || initTitleIcon === void 0 ? void 0 : initTitleIcon.replace(/[A-Z]/g, function (letter, idx) { return "".concat(idx > 0 ? '_' : '').concat(letter.toLowerCase()); }); }, [initTitleIcon]))[0];
-    var textColor = useAutoUpdateState(useMemo(function () { return theme.palette[color || 'primary'].contrastText; }, [theme, color]))[0];
-    // Effect ----------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Memo
+     * ******************************************************************************************************************/
+    var titleIcon = initTitleIcon === null || initTitleIcon === void 0 ? void 0 : initTitleIcon.replace(/[A-Z]/g, function (letter, idx) { return "".concat(idx > 0 ? '_' : '').concat(letter.toLowerCase()); });
+    /********************************************************************************************************************
+     * Effect
+     * ******************************************************************************************************************/
     useEffect(function () {
         if (onShow)
             onShow();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    // Function - close -------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Function
+     * ******************************************************************************************************************/
     var close = useCallback(function () {
         setOpen(false);
         setTimeout(function () {
@@ -107,55 +120,22 @@ var templateObject_1, templateObject_2, templateObject_3;var Dialog = React.forw
                 onClose();
         }, theme.transitions.duration.leavingScreen);
     }, [onClose, theme]);
-    var scrollToTop = useCallback(function () {
-        var _a;
-        (_a = contentRef.current) === null || _a === void 0 ? void 0 : _a.scrollTo({ top: 0 });
-    }, [contentRef]);
-    // State - commands ------------------------------------------------------------------------------------------------
-    var commands = useAutoUpdateState(useMemo(function () { return ({
+    /********************************************************************************************************************
+     * Commands
+     * ******************************************************************************************************************/
+    var commands = useMemo(function () { return ({
         getId: function () { return id; },
         close: close,
-        scrollToTop: scrollToTop,
-    }); }, [id, close, scrollToTop]))[0];
-    // Effect - Commands -----------------------------------------------------------------------------------------------
+        scrollToTop: function () { var _a; return (_a = contentRef.current) === null || _a === void 0 ? void 0 : _a.scrollTo({ top: 0 }); },
+    }); }, [id, close]);
+    useForwardRef(ref, commands);
     useLayoutEffect(function () {
-        if (ref) {
-            if (typeof ref === 'function') {
-                ref(commands);
-            }
-            else {
-                ref.current = commands;
-            }
-        }
-        if (commandsRef) {
-            if (typeof commandsRef === 'function') {
-                commandsRef(commands);
-            }
-            else {
-                commandsRef.current = commands;
-            }
-        }
-        return function () {
-            if (ref) {
-                if (typeof ref === 'function') {
-                    ref(null);
-                }
-                else {
-                    ref.current = null;
-                }
-            }
-            if (commandsRef) {
-                if (typeof commandsRef === 'function') {
-                    commandsRef(undefined);
-                }
-                else {
-                    commandsRef.current = undefined;
-                }
-            }
-        };
-    }, [ref, commandsRef, commands]);
-    // Event Handler ---------------------------------------------------------------------------------------------------
-    var handleClose = useCallback(function (e, reason) {
+        onCommands && onCommands(commands);
+    }, [commands, onCommands]);
+    /********************************************************************************************************************
+     * Event Handler
+     * ******************************************************************************************************************/
+    var handleClose = useCallback(function (_, reason) {
         switch (reason) {
             case 'backdropClick':
                 if (backdropClose) {
@@ -186,12 +166,13 @@ var templateObject_1, templateObject_2, templateObject_3;var Dialog = React.forw
             close();
         }
         else {
-            if (onRequestClose)
-                onRequestClose();
+            onRequestClose && onRequestClose();
         }
     }, [autoClose, onRequestClose, close]);
-    // Render ----------------------------------------------------------------------------------------------------------
-    return (React.createElement(StyledDialog, __assign({ className: "color-".concat(color, " ").concat(fullHeight ? 'Dialog-full-height' : ''), open: open, "aria-labelledby": titleId, onClose: handleClose }, otherProps),
+    /********************************************************************************************************************
+     * Render
+     * ******************************************************************************************************************/
+    return (React.createElement(StyledDialog, __assign({ className: "color-".concat(color, " ").concat(fullHeight ? 'Dialog-full-height' : ''), open: open, "aria-labelledby": "dialog-title-".concat(id), onClose: handleClose }, otherProps),
         title && (React.createElement(StyledDialogTitle, __assign({}, titleProps),
             (titleIcon || title) && (React.createElement(Box, { style: { display: 'flex', fontSize: '17px' } },
                 titleIcon && (React.createElement(Box, { style: { display: 'flex', alignItems: 'center', marginRight: 7 } },
@@ -201,175 +182,70 @@ var templateObject_1, templateObject_2, templateObject_3;var Dialog = React.forw
                     subTitle && React.createElement("div", { className: 'Dialog-SubTitle' },
                         "\u00A0-\u00A0",
                         subTitle))))),
-            !hideClose && (React.createElement(StyleDialogTitleCloseButton, { className: 'dialog-close-btn', "aria-label": 'close', style: { color: textColor }, onClick: handleCloseClick },
+            !hideClose && (React.createElement(StyleDialogTitleCloseButton, { className: 'dialog-close-btn', "aria-label": 'close', style: { color: theme.palette[color || 'primary'].contrastText }, onClick: handleCloseClick },
                 React.createElement(Icon, null, "close"))))),
         React.createElement(StyledDialogContent, { ref: contentRef, style: {
                 paddingBottom: actions ? 15 : undefined,
             } }, content),
         actions && React.createElement(StyledDialogActions, null, actions)));
 });
-Dialog.displayName = 'Dialog';var DEFAULT_STYLE = {
-    paddingLeft: 15,
-    paddingRight: 15,
-    minWidth: 0,
+Dialog.displayName = 'Dialog';var DialogActionButton = function (_a) {
+    var variant = _a.variant, otherProps = __rest(_a, ["variant"]);
+    return React.createElement(StyledButton, __assign({ variant: variant || 'text' }, otherProps));
 };
-var DialogActionButton = function (_a) {
-    // State -----------------------------------------------------------------------------------------------------------
-    var variant = _a.variant, initStyle = _a.style, otherProps = __rest(_a, ["variant", "style"]);
-    var style = useAutoUpdateState(useMemo(function () { return (__assign(__assign({}, DEFAULT_STYLE), initStyle)); }, [initStyle]))[0];
-    // Render ----------------------------------------------------------------------------------------------------------
-    return React.createElement(Button, __assign({ variant: variant || 'text', style: style }, otherProps));
-};var AlertDialog = React.forwardRef(function (_a, ref) {
-    // Ref -------------------------------------------------------------------------------------------------------------
-    var _b = _a.color, color = _b === void 0 ? 'primary' : _b, initStyle = _a.style, commandsRef = _a.commandsRef, _c = _a.confirmButtonLabel, confirmButtonLabel = _c === void 0 ? '확인' : _c, confirmButtonProps = _a.confirmButtonProps, onShow = _a.onShow, onClose = _a.onClose, props = __rest(_a, ["color", "style", "commandsRef", "confirmButtonLabel", "confirmButtonProps", "onShow", "onClose"]);
+var DialogActionButton$1 = React.memo(DialogActionButton);
+/********************************************************************************************************************
+ * Styled Components
+ * ******************************************************************************************************************/
+var StyledButton = styled(Button)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  padding-left: 15px;\n  padding-right: 15px;\n  min-width: 0;\n"], ["\n  padding-left: 15px;\n  padding-right: 15px;\n  min-width: 0;\n"])));
+var templateObject_1;var AlertDialog = React.forwardRef(function (_a, ref) {
+    /********************************************************************************************************************
+     * Ref
+     * ******************************************************************************************************************/
+    var _b = _a.color, color = _b === void 0 ? 'primary' : _b, style = _a.style, _c = _a.confirmButtonLabel, confirmButtonLabel = _c === void 0 ? '확인' : _c, confirmButtonProps = _a.confirmButtonProps, onCommands = _a.onCommands, props = __rest(_a, ["color", "style", "confirmButtonLabel", "confirmButtonProps", "onCommands"]);
     var dialogRef = useRef(null);
-    // State -----------------------------------------------------------------------------------------------------------
-    var style = useAutoUpdateState(useMemo(function () { return ({
-        zIndex: 1399,
-        initStyle: initStyle,
-    }); }, [initStyle]))[0];
-    // Function - close --------------------------------------------------------------------------------------------------
-    var getId = useCallback(function () {
-        var _a;
-        return ((_a = dialogRef.current) === null || _a === void 0 ? void 0 : _a.getId()) || '';
-    }, [dialogRef]);
-    var close = useCallback(function () {
-        var _a;
-        (_a = dialogRef.current) === null || _a === void 0 ? void 0 : _a.close();
-    }, [dialogRef]);
-    // State - commands --------------------------------------------------------------------------------------------------
-    var commands = useAutoUpdateState(useMemo(function () { return ({
-        getId: getId,
-        close: close,
-    }); }, [getId, close]))[0];
-    // Commands ----------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Commands
+     * ******************************************************************************************************************/
+    var commands = useMemo(function () { return ({
+        getId: function () { var _a; return ((_a = dialogRef.current) === null || _a === void 0 ? void 0 : _a.getId()) || ''; },
+        close: function () { var _a; return (_a = dialogRef.current) === null || _a === void 0 ? void 0 : _a.close(); },
+    }); }, []);
+    useForwardRef(ref, commands);
     useLayoutEffect(function () {
-        if (ref) {
-            if (typeof ref === 'function') {
-                ref(commands || null);
-            }
-            else {
-                ref.current = commands || null;
-            }
-        }
-        if (commandsRef) {
-            if (typeof commandsRef === 'function') {
-                commandsRef(commands);
-            }
-            else {
-                commandsRef.current = commands;
-            }
-        }
-        return function () {
-            if (ref) {
-                if (typeof ref === 'function') {
-                    ref(null);
-                }
-                else {
-                    ref.current = null;
-                }
-            }
-            if (commandsRef) {
-                if (typeof commandsRef === 'function') {
-                    commandsRef(undefined);
-                }
-                else {
-                    commandsRef.current = undefined;
-                }
-            }
-        };
-    }, [ref, commandsRef, commands]);
-    // Event Handler ---------------------------------------------------------------------------------------------------
-    var handleShow = useCallback(function () {
-        if (onShow)
-            onShow();
-    }, [onShow]);
-    var handleClose = useCallback(function () {
-        if (onClose)
-            onClose();
-    }, [onClose]);
-    // Render ----------------------------------------------------------------------------------------------------------
-    return (React.createElement(Dialog, __assign({ ref: dialogRef, color: color, autoClose: true, escapeClose: true, style: style, onShow: handleShow, onClose: handleClose }, props, { actions: React.createElement(DialogActionButton, __assign({ variant: 'text' }, confirmButtonProps, { onClick: close }), confirmButtonLabel) })));
+        onCommands && onCommands(commands);
+    }, [commands, onCommands]);
+    /********************************************************************************************************************
+     * Render
+     * ******************************************************************************************************************/
+    return (React.createElement(Dialog, __assign({ ref: dialogRef, color: color, autoClose: true, escapeClose: true, style: __assign({ zIndex: 1399 }, style) }, props, { actions: React.createElement(DialogActionButton$1, __assign({ variant: 'text' }, confirmButtonProps, { onClick: function () { var _a; return (_a = dialogRef.current) === null || _a === void 0 ? void 0 : _a.close(); } }), confirmButtonLabel) })));
 });
 AlertDialog.displayName = 'AlertDialog';var ConfirmDialog = React.forwardRef(function (_a, ref) {
-    // Ref -------------------------------------------------------------------------------------------------------------
-    var initStyle = _a.style, commandsRef = _a.commandsRef, _b = _a.color, color = _b === void 0 ? 'primary' : _b, _c = _a.confirmButtonLabel, confirmButtonLabel = _c === void 0 ? '확인' : _c, confirmButtonProps = _a.confirmButtonProps, _d = _a.cancelButtonLabel, cancelButtonLabel = _d === void 0 ? '취소' : _d, cancelButtonProps = _a.cancelButtonProps, onShow = _a.onShow, onClose = _a.onClose, onConfirm = _a.onConfirm, onCancel = _a.onCancel, props = __rest(_a, ["style", "commandsRef", "color", "confirmButtonLabel", "confirmButtonProps", "cancelButtonLabel", "cancelButtonProps", "onShow", "onClose", "onConfirm", "onCancel"]);
+    /********************************************************************************************************************
+     * Ref
+     * ******************************************************************************************************************/
+    var initStyle = _a.style, _b = _a.color, color = _b === void 0 ? 'primary' : _b, _c = _a.confirmButtonLabel, confirmButtonLabel = _c === void 0 ? '확인' : _c, confirmButtonProps = _a.confirmButtonProps, _d = _a.cancelButtonLabel, cancelButtonLabel = _d === void 0 ? '취소' : _d, cancelButtonProps = _a.cancelButtonProps, onShow = _a.onShow, onClose = _a.onClose, onConfirm = _a.onConfirm, onCancel = _a.onCancel, onCommands = _a.onCommands, props = __rest(_a, ["style", "color", "confirmButtonLabel", "confirmButtonProps", "cancelButtonLabel", "cancelButtonProps", "onShow", "onClose", "onConfirm", "onCancel", "onCommands"]);
     var dialogRef = useRef(null);
-    // State -----------------------------------------------------------------------------------------------------------
-    var style = useAutoUpdateState(useMemo(function () { return ({ zIndex: 1399, initStyle: initStyle }); }, [initStyle]))[0];
-    // Function - close --------------------------------------------------------------------------------------------------
-    var getId = useCallback(function () {
-        var _a;
-        return ((_a = dialogRef.current) === null || _a === void 0 ? void 0 : _a.getId()) || '';
-    }, [dialogRef]);
-    var close = useCallback(function () {
-        var _a;
-        (_a = dialogRef.current) === null || _a === void 0 ? void 0 : _a.close();
-    }, [dialogRef]);
-    // State - commands --------------------------------------------------------------------------------------------------
-    var commands = useAutoUpdateState(useMemo(function () { return ({
-        getId: getId,
-        close: close,
-    }); }, [getId, close]))[0];
-    // Commands ----------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Commands
+     * ******************************************************************************************************************/
+    var commands = useMemo(function () {
+        return ({
+            getId: function () { var _a; return ((_a = dialogRef.current) === null || _a === void 0 ? void 0 : _a.getId()) || ''; },
+            close: function () { var _a; return (_a = dialogRef.current) === null || _a === void 0 ? void 0 : _a.close(); },
+        });
+    }, []);
+    useForwardRef(ref, commands);
     useLayoutEffect(function () {
-        if (ref) {
-            if (typeof ref === 'function') {
-                ref(commands || null);
-            }
-            else {
-                ref.current = commands || null;
-            }
-        }
-        if (commandsRef) {
-            if (typeof commandsRef === 'function') {
-                commandsRef(commands);
-            }
-            else {
-                commandsRef.current = commands;
-            }
-        }
-        return function () {
-            if (ref) {
-                if (typeof ref === 'function') {
-                    ref(null);
-                }
-                else {
-                    ref.current = null;
-                }
-            }
-            if (commandsRef) {
-                if (typeof commandsRef === 'function') {
-                    commandsRef(undefined);
-                }
-                else {
-                    commandsRef.current = undefined;
-                }
-            }
-        };
-    }, [ref, commandsRef, commands]);
-    // Event Handler ---------------------------------------------------------------------------------------------------
-    var handleShow = useCallback(function () {
-        if (onShow)
-            onShow();
-    }, [onShow]);
-    var handleClose = useCallback(function () {
-        if (onClose)
-            onClose();
-    }, [onClose]);
-    var handleCancelClick = useCallback(function () {
-        if (onCancel)
-            onCancel(commands);
-    }, [commands, onCancel]);
-    var handleConfirmClick = useCallback(function () {
-        if (onConfirm)
-            onConfirm(commands);
-    }, [onConfirm, commands]);
-    // Render ----------------------------------------------------------------------------------------------------------
-    return (React.createElement(Dialog, __assign({ ref: dialogRef, color: color, escapeClose: true, style: style, onShow: handleShow, onClose: handleClose, onRequestClose: handleCancelClick }, props, { actions: React.createElement(React.Fragment, null,
-            React.createElement(DialogActionButton, __assign({ variant: 'text' }, cancelButtonProps, { onClick: handleCancelClick }),
+        onCommands && onCommands(commands);
+    }, [commands, onCommands]);
+    /********************************************************************************************************************
+     * Render
+     * ******************************************************************************************************************/
+    return (React.createElement(Dialog, __assign({ ref: dialogRef, color: color, escapeClose: true, style: __assign({ zIndex: 1399 }, initStyle), onShow: function () { return onShow && onShow(); }, onClose: function () { return onClose && onClose(); }, onRequestClose: function () { return onCancel && onCancel(commands); } }, props, { actions: React.createElement(React.Fragment, null,
+            React.createElement(DialogActionButton$1, __assign({ variant: 'text' }, cancelButtonProps, { onClick: function () { return onCancel && onCancel(commands); } }),
                 React.createElement(Typography, { fontSize: 'inherit', style: { color: '#6f6f6f' } }, cancelButtonLabel)),
-            React.createElement(DialogActionButton, __assign({ variant: 'text', color: color }, confirmButtonProps, { onClick: handleConfirmClick }), confirmButtonLabel)) })));
+            React.createElement(DialogActionButton$1, __assign({ variant: 'text', color: color }, confirmButtonProps, { onClick: function () { return onConfirm && onConfirm(commands); } }), confirmButtonLabel)) })));
 });
 ConfirmDialog.displayName = 'ConfirmDialog';class ErrorBoundary extends Component {
     displayName = "ReactUseErrorBoundary";
@@ -429,20 +305,26 @@ var DialogErrorBoundary = function (_a) {
     return React.createElement(ErrorCatcher, { onError: onError }, children);
 };
 DialogErrorBoundary.displayName = 'DialogErrorBoundary';var DialogContextProvider = function (_a) {
-    // Ref -------------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Ref
+     * ******************************************************************************************************************/
     var children = _a.children;
     var dialogKeyRef = useRef(0);
-    // State -------------------------------------------------------------------------------------------------------------
+    var dialogIdsRef = useRef({});
+    /********************************************************************************************************************
+     * State
+     * ******************************************************************************************************************/
     var _b = useState([]), dialogs = _b[0], setDialogs = _b[1];
-    var dialogIds = useState({})[0];
-    // Event Handler ---------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Event Handler
+     * ******************************************************************************************************************/
     var handleShow = useCallback(function (dialog, id, onShow) {
-        dialogIds[id] = dialog;
+        dialogIdsRef.current[id] = dialog;
         if (onShow)
             onShow(id);
-    }, [dialogIds]);
+    }, []);
     var handleClose = useCallback(function (id, onClose) {
-        var dialog = dialogIds[id];
+        var dialog = dialogIdsRef.current[id];
         if (dialog) {
             setDialogs(function (dialogs) {
                 var idx = dialogs.indexOf(dialog);
@@ -455,12 +337,14 @@ DialogErrorBoundary.displayName = 'DialogErrorBoundary';var DialogContextProvide
                     return dialogs;
                 }
             });
-            delete dialogIds[id];
+            delete dialogIdsRef.current[id];
         }
         if (onClose)
             onClose(id);
-    }, [dialogIds]);
-    // Function - alertDialog --------------------------------------------------------------------------------------------
+    }, []);
+    /********************************************************************************************************************
+     * Function
+     * ******************************************************************************************************************/
     var alertDialog = useCallback(function (props) {
         dialogKeyRef.current += 1;
         var onShow = props.onShow, onClose = props.onClose, otherProps = __rest(props, ["onShow", "onClose"]);
@@ -478,7 +362,6 @@ DialogErrorBoundary.displayName = 'DialogErrorBoundary';var DialogContextProvide
             return __spreadArray(__spreadArray([], dialogs, true), [dialog], false);
         });
     }, [handleClose, handleShow]);
-    // Function - confirmDialog ------------------------------------------------------------------------------------------
     var confirmDialog = useCallback(function (props) {
         dialogKeyRef.current += 1;
         var onShow = props.onShow, onClose = props.onClose, otherProps = __rest(props, ["onShow", "onClose"]);
@@ -492,7 +375,6 @@ DialogErrorBoundary.displayName = 'DialogErrorBoundary';var DialogContextProvide
             return __spreadArray(__spreadArray([], dialogs, true), [dialog], false);
         });
     }, [handleClose, handleShow]);
-    // Function - pushDialog ---------------------------------------------------------------------------------------------
     var pushDialog = useCallback(function (dialogComponent, props, onErrorBoundary) {
         dialogKeyRef.current += 1;
         var dialogId = "dig_".concat(dialogKeyRef.current);
@@ -505,12 +387,10 @@ DialogErrorBoundary.displayName = 'DialogErrorBoundary';var DialogContextProvide
             return __spreadArray(__spreadArray([], dialogs, true), [dialog], false);
         });
     }, [handleClose, handleShow]);
-    // State - value -----------------------------------------------------------------------------------------------------
-    var value = useAutoUpdateState(DialogContextDefaultValue, useCallback(function () {
-        return { pushDialog: pushDialog, alertDialog: alertDialog, confirmDialog: confirmDialog };
-    }, [alertDialog, confirmDialog, pushDialog]))[0];
-    // Render ----------------------------------------------------------------------------------------------------------
-    return (React.createElement(DialogContext.Provider, { value: value },
+    /********************************************************************************************************************
+     * Render
+     * ******************************************************************************************************************/
+    return (React.createElement(DialogContext.Provider, { value: { pushDialog: pushDialog, alertDialog: alertDialog, confirmDialog: confirmDialog } },
         children,
         dialogs));
 };var _default = {};
@@ -540,4 +420,4 @@ function getDialogDefault() {
         throw new Error('useConfirmDialog should be used within DialogContext.Provider');
     }
     return value.confirmDialog;
-}export{Dialog,DialogActionButton,DialogContextProvider,getDialogDefault,setDialogDefault,useAlertDialog,useConfirmDialog,useDialog};
+}export{Dialog,DialogActionButton$1 as DialogActionButton,DialogContextProvider,getDialogDefault,setDialogDefault,useAlertDialog,useConfirmDialog,useDialog};

@@ -1,7 +1,7 @@
 declare global {
   type PartialPick<T, K extends keyof T> = Partial<Pick<T, K>>;
   type PartialOmit<T, K extends keyof T> = Partial<Omit<T, K>>;
-  //--------------------------------------------------------------------------------------------------------------------
+
   function ll(message?: any, ...optionalParams: any[]): void;
   function empty(v: any): boolean;
   function notEmpty(v: any): boolean;

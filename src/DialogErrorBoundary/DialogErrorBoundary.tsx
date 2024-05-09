@@ -12,7 +12,7 @@ const ErrorCatcher = withErrorBoundary(
   }
 );
 
-const DialogErrorBoundary: React.FC<Props> = ({ onError, children }) => {
+const DialogErrorBoundary = ({ onError, children }: Props) => {
   return <ErrorCatcher onError={onError}>{children}</ErrorCatcher>;
 };
 

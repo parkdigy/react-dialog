@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { DialogCommands, DialogProps } from '../Dialog';
 import { ButtonProps } from '@mui/material';
 
@@ -11,11 +11,11 @@ export interface ConfirmDialogProps
     DialogProps,
     'commandsRef' | 'actions' | 'autoClose' | 'backdropClose' | 'escapeClose' | 'onRequestClose'
   > {
-  commandsRef?: React.MutableRefObject<ConfirmDialogCommands | undefined> | ConfirmDialogCommandsRefFunction;
   confirmButtonLabel?: ReactNode;
   confirmButtonProps?: Omit<ButtonProps, 'children' | 'onClick'>;
   cancelButtonLabel?: ReactNode;
   cancelButtonProps?: Omit<ButtonProps, 'children' | 'onClick'>;
   onConfirm?(commands: ConfirmDialogCommands): void;
   onCancel?(commands: ConfirmDialogCommands): void;
+  onCommands?(commands: ConfirmDialogCommands): void;
 }

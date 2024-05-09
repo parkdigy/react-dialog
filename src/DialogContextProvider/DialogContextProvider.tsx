@@ -1,60 +1,55 @@
 import React, { ReactNode, useCallback, useRef, useState } from 'react';
 import { DialogContextProviderProps as Props } from './DialogContextProvider.types';
-import {
-  DialogContext,
-  DialogContextDefaultValue,
-  DialogContextValue,
-  DialogRequireProps,
-  PushDialog,
-} from '../DialogContext';
-import { useAutoUpdateState } from '@pdg/react-hook';
+import { DialogContext, DialogRequireProps, PushDialog } from '../DialogContext';
 import { AlertDialog, AlertDialogCommands, AlertDialogProps } from '../AlertDialog';
 import { ConfirmDialog, ConfirmDialogCommands, ConfirmDialogProps } from '../ConfirmDialog';
 import DialogErrorBoundary from '../DialogErrorBoundary';
 
-const DialogContextProvider: React.FC<Props> = ({ children }) => {
-  // Ref -------------------------------------------------------------------------------------------------------------
+const DialogContextProvider = ({ children }: Props) => {
+  /********************************************************************************************************************
+   * Ref
+   * ******************************************************************************************************************/
 
   const dialogKeyRef = useRef(0);
+  const dialogIdsRef = useRef<Record<string, any>>({});
 
-  // State -------------------------------------------------------------------------------------------------------------
+  /********************************************************************************************************************
+   * State
+   * ******************************************************************************************************************/
 
   const [dialogs, setDialogs] = useState<ReactNode[]>([]);
-  const [dialogIds] = useState<{ [key: string]: any }>({});
 
-  // Event Handler ---------------------------------------------------------------------------------------------------
+  /********************************************************************************************************************
+   * Event Handler
+   * ******************************************************************************************************************/
 
-  const handleShow = useCallback(
-    (dialog: JSX.Element, id: string, onShow?: (id: string) => void) => {
-      dialogIds[id] = dialog;
-      if (onShow) onShow(id);
-    },
-    [dialogIds]
-  );
+  const handleShow = useCallback((dialog: React.JSX.Element, id: string, onShow?: (id: string) => void) => {
+    dialogIdsRef.current[id] = dialog;
+    if (onShow) onShow(id);
+  }, []);
 
-  const handleClose = useCallback(
-    (id: string, onClose?: (id: string) => void) => {
-      const dialog = dialogIds[id];
-      if (dialog) {
-        setDialogs((dialogs) => {
-          const idx = dialogs.indexOf(dialog);
-          if (idx > -1) {
-            const newDialogs = [...dialogs];
-            newDialogs.splice(idx, 1);
-            return newDialogs;
-          } else {
-            return dialogs;
-          }
-        });
+  const handleClose = useCallback((id: string, onClose?: (id: string) => void) => {
+    const dialog = dialogIdsRef.current[id];
+    if (dialog) {
+      setDialogs((dialogs) => {
+        const idx = dialogs.indexOf(dialog);
+        if (idx > -1) {
+          const newDialogs = [...dialogs];
+          newDialogs.splice(idx, 1);
+          return newDialogs;
+        } else {
+          return dialogs;
+        }
+      });
 
-        delete dialogIds[id];
-      }
-      if (onClose) onClose(id);
-    },
-    [dialogIds]
-  );
+      delete dialogIdsRef.current[id];
+    }
+    if (onClose) onClose(id);
+  }, []);
 
-  // Function - alertDialog --------------------------------------------------------------------------------------------
+  /********************************************************************************************************************
+   * Function
+   * ******************************************************************************************************************/
 
   const alertDialog = useCallback(
     (props: AlertDialogProps) => {
@@ -89,8 +84,6 @@ const DialogContextProvider: React.FC<Props> = ({ children }) => {
     [handleClose, handleShow]
   );
 
-  // Function - confirmDialog ------------------------------------------------------------------------------------------
-
   const confirmDialog = useCallback(
     (props: ConfirmDialogProps) => {
       dialogKeyRef.current += 1;
@@ -120,8 +113,6 @@ const DialogContextProvider: React.FC<Props> = ({ children }) => {
     [handleClose, handleShow]
   );
 
-  // Function - pushDialog ---------------------------------------------------------------------------------------------
-
   const pushDialog = useCallback<PushDialog>(
     (dialogComponent, props?, onErrorBoundary?) => {
       dialogKeyRef.current += 1;
@@ -147,19 +138,12 @@ const DialogContextProvider: React.FC<Props> = ({ children }) => {
     [handleClose, handleShow]
   );
 
-  // State - value -----------------------------------------------------------------------------------------------------
-
-  const [value] = useAutoUpdateState<DialogContextValue>(
-    DialogContextDefaultValue,
-    useCallback((): DialogContextValue => {
-      return { pushDialog, alertDialog, confirmDialog };
-    }, [alertDialog, confirmDialog, pushDialog])
-  );
-
-  // Render ----------------------------------------------------------------------------------------------------------
+  /********************************************************************************************************************
+   * Render
+   * ******************************************************************************************************************/
 
   return (
-    <DialogContext.Provider value={value}>
+    <DialogContext.Provider value={{ pushDialog, alertDialog, confirmDialog }}>
       {children}
       {dialogs}
     </DialogContext.Provider>

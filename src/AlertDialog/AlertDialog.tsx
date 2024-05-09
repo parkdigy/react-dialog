@@ -1,110 +1,38 @@
-import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import React, { useLayoutEffect, useMemo, useRef } from 'react';
 import { AlertDialogCommands, AlertDialogProps as Props } from './AlertDialog.types';
 import { Dialog, DialogCommands } from '../Dialog';
-import { useAutoUpdateState } from '@pdg/react-hook';
 import { DialogActionButton } from '../DialogActionButton';
+import { useForwardRef } from '@pdg/react-hook';
 
 const AlertDialog = React.forwardRef<AlertDialogCommands, Props>(
-  (
-    {
-      color = 'primary',
-      style: initStyle,
-      commandsRef,
-      confirmButtonLabel = '확인',
-      confirmButtonProps,
-      onShow,
-      onClose,
-      ...props
-    },
-    ref
-  ) => {
-    // Ref -------------------------------------------------------------------------------------------------------------
+  ({ color = 'primary', style, confirmButtonLabel = '확인', confirmButtonProps, onCommands, ...props }, ref) => {
+    /********************************************************************************************************************
+     * Ref
+     * ******************************************************************************************************************/
 
     const dialogRef = useRef<DialogCommands>(null);
 
-    // State -----------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Commands
+     * ******************************************************************************************************************/
 
-    const [style] = useAutoUpdateState<Props['style']>(
-      useMemo(
-        () => ({
-          zIndex: 1399,
-          initStyle,
-        }),
-        [initStyle]
-      )
+    const commands: AlertDialogCommands = useMemo(
+      () => ({
+        getId: () => dialogRef.current?.getId() || '',
+        close: () => dialogRef.current?.close(),
+      }),
+      []
     );
 
-    // Function - close --------------------------------------------------------------------------------------------------
-
-    const getId = useCallback((): string => {
-      return dialogRef.current?.getId() || '';
-    }, [dialogRef]);
-
-    const close = useCallback(() => {
-      dialogRef.current?.close();
-    }, [dialogRef]);
-
-    // State - commands --------------------------------------------------------------------------------------------------
-
-    const [commands] = useAutoUpdateState<AlertDialogCommands>(
-      useMemo(
-        () => ({
-          getId,
-          close,
-        }),
-        [getId, close]
-      )
-    );
-
-    // Commands ----------------------------------------------------------------------------------------------------------
+    useForwardRef(ref, commands);
 
     useLayoutEffect(() => {
-      if (ref) {
-        if (typeof ref === 'function') {
-          ref(commands || null);
-        } else {
-          ref.current = commands || null;
-        }
-      }
+      onCommands && onCommands(commands);
+    }, [commands, onCommands]);
 
-      if (commandsRef) {
-        if (typeof commandsRef === 'function') {
-          commandsRef(commands);
-        } else {
-          commandsRef.current = commands;
-        }
-      }
-
-      return () => {
-        if (ref) {
-          if (typeof ref === 'function') {
-            ref(null);
-          } else {
-            ref.current = null;
-          }
-        }
-
-        if (commandsRef) {
-          if (typeof commandsRef === 'function') {
-            commandsRef(undefined);
-          } else {
-            commandsRef.current = undefined;
-          }
-        }
-      };
-    }, [ref, commandsRef, commands]);
-
-    // Event Handler ---------------------------------------------------------------------------------------------------
-
-    const handleShow = useCallback(() => {
-      if (onShow) onShow();
-    }, [onShow]);
-
-    const handleClose = useCallback(() => {
-      if (onClose) onClose();
-    }, [onClose]);
-
-    // Render ----------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Render
+     * ******************************************************************************************************************/
 
     return (
       <Dialog
@@ -112,12 +40,13 @@ const AlertDialog = React.forwardRef<AlertDialogCommands, Props>(
         color={color}
         autoClose
         escapeClose
-        style={style}
-        onShow={handleShow}
-        onClose={handleClose}
+        style={{
+          zIndex: 1399,
+          ...style,
+        }}
         {...props}
         actions={
-          <DialogActionButton variant='text' {...confirmButtonProps} onClick={close}>
+          <DialogActionButton variant='text' {...confirmButtonProps} onClick={() => dialogRef.current?.close()}>
             {confirmButtonLabel}
           </DialogActionButton>
         }

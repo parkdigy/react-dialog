@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { DialogProps as _DialogProps, DialogTitleProps } from '@mui/material';
 
 export interface DialogCommands {
@@ -7,11 +7,8 @@ export interface DialogCommands {
   scrollToTop(): void;
 }
 
-export type DialogCommandsRefFunction = (commands: DialogCommands | undefined) => void;
-
 export interface DialogProps
   extends Omit<_DialogProps, 'ref' | 'open' | 'title' | 'aria-labelledby' | 'content' | 'onClose'> {
-  commandsRef?: React.MutableRefObject<DialogCommands | undefined> | DialogCommandsRefFunction;
   content: ReactNode;
   color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
   titleIcon?: string;
@@ -27,4 +24,5 @@ export interface DialogProps
   onShow?(): void;
   onRequestClose?(): void;
   onClose?(): void;
+  onCommands?(commands: DialogCommands): void;
 }

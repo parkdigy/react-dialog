@@ -8,12 +8,11 @@ import {
   StyleDialogTitleCloseButton,
   StyledDialogActions,
 } from './Dialog.styles';
-import { useAutoUpdateState } from '@pdg/react-hook';
+import { useForwardRef } from '@pdg/react-hook';
 
 const Dialog = React.forwardRef<DialogCommands, Props>(
   (
     {
-      commandsRef,
       content,
       color = 'primary',
       titleIcon: initTitleIcon,
@@ -29,45 +28,53 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
       onShow,
       onRequestClose,
       onClose,
+      onCommands,
       ...otherProps
     },
     ref
   ) => {
-    // ID --------------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * ID
+     * ******************************************************************************************************************/
 
     const id = useId();
 
-    // Theme -----------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Use
+     * ******************************************************************************************************************/
 
     const theme = useTheme();
 
-    // Ref -------------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Ref
+     * ******************************************************************************************************************/
 
     const contentRef = useRef<HTMLDivElement>(null);
 
-    // State -----------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * State
+     * ******************************************************************************************************************/
 
     const [open, setOpen] = useState(true);
-    const [titleId] = useState(`dialog-title-${id}`);
-    const [titleIcon] = useAutoUpdateState<string | undefined>(
-      useMemo(
-        () => initTitleIcon?.replace(/[A-Z]/g, (letter, idx) => `${idx > 0 ? '_' : ''}${letter.toLowerCase()}`),
-        [initTitleIcon]
-      )
-    );
 
-    const [textColor] = useAutoUpdateState<string>(
-      useMemo(() => theme.palette[color || 'primary'].contrastText, [theme, color])
-    );
+    /********************************************************************************************************************
+     * Memo
+     * ******************************************************************************************************************/
 
-    // Effect ----------------------------------------------------------------------------------------------------------
+    const titleIcon = initTitleIcon?.replace(/[A-Z]/g, (letter, idx) => `${idx > 0 ? '_' : ''}${letter.toLowerCase()}`);
+
+    /********************************************************************************************************************
+     * Effect
+     * ******************************************************************************************************************/
 
     useEffect(() => {
       if (onShow) onShow();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Function - close -------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Function
+     * ******************************************************************************************************************/
 
     const close = useCallback(() => {
       setOpen(false);
@@ -76,65 +83,31 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
       }, theme.transitions.duration.leavingScreen);
     }, [onClose, theme]);
 
-    const scrollToTop = useCallback(() => {
-      contentRef.current?.scrollTo({ top: 0 });
-    }, [contentRef]);
+    /********************************************************************************************************************
+     * Commands
+     * ******************************************************************************************************************/
 
-    // State - commands ------------------------------------------------------------------------------------------------
-
-    const [commands] = useAutoUpdateState<DialogCommands>(
-      useMemo(
-        () => ({
-          getId: () => id,
-          close,
-          scrollToTop,
-        }),
-        [id, close, scrollToTop]
-      )
+    const commands = useMemo(
+      () => ({
+        getId: () => id,
+        close,
+        scrollToTop: () => contentRef.current?.scrollTo({ top: 0 }),
+      }),
+      [id, close]
     );
 
-    // Effect - Commands -----------------------------------------------------------------------------------------------
+    useForwardRef(ref, commands);
 
     useLayoutEffect(() => {
-      if (ref) {
-        if (typeof ref === 'function') {
-          ref(commands);
-        } else {
-          ref.current = commands;
-        }
-      }
+      onCommands && onCommands(commands);
+    }, [commands, onCommands]);
 
-      if (commandsRef) {
-        if (typeof commandsRef === 'function') {
-          commandsRef(commands);
-        } else {
-          commandsRef.current = commands;
-        }
-      }
-
-      return () => {
-        if (ref) {
-          if (typeof ref === 'function') {
-            ref(null);
-          } else {
-            ref.current = null;
-          }
-        }
-
-        if (commandsRef) {
-          if (typeof commandsRef === 'function') {
-            commandsRef(undefined);
-          } else {
-            commandsRef.current = undefined;
-          }
-        }
-      };
-    }, [ref, commandsRef, commands]);
-
-    // Event Handler ---------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Event Handler
+     * ******************************************************************************************************************/
 
     const handleClose = useCallback(
-      (e: object, reason: string) => {
+      (_: object, reason: string) => {
         switch (reason) {
           case 'backdropClick':
             if (backdropClose) {
@@ -163,17 +136,19 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
       if (autoClose) {
         close();
       } else {
-        if (onRequestClose) onRequestClose();
+        onRequestClose && onRequestClose();
       }
     }, [autoClose, onRequestClose, close]);
 
-    // Render ----------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * Render
+     * ******************************************************************************************************************/
 
     return (
       <StyledDialog
         className={`color-${color} ${fullHeight ? 'Dialog-full-height' : ''}`}
         open={open}
-        aria-labelledby={titleId}
+        aria-labelledby={`dialog-title-${id}`}
         onClose={handleClose}
         {...otherProps}
       >
@@ -198,7 +173,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
               <StyleDialogTitleCloseButton
                 className='dialog-close-btn'
                 aria-label='close'
-                style={{ color: textColor }}
+                style={{ color: theme.palette[color || 'primary'].contrastText }}
                 onClick={handleCloseClick}
               >
                 <Icon>close</Icon>

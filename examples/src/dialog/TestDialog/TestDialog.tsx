@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { Dialog, DialogCommands, DialogActionButton } from '../../../../src';
-import { TestDialogProps } from './TestDialog.types';
+import { TestDialogProps as Props } from './TestDialog.types';
 import { Button } from '@mui/material';
 
-const TestDialog: React.FC<TestDialogProps> = ({ onShow, onClose }) => {
+const TestDialog = ({ onShow, onClose }: Props) => {
   const dialogRef = useRef<DialogCommands>(null);
 
   return (
