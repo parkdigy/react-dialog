@@ -84,7 +84,7 @@ var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.fo
     /********************************************************************************************************************
      * ID
      * ******************************************************************************************************************/
-    var content = _a.content, _b = _a.color, color = _b === void 0 ? 'primary' : _b, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, subTitle = _a.subTitle, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, onRequestClose = _a.onRequestClose, onClose = _a.onClose, onCommands = _a.onCommands, otherProps = __rest(_a, ["content", "color", "titleIcon", "title", "titleProps", "subTitle", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose", "onCommands"]);
+    var content = _a.content, _b = _a.color, color = _b === void 0 ? 'primary' : _b, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, subTitle = _a.subTitle, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, initOnRequestClose = _a.onRequestClose, initOnClose = _a.onClose, onCommands = _a.onCommands, otherProps = __rest(_a, ["content", "color", "titleIcon", "title", "titleProps", "subTitle", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose", "onCommands"]);
     var id = React.useId();
     /********************************************************************************************************************
      * Use
@@ -94,6 +94,8 @@ var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.fo
      * Ref
      * ******************************************************************************************************************/
     var contentRef = React.useRef(null);
+    var onRequestCloseRef = reactHook.useAutoUpdateLayoutRef(initOnRequestClose);
+    var onCloseRef = reactHook.useAutoUpdateLayoutRef(initOnClose);
     /********************************************************************************************************************
      * State
      * ******************************************************************************************************************/
@@ -116,10 +118,9 @@ var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.fo
     var close = React.useCallback(function () {
         setOpen(false);
         setTimeout(function () {
-            if (onClose)
-                onClose();
+            onCloseRef.current && onCloseRef.current();
         }, theme.transitions.duration.leavingScreen);
-    }, [onClose, theme]);
+    }, [onCloseRef, theme.transitions.duration.leavingScreen]);
     /********************************************************************************************************************
      * Commands
      * ******************************************************************************************************************/
@@ -143,8 +144,7 @@ var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.fo
                         close();
                     }
                     else {
-                        if (onRequestClose)
-                            onRequestClose();
+                        onRequestCloseRef.current && onRequestCloseRef.current();
                     }
                 }
                 break;
@@ -154,21 +154,20 @@ var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.fo
                         close();
                     }
                     else {
-                        if (onRequestClose)
-                            onRequestClose();
+                        onRequestCloseRef.current && onRequestCloseRef.current();
                     }
                 }
                 break;
         }
-    }, [close, autoClose, backdropClose, escapeClose, onRequestClose]);
+    }, [backdropClose, escapeClose, autoClose, close, onRequestCloseRef]);
     var handleCloseClick = React.useCallback(function () {
         if (autoClose) {
             close();
         }
         else {
-            onRequestClose && onRequestClose();
+            onRequestCloseRef.current && onRequestCloseRef.current();
         }
-    }, [autoClose, onRequestClose, close]);
+    }, [autoClose, close, onRequestCloseRef]);
     /********************************************************************************************************************
      * Render
      * ******************************************************************************************************************/

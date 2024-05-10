@@ -8,7 +8,7 @@ import {
   StyleDialogTitleCloseButton,
   StyledDialogActions,
 } from './Dialog.styles';
-import { useForwardRef } from '@pdg/react-hook';
+import { useAutoUpdateLayoutRef, useForwardRef } from '@pdg/react-hook';
 
 const Dialog = React.forwardRef<DialogCommands, Props>(
   (
@@ -26,8 +26,8 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
       escapeClose,
       fullHeight,
       onShow,
-      onRequestClose,
-      onClose,
+      onRequestClose: initOnRequestClose,
+      onClose: initOnClose,
       onCommands,
       ...otherProps
     },
@@ -50,6 +50,8 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
      * ******************************************************************************************************************/
 
     const contentRef = useRef<HTMLDivElement>(null);
+    const onRequestCloseRef = useAutoUpdateLayoutRef(initOnRequestClose);
+    const onCloseRef = useAutoUpdateLayoutRef(initOnClose);
 
     /********************************************************************************************************************
      * State
@@ -79,9 +81,9 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
     const close = useCallback(() => {
       setOpen(false);
       setTimeout(() => {
-        if (onClose) onClose();
+        onCloseRef.current && onCloseRef.current();
       }, theme.transitions.duration.leavingScreen);
-    }, [onClose, theme]);
+    }, [onCloseRef, theme.transitions.duration.leavingScreen]);
 
     /********************************************************************************************************************
      * Commands
@@ -114,7 +116,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
               if (autoClose) {
                 close();
               } else {
-                if (onRequestClose) onRequestClose();
+                onRequestCloseRef.current && onRequestCloseRef.current();
               }
             }
             break;
@@ -123,22 +125,22 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
               if (autoClose) {
                 close();
               } else {
-                if (onRequestClose) onRequestClose();
+                onRequestCloseRef.current && onRequestCloseRef.current();
               }
             }
             break;
         }
       },
-      [close, autoClose, backdropClose, escapeClose, onRequestClose]
+      [backdropClose, escapeClose, autoClose, close, onRequestCloseRef]
     );
 
     const handleCloseClick = useCallback(() => {
       if (autoClose) {
         close();
       } else {
-        onRequestClose && onRequestClose();
+        onRequestCloseRef.current && onRequestCloseRef.current();
       }
-    }, [autoClose, onRequestClose, close]);
+    }, [autoClose, close, onRequestCloseRef]);
 
     /********************************************************************************************************************
      * Render
