@@ -12,7 +12,7 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-/* global Reflect, Promise, SuppressedError, Symbol */
+/* global Reflect, Promise, SuppressedError, Symbol, Iterator */
 
 
 var __assign = function() {
@@ -61,7 +61,7 @@ var DialogContextDefaultValue = {
     alertDialog: function () { },
     confirmDialog: function () { },
 };
-/* eslint-enable */var DialogContext = React.createContext(DialogContextDefaultValue);var StyledDialog = material.styled(material.Dialog)(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n"], ["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n"])));
+/* eslint-enable */var DialogContext = React.createContext(DialogContextDefaultValue);var StyledDialog = material.styled(material.Dialog)(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n  > .MuiDialog-container > .MuiDialog-paper:not(.MuiDialog-paperFullScreen) {\n    width: calc(100% - ", "px);\n    max-height: calc(100% - ", "px);\n    margin: 0;\n  }\n"], ["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n  > .MuiDialog-container > .MuiDialog-paper:not(.MuiDialog-paperFullScreen) {\n    width: calc(100% - ", "px);\n    max-height: calc(100% - ", "px);\n    margin: 0;\n  }\n"])), function (props) { return props['data-margin'] * 2; }, function (props) { return props['data-margin'] * 2; });
 var StyledDialogTitle = material.styled(material.DialogTitle)(function () { return ({
     position: 'relative',
     paddingRight: 60,
@@ -84,7 +84,7 @@ var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.fo
     /********************************************************************************************************************
      * ID
      * ******************************************************************************************************************/
-    var content = _a.content, _b = _a.color, color = _b === void 0 ? 'primary' : _b, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, subTitle = _a.subTitle, actions = _a.actions, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, initOnRequestClose = _a.onRequestClose, initOnClose = _a.onClose, onCommands = _a.onCommands, otherProps = __rest(_a, ["content", "color", "titleIcon", "title", "titleProps", "subTitle", "actions", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose", "onCommands"]);
+    var content = _a.content, contentProps = _a.contentProps, _b = _a.color, color = _b === void 0 ? 'primary' : _b, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, subTitle = _a.subTitle, actions = _a.actions, _c = _a.margin, margin = _c === void 0 ? 32 : _c, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, initOnRequestClose = _a.onRequestClose, initOnClose = _a.onClose, onCommands = _a.onCommands, otherProps = __rest(_a, ["content", "contentProps", "color", "titleIcon", "title", "titleProps", "subTitle", "actions", "margin", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose", "onCommands"]);
     var id = React.useId();
     /********************************************************************************************************************
      * Use
@@ -99,7 +99,7 @@ var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.fo
     /********************************************************************************************************************
      * State
      * ******************************************************************************************************************/
-    var _c = React.useState(true), open = _c[0], setOpen = _c[1];
+    var _d = React.useState(true), open = _d[0], setOpen = _d[1];
     /********************************************************************************************************************
      * Memo
      * ******************************************************************************************************************/
@@ -112,6 +112,16 @@ var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.fo
             onShow();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    /********************************************************************************************************************
+     * Memo
+     * ******************************************************************************************************************/
+    var finalContentProps = React.useMemo(function () {
+        var newContentProps = contentProps || {};
+        if (actions) {
+            newContentProps.style = __assign({ paddingBottom: 15 }, newContentProps.style);
+        }
+        return newContentProps;
+    }, [contentProps, actions]);
     /********************************************************************************************************************
      * Function
      * ******************************************************************************************************************/
@@ -171,21 +181,19 @@ var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.fo
     /********************************************************************************************************************
      * Render
      * ******************************************************************************************************************/
-    return (React.createElement(StyledDialog, __assign({ className: "color-".concat(color, " ").concat(fullHeight ? 'Dialog-full-height' : ''), open: open, "aria-labelledby": "dialog-title-".concat(id), onClose: handleClose }, otherProps),
+    return (React.createElement(StyledDialog, __assign({ className: "color-".concat(color, " ").concat(fullHeight ? 'Dialog-full-height' : ''), open: open, "data-margin": margin, "aria-labelledby": "dialog-title-".concat(id), onClose: handleClose }, otherProps),
         title && (React.createElement(StyledDialogTitle, __assign({}, titleProps),
-            (titleIcon || title) && (React.createElement(material.Box, { style: { display: 'flex', fontSize: '17px' } },
-                titleIcon && (React.createElement(material.Box, { style: { display: 'flex', alignItems: 'center', marginRight: 7 } },
+            (titleIcon || title) && (React.createElement(material.Box, { display: 'flex', fontSize: 17 },
+                titleIcon && (React.createElement(material.Box, { display: 'flex', alignItems: 'center', marginRight: '7px' },
                     React.createElement(material.Icon, { style: { fontSize: '22px' } }, titleIcon))),
-                title && (React.createElement(material.Box, { style: { display: 'flex', alignItems: 'center' } },
+                title && (React.createElement(material.Box, { display: 'flex', alignItems: 'center' },
                     title,
                     subTitle && React.createElement("div", { className: 'Dialog-SubTitle' },
                         "\u00A0-\u00A0",
                         subTitle))))),
             !hideClose && (React.createElement(StyleDialogTitleCloseButton, { className: 'dialog-close-btn', "aria-label": 'close', style: { color: theme.palette[color || 'primary'].contrastText }, onClick: handleCloseClick },
                 React.createElement(material.Icon, null, "close"))))),
-        React.createElement(StyledDialogContent, { ref: contentRef, style: {
-                paddingBottom: actions ? 15 : undefined,
-            } }, content),
+        React.createElement(StyledDialogContent, __assign({ ref: contentRef }, finalContentProps), content),
         actions && React.createElement(StyledDialogActions, null, actions)));
 });
 Dialog.displayName = 'Dialog';var DialogActionButton = function (_a) {

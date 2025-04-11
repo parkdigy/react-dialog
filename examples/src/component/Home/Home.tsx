@@ -68,13 +68,13 @@ const Home = () => {
       <br />
       <div>
         <Grid container spacing={2}>
-          <Grid item>
+          <Grid>
             <Button onClick={handleTestDialogClick}>testDialog</Button>
           </Grid>
-          <Grid item>
+          <Grid>
             <Button onClick={handleAlertDialogClick}>alertDialog</Button>
           </Grid>
-          <Grid item>
+          <Grid>
             <Button onClick={handleConfirmDialogClick}>confirmDialog</Button>
           </Grid>
         </Grid>

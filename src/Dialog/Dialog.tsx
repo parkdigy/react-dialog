@@ -14,12 +14,14 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
   (
     {
       content,
+      contentProps,
       color = 'primary',
       titleIcon: initTitleIcon,
       title,
       titleProps,
       subTitle,
       actions,
+      margin = 32,
       hideClose,
       autoClose,
       backdropClose,
@@ -73,6 +75,21 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
       if (onShow) onShow();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    /********************************************************************************************************************
+     * Memo
+     * ******************************************************************************************************************/
+
+    const finalContentProps = useMemo(() => {
+      const newContentProps = contentProps || {};
+      if (actions) {
+        newContentProps.style = {
+          paddingBottom: 15,
+          ...newContentProps.style,
+        };
+      }
+      return newContentProps;
+    }, [contentProps, actions]);
 
     /********************************************************************************************************************
      * Function
@@ -150,6 +167,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
       <StyledDialog
         className={`color-${color} ${fullHeight ? 'Dialog-full-height' : ''}`}
         open={open}
+        data-margin={margin}
         aria-labelledby={`dialog-title-${id}`}
         onClose={handleClose}
         {...otherProps}
@@ -157,14 +175,14 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
         {title && (
           <StyledDialogTitle {...titleProps}>
             {(titleIcon || title) && (
-              <Box style={{ display: 'flex', fontSize: '17px' }}>
+              <Box display='flex' fontSize={17}>
                 {titleIcon && (
-                  <Box style={{ display: 'flex', alignItems: 'center', marginRight: 7 }}>
+                  <Box display='flex' alignItems='center' marginRight='7px'>
                     <Icon style={{ fontSize: '22px' }}>{titleIcon}</Icon>
                   </Box>
                 )}
                 {title && (
-                  <Box style={{ display: 'flex', alignItems: 'center' }}>
+                  <Box display='flex' alignItems='center'>
                     {title}
                     {subTitle && <div className='Dialog-SubTitle'>&nbsp;-&nbsp;{subTitle}</div>}
                   </Box>
@@ -183,12 +201,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
             )}
           </StyledDialogTitle>
         )}
-        <StyledDialogContent
-          ref={contentRef}
-          style={{
-            paddingBottom: actions ? 15 : undefined,
-          }}
-        >
+        <StyledDialogContent ref={contentRef} {...finalContentProps}>
           {content}
         </StyledDialogContent>
         {actions && <StyledDialogActions>{actions}</StyledDialogActions>}

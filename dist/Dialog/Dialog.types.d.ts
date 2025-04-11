@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { DialogProps as _DialogProps, DialogTitleProps } from '@mui/material';
+import { DialogContentProps, DialogProps as _DialogProps, DialogTitleProps } from '@mui/material';
 export interface DialogCommands {
     getId(): string;
     close(): void;
@@ -7,6 +7,7 @@ export interface DialogCommands {
 }
 export interface DialogProps extends Omit<_DialogProps, 'ref' | 'open' | 'title' | 'aria-labelledby' | 'content' | 'onClose'> {
     content: ReactNode;
+    contentProps?: Partial<Omit<DialogContentProps, 'children'>>;
     color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
     titleIcon?: string;
     title?: ReactNode;
@@ -18,6 +19,7 @@ export interface DialogProps extends Omit<_DialogProps, 'ref' | 'open' | 'title'
     backdropClose?: boolean;
     escapeClose?: boolean;
     fullHeight?: boolean;
+    margin?: number;
     onShow?(): void;
     onRequestClose?(): void;
     onClose?(): void;

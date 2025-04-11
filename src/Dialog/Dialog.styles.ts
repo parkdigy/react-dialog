@@ -6,6 +6,11 @@ export const StyledDialog = styled(Dialog)`
       height: 100vh;
     }
   }
+  > .MuiDialog-container > .MuiDialog-paper:not(.MuiDialog-paperFullScreen) {
+    width: calc(100% - ${(props: { ['data-margin']: number }) => props['data-margin'] * 2}px);
+    max-height: calc(100% - ${(props: { ['data-margin']: number }) => props['data-margin'] * 2}px);
+    margin: 0;
+  }
 `;
 
 export const StyledDialogTitle = styled(DialogTitle)(() => ({
