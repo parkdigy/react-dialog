@@ -10,12 +10,14 @@ export default function useDialog<P extends Partial<DialogRequireProps>>(
     throw new Error('useDialog should be used within DialogContext.Provider');
   }
 
+  const pushDialog = value.pushDialog;
+
   return useCallback(
     (props, onErrorBoundary?: (error: unknown, errorInfo: ErrorInfo) => void) => {
       const dialogDefault = getDialogDefault();
 
-      value.pushDialog(dialogComponent as any, props, onErrorBoundary || dialogDefault.onBoundaryError);
+      pushDialog(dialogComponent as any, props, onErrorBoundary || dialogDefault.onBoundaryError);
     },
-    [value, dialogComponent]
+    [pushDialog, dialogComponent]
   );
 }

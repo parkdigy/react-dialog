@@ -411,10 +411,11 @@ function getDialogDefault() {
     if (value === undefined) {
         throw new Error('useDialog should be used within DialogContext.Provider');
     }
+    var pushDialog = value.pushDialog;
     return useCallback(function (props, onErrorBoundary) {
         var dialogDefault = getDialogDefault();
-        value.pushDialog(dialogComponent, props, onErrorBoundary || dialogDefault.onBoundaryError);
-    }, [value, dialogComponent]);
+        pushDialog(dialogComponent, props, onErrorBoundary || dialogDefault.onBoundaryError);
+    }, [pushDialog, dialogComponent]);
 }function useAlertDialog() {
     var value = useContext(DialogContext);
     if (value === undefined) {
