@@ -9,6 +9,7 @@ const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
   (
     {
       style: initStyle,
+      maxWidth = 'xs',
       color = 'primary',
       confirmButtonLabel = '확인',
       confirmButtonProps,
@@ -55,6 +56,7 @@ const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
     return (
       <Dialog
         ref={dialogRef}
+        maxWidth={maxWidth}
         color={color}
         escapeClose={true}
         style={{ zIndex: 1399, ...initStyle }}
