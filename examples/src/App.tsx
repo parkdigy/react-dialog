@@ -1,7 +1,7 @@
 import './init';
 
 import React, { ErrorInfo } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router';
 import { DefaultLayout } from './layout';
 import { setDialogDefault } from '../../src';
 
