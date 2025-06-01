@@ -12,13 +12,7 @@
     "reinstall-module": "rm -rf node_modules && rm -f package-lock.json && npm i"
   },
   "devDependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^7.0.2",
-    "@mui/material": "^7.0.2",
     "@pdg/react-admin-layout": "^1.0.40",
-    "@pdg/react-hook": "^1.0.28",
-    "@pdg/util": "^1.0.23",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.16",
     "@soda/friendly-errors-webpack-plugin": "^1.8.1",
     "@types/jest": "^29.5.14",
