@@ -1,4 +1,4 @@
-import React,{createContext,useId,useRef,useState,useEffect,useMemo,useCallback,useLayoutEffect,Component,useContext}from'react';import {styled,Dialog as Dialog$1,DialogTitle,IconButton,DialogContent,DialogActions,useTheme,Box,Icon,Button,Typography}from'@mui/material';import {useAutoUpdateLayoutRef,useForwardRef}from'@pdg/react-hook';/******************************************************************************
+import React,{createContext,useId,useRef,useState,useEffect,useMemo,useCallback,useLayoutEffect,Component,useContext}from'react';import {useTheme,styled,Box,Icon,Dialog as Dialog$1,DialogTitle,IconButton,DialogContent,DialogActions,Button,Typography}from'@mui/material';import {useAutoUpdateLayoutRef,useForwardRef}from'@pdg/react-hook';/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -61,26 +61,7 @@ var DialogContextDefaultValue = {
     alertDialog: function () { },
     confirmDialog: function () { },
 };
-/* eslint-enable */var DialogContext = createContext(DialogContextDefaultValue);var StyledDialog = styled(Dialog$1)(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n  > .MuiDialog-container > .MuiDialog-paper:not(.MuiDialog-paperFullScreen) {\n    width: calc(100% - ", "px);\n    max-height: calc(100% - ", "px);\n    margin: 0;\n  }\n"], ["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n  > .MuiDialog-container > .MuiDialog-paper:not(.MuiDialog-paperFullScreen) {\n    width: calc(100% - ", "px);\n    max-height: calc(100% - ", "px);\n    margin: 0;\n  }\n"])), function (props) { return props['data-margin'] * 2; }, function (props) { return props['data-margin'] * 2; });
-var StyledDialogTitle = styled(DialogTitle)(function () { return ({
-    position: 'relative',
-    paddingRight: 60,
-    paddingTop: 10,
-    paddingBottom: 10,
-    width: '100%',
-}); });
-var StyleDialogTitleCloseButton = styled(IconButton)(function (_a) {
-    var theme = _a.theme;
-    return ({
-        position: 'absolute',
-        right: 8,
-        top: 5,
-        color: theme.palette.grey[500],
-    });
-});
-var StyledDialogContent = styled(DialogContent)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"], ["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"])));
-var StyledDialogActions = styled(DialogActions)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding-left: 20px;\n  padding-right: 15px;\n"], ["\n  padding-left: 20px;\n  padding-right: 15px;\n"])));
-var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.forwardRef(function (_a, ref) {
+/* eslint-enable */var DialogContext = createContext(DialogContextDefaultValue);var Dialog = React.forwardRef(function (_a, ref) {
     /********************************************************************************************************************
      * ID
      * ******************************************************************************************************************/
@@ -196,7 +177,30 @@ var templateObject_1$1, templateObject_2, templateObject_3;var Dialog = React.fo
         React.createElement(StyledDialogContent, __assign({ ref: contentRef }, finalContentProps), content),
         actions && React.createElement(StyledDialogActions, null, actions)));
 });
-Dialog.displayName = 'Dialog';var DialogActionButton = function (_a) {
+Dialog.displayName = 'Dialog';
+/********************************************************************************************************************
+ * Styled Components
+ * ******************************************************************************************************************/
+var StyledDialog = styled(Dialog$1)(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n  > .MuiDialog-container > .MuiDialog-paper:not(.MuiDialog-paperFullScreen) {\n    width: calc(100% - ", "px);\n    max-height: calc(100% - ", "px);\n    margin: 0;\n  }\n"], ["\n  &.Dialog-full-height {\n    > .MuiDialog-container > .MuiDialog-paper {\n      height: 100vh;\n    }\n  }\n  > .MuiDialog-container > .MuiDialog-paper:not(.MuiDialog-paperFullScreen) {\n    width: calc(100% - ", "px);\n    max-height: calc(100% - ", "px);\n    margin: 0;\n  }\n"])), function (props) { return props['data-margin'] * 2; }, function (props) { return props['data-margin'] * 2; });
+var StyledDialogTitle = styled(DialogTitle)(function () { return ({
+    position: 'relative',
+    paddingRight: 60,
+    paddingTop: 10,
+    paddingBottom: 10,
+    width: '100%',
+}); });
+var StyleDialogTitleCloseButton = styled(IconButton)(function (_a) {
+    var theme = _a.theme;
+    return ({
+        position: 'absolute',
+        right: 8,
+        top: 5,
+        color: theme.palette.grey[500],
+    });
+});
+var StyledDialogContent = styled(DialogContent)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"], ["\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n"])));
+var StyledDialogActions = styled(DialogActions)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding-left: 20px;\n  padding-right: 15px;\n"], ["\n  padding-left: 20px;\n  padding-right: 15px;\n"])));
+var templateObject_1$1, templateObject_2, templateObject_3;var DialogActionButton = function (_a) {
     var variant = _a.variant, otherProps = __rest(_a, ["variant"]);
     return React.createElement(StyledButton, __assign({ variant: variant || 'text' }, otherProps));
 };

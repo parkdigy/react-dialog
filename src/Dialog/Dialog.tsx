@@ -1,13 +1,16 @@
 import React, { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { useTheme, Icon, Box } from '@mui/material';
-import { DialogProps as Props, DialogCommands } from './Dialog.types';
 import {
-  StyledDialog,
-  StyledDialogTitle,
-  StyledDialogContent,
-  StyleDialogTitleCloseButton,
-  StyledDialogActions,
-} from './Dialog.styles';
+  Dialog as MuiDialog,
+  useTheme,
+  Icon,
+  Box,
+  styled,
+  DialogTitle,
+  IconButton,
+  DialogContent,
+  DialogActions,
+} from '@mui/material';
+import { DialogProps as Props, DialogCommands } from './Dialog.types';
 import { useAutoUpdateLayoutRef, useForwardRef } from '@pdg/react-hook';
 
 const Dialog = React.forwardRef<DialogCommands, Props>(
@@ -213,3 +216,46 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
 Dialog.displayName = 'Dialog';
 
 export default Dialog;
+
+/********************************************************************************************************************
+ * Styled Components
+ * ******************************************************************************************************************/
+
+const StyledDialog = styled(MuiDialog)`
+  &.Dialog-full-height {
+    > .MuiDialog-container > .MuiDialog-paper {
+      height: 100vh;
+    }
+  }
+  > .MuiDialog-container > .MuiDialog-paper:not(.MuiDialog-paperFullScreen) {
+    width: calc(100% - ${(props: { ['data-margin']: number }) => props['data-margin'] * 2}px);
+    max-height: calc(100% - ${(props: { ['data-margin']: number }) => props['data-margin'] * 2}px);
+    margin: 0;
+  }
+`;
+
+const StyledDialogTitle = styled(DialogTitle)(() => ({
+  position: 'relative',
+  paddingRight: 60,
+  paddingTop: 10,
+  paddingBottom: 10,
+  width: '100%',
+}));
+
+const StyleDialogTitleCloseButton = styled(IconButton)(({ theme }) => ({
+  position: 'absolute',
+  right: 8,
+  top: 5,
+  color: theme.palette.grey[500],
+}));
+
+const StyledDialogContent = styled(DialogContent)`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledDialogActions = styled(DialogActions)`
+  padding-left: 20px;
+  padding-right: 15px;
+`;
