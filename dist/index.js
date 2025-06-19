@@ -233,10 +233,54 @@ var templateObject_1;var AlertDialog = React.forwardRef(function (_a, ref) {
 });
 AlertDialog.displayName = 'AlertDialog';var ConfirmDialog = React.forwardRef(function (_a, ref) {
     /********************************************************************************************************************
+     * Use
+     * ******************************************************************************************************************/
+    var _b = _a.type, type = _b === void 0 ? 'default' : _b, content = _a.content, initStyle = _a.style, _c = _a.maxWidth, maxWidth = _c === void 0 ? 'xs' : _c, _d = _a.confirmButtonLabel, confirmButtonLabel = _d === void 0 ? '확인' : _d, confirmButtonProps = _a.confirmButtonProps, _e = _a.cancelButtonLabel, cancelButtonLabel = _e === void 0 ? '취소' : _e, cancelButtonProps = _a.cancelButtonProps, onShow = _a.onShow, onClose = _a.onClose, onConfirm = _a.onConfirm, onCancel = _a.onCancel, onCommands = _a.onCommands, props = __rest(_a, ["type", "content", "style", "maxWidth", "confirmButtonLabel", "confirmButtonProps", "cancelButtonLabel", "cancelButtonProps", "onShow", "onClose", "onConfirm", "onCancel", "onCommands"]);
+    var theme = material.useTheme();
+    /********************************************************************************************************************
      * Ref
      * ******************************************************************************************************************/
-    var initStyle = _a.style, _b = _a.maxWidth, maxWidth = _b === void 0 ? 'xs' : _b, _c = _a.color, color = _c === void 0 ? 'primary' : _c, _d = _a.confirmButtonLabel, confirmButtonLabel = _d === void 0 ? '확인' : _d, confirmButtonProps = _a.confirmButtonProps, _e = _a.cancelButtonLabel, cancelButtonLabel = _e === void 0 ? '취소' : _e, cancelButtonProps = _a.cancelButtonProps, onShow = _a.onShow, onClose = _a.onClose, onConfirm = _a.onConfirm, onCancel = _a.onCancel, onCommands = _a.onCommands, props = __rest(_a, ["style", "maxWidth", "color", "confirmButtonLabel", "confirmButtonProps", "cancelButtonLabel", "cancelButtonProps", "onShow", "onClose", "onConfirm", "onCancel", "onCommands"]);
     var dialogRef = React.useRef(null);
+    /********************************************************************************************************************
+     * Memo
+     * ******************************************************************************************************************/
+    var _f = React.useMemo(function () {
+        var newColor;
+        var newTextColor;
+        switch (type) {
+            case 'primary':
+                newColor = 'info';
+                newTextColor = theme.palette.primary.main;
+                break;
+            case 'info':
+                newColor = 'info';
+                newTextColor = theme.palette.info.main;
+                break;
+            case 'success':
+                newColor = 'success';
+                newTextColor = theme.palette.success.main;
+                break;
+            case 'warning':
+                newColor = 'warning';
+                newTextColor = theme.palette.warning.main;
+                break;
+            case 'error':
+                newColor = 'error';
+                newTextColor = theme.palette.error.main;
+                break;
+            default:
+                newColor = 'primary';
+                newTextColor = theme.palette.text.primary;
+        }
+        return { color: newColor, textColor: newTextColor };
+    }, [
+        theme.palette.error.main,
+        theme.palette.info.main,
+        theme.palette.primary.main,
+        theme.palette.success.main,
+        theme.palette.warning.main,
+        type,
+    ]), color = _f.color, textColor = _f.textColor;
     /********************************************************************************************************************
      * Commands
      * ******************************************************************************************************************/
@@ -253,10 +297,9 @@ AlertDialog.displayName = 'AlertDialog';var ConfirmDialog = React.forwardRef(fun
     /********************************************************************************************************************
      * Render
      * ******************************************************************************************************************/
-    return (React.createElement(Dialog, __assign({ ref: dialogRef, maxWidth: maxWidth, color: color, escapeClose: true, style: __assign({ zIndex: 1399 }, initStyle), onShow: function () { return onShow && onShow(); }, onClose: function () { return onClose && onClose(); }, onRequestClose: function () { return onCancel && onCancel(commands); } }, props, { actions: React.createElement(React.Fragment, null,
-            React.createElement(DialogActionButton$1, __assign({ variant: 'text' }, cancelButtonProps, { onClick: function () { return onCancel && onCancel(commands); } }),
-                React.createElement(material.Typography, { fontSize: 'inherit', style: { color: '#6f6f6f' } }, cancelButtonLabel)),
-            React.createElement(DialogActionButton$1, __assign({ variant: 'text', color: color }, confirmButtonProps, { onClick: function () { return onConfirm && onConfirm(commands); } }), confirmButtonLabel)) })));
+    return (React.createElement(Dialog, __assign({ ref: dialogRef, maxWidth: maxWidth, color: color, escapeClose: true, style: __assign({ zIndex: 1399 }, initStyle), onShow: function () { return onShow && onShow(); }, onClose: function () { return onClose && onClose(); }, onRequestClose: function () { return onCancel && onCancel(commands); } }, props, { content: React.createElement(material.Box, { textAlign: 'center', py: 2, fontSize: 14, color: textColor }, content), actions: React.createElement(React.Fragment, null,
+            React.createElement(DialogActionButton$1, __assign({ variant: 'contained', size: 'large', style: { flex: 1, color: '#fff', backgroundColor: '#9f9f9f' } }, cancelButtonProps, { onClick: function () { return onCancel && onCancel(commands); } }), cancelButtonLabel),
+            React.createElement(DialogActionButton$1, __assign({ variant: 'contained', size: 'large', color: color, style: { flex: 1 } }, confirmButtonProps, { onClick: function () { return onConfirm && onConfirm(commands); } }), confirmButtonLabel)) })));
 });
 ConfirmDialog.displayName = 'ConfirmDialog';class ErrorBoundary extends React.Component {
     displayName = "ReactUseErrorBoundary";

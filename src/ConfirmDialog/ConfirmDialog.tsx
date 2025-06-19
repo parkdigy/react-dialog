@@ -1,16 +1,17 @@
 import React, { useLayoutEffect, useMemo, useRef } from 'react';
 import { ConfirmDialogCommands, ConfirmDialogProps as Props } from './ConfirmDialog.types';
-import { Dialog, DialogCommands } from '../Dialog';
+import { Dialog, DialogCommands, DialogProps } from '../Dialog';
 import { DialogActionButton } from '../DialogActionButton';
-import { Typography } from '@mui/material';
+import { Box, TypographyProps, useTheme } from '@mui/material';
 import { useForwardRef } from '@pdg/react-hook';
 
 const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
   (
     {
+      type = 'default',
+      content,
       style: initStyle,
       maxWidth = 'xs',
-      color = 'primary',
       confirmButtonLabel = '확인',
       confirmButtonProps,
       cancelButtonLabel = '취소',
@@ -25,10 +26,58 @@ const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
     ref
   ) => {
     /********************************************************************************************************************
+     * Use
+     * ******************************************************************************************************************/
+
+    const theme = useTheme();
+
+    /********************************************************************************************************************
      * Ref
      * ******************************************************************************************************************/
 
     const dialogRef = useRef<DialogCommands>(null);
+
+    /********************************************************************************************************************
+     * Memo
+     * ******************************************************************************************************************/
+
+    const { color, textColor } = useMemo(() => {
+      let newColor: DialogProps['color'];
+      let newTextColor: string;
+      switch (type) {
+        case 'primary':
+          newColor = 'info';
+          newTextColor = theme.palette.primary.main;
+          break;
+        case 'info':
+          newColor = 'info';
+          newTextColor = theme.palette.info.main;
+          break;
+        case 'success':
+          newColor = 'success';
+          newTextColor = theme.palette.success.main;
+          break;
+        case 'warning':
+          newColor = 'warning';
+          newTextColor = theme.palette.warning.main;
+          break;
+        case 'error':
+          newColor = 'error';
+          newTextColor = theme.palette.error.main;
+          break;
+        default:
+          newColor = 'primary';
+          newTextColor = theme.palette.text.primary;
+      }
+      return { color: newColor, textColor: newTextColor };
+    }, [
+      theme.palette.error.main,
+      theme.palette.info.main,
+      theme.palette.primary.main,
+      theme.palette.success.main,
+      theme.palette.warning.main,
+      type,
+    ]);
 
     /********************************************************************************************************************
      * Commands
@@ -64,16 +113,27 @@ const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
         onClose={() => onClose && onClose()}
         onRequestClose={() => onCancel && onCancel(commands)}
         {...props}
+        content={
+          <Box textAlign='center' py={2} fontSize={14} color={textColor}>
+            {content}
+          </Box>
+        }
         actions={
           <>
-            <DialogActionButton variant='text' {...cancelButtonProps} onClick={() => onCancel && onCancel(commands)}>
-              <Typography fontSize='inherit' style={{ color: '#6f6f6f' }}>
-                {cancelButtonLabel}
-              </Typography>
+            <DialogActionButton
+              variant='contained'
+              size='large'
+              style={{ flex: 1, color: '#fff', backgroundColor: '#9f9f9f' }}
+              {...cancelButtonProps}
+              onClick={() => onCancel && onCancel(commands)}
+            >
+              {cancelButtonLabel}
             </DialogActionButton>
             <DialogActionButton
-              variant='text'
+              variant='contained'
+              size='large'
               color={color}
+              style={{ flex: 1 }}
               {...confirmButtonProps}
               onClick={() => onConfirm && onConfirm(commands)}
             >

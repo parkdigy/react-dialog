@@ -4,7 +4,8 @@ import { ButtonProps } from '@mui/material';
 export interface ConfirmDialogCommands extends Omit<DialogCommands, 'scrollToTop'> {
 }
 export type ConfirmDialogCommandsRefFunction = (commands: ConfirmDialogCommands | undefined) => void;
-export interface ConfirmDialogProps extends Omit<DialogProps, 'commandsRef' | 'actions' | 'autoClose' | 'backdropClose' | 'escapeClose' | 'onRequestClose'> {
+export interface ConfirmDialogProps extends Omit<DialogProps, 'commandsRef' | 'actions' | 'autoClose' | 'backdropClose' | 'escapeClose' | 'onRequestClose' | 'color'> {
+    type?: 'default' | 'primary' | 'error' | 'warning' | 'info' | 'success';
     confirmButtonLabel?: ReactNode;
     confirmButtonProps?: Omit<ButtonProps, 'children' | 'onClick'>;
     cancelButtonLabel?: ReactNode;

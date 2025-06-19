@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { TestDialog } from '@dialog';
-import { Button, Grid, Typography } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { useAlertDialog, useConfirmDialog, useDialog, ConfirmDialogCommands } from '../../../../src';
 
 const Home = () => {
@@ -36,10 +36,10 @@ const Home = () => {
 
   const handleConfirmDialogClick = useCallback(() => {
     confirmDialog({
-      color: 'error',
+      type: 'error',
       title: 'Title',
       subTitle: 'Sub Title',
-      content: <Typography color='error'>오류가 발생했습니다. 다시 시도하시겠습니까?</Typography>,
+      content: '오류가 발생했습니다. 다시 시도하시겠습니까?',
       onShow() {
         ll('confirmDialog show');
       },

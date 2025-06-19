@@ -9,8 +9,9 @@ export type ConfirmDialogCommandsRefFunction = (commands: ConfirmDialogCommands 
 export interface ConfirmDialogProps
   extends Omit<
     DialogProps,
-    'commandsRef' | 'actions' | 'autoClose' | 'backdropClose' | 'escapeClose' | 'onRequestClose'
+    'commandsRef' | 'actions' | 'autoClose' | 'backdropClose' | 'escapeClose' | 'onRequestClose' | 'color'
   > {
+  type?: 'default' | 'primary' | 'error' | 'warning' | 'info' | 'success';
   confirmButtonLabel?: ReactNode;
   confirmButtonProps?: Omit<ButtonProps, 'children' | 'onClick'>;
   cancelButtonLabel?: ReactNode;
