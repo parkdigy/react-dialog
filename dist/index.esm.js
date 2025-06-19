@@ -252,6 +252,10 @@ AlertDialog.displayName = 'AlertDialog';var ConfirmDialog = React.forwardRef(fun
                 newColor = 'info';
                 newTextColor = theme.palette.primary.main;
                 break;
+            case 'secondary':
+                newColor = 'secondary';
+                newTextColor = theme.palette.secondary.main;
+                break;
             case 'info':
                 newColor = 'info';
                 newTextColor = theme.palette.info.main;

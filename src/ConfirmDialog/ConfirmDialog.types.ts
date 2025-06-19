@@ -11,7 +11,7 @@ export interface ConfirmDialogProps
     DialogProps,
     'commandsRef' | 'actions' | 'autoClose' | 'backdropClose' | 'escapeClose' | 'onRequestClose' | 'color'
   > {
-  type?: 'default' | 'primary' | 'error' | 'warning' | 'info' | 'success';
+  type?: 'default' | 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success';
   confirmButtonLabel?: ReactNode;
   confirmButtonProps?: Omit<ButtonProps, 'children' | 'onClick'>;
   cancelButtonLabel?: ReactNode;
