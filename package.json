@@ -2,7 +2,7 @@
   "name": "@pdg/react-dialog",
   "title": "React Dialog",
   "type": "module",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "description": "React Dialog",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -52,7 +52,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.1.0",
     "@mui/material": "^7.1.0",
-    "@pdg/react-hook": "^1.0.30"
+    "@pdg/react-hook": "^1.0.32"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
