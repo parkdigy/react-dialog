@@ -55,13 +55,11 @@ function __makeTemplateObject(cooked, raw) {
 typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
     var e = new Error(message);
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};/* eslint-disable */
-var DialogContextDefaultValue = {
+};var DialogContextDefaultValue = {
     pushDialog: function () { },
     alertDialog: function () { },
     confirmDialog: function () { },
-};
-/* eslint-enable */var DialogContext = createContext(DialogContextDefaultValue);var Dialog = React.forwardRef(function (_a, ref) {
+};var DialogContext = createContext(DialogContextDefaultValue);var Dialog = React.forwardRef(function (_a, ref) {
     /********************************************************************************************************************
      * ID
      * ******************************************************************************************************************/
@@ -281,7 +279,9 @@ AlertDialog.displayName = 'AlertDialog';var ConfirmDialog = React.forwardRef(fun
         theme.palette.error.main,
         theme.palette.info.main,
         theme.palette.primary.main,
+        theme.palette.secondary.main,
         theme.palette.success.main,
+        theme.palette.text.primary,
         theme.palette.warning.main,
         type,
     ]), color = _f.color, textColor = _f.textColor;

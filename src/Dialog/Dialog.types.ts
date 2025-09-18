@@ -23,8 +23,8 @@ export interface DialogProps
   escapeClose?: boolean;
   fullHeight?: boolean;
   margin?: number;
-  onShow?(): void;
-  onRequestClose?(): void;
-  onClose?(): void;
-  onCommands?(commands: DialogCommands): void;
+  onShow?: () => void;
+  onRequestClose?: () => void;
+  onClose?: () => void;
+  onCommands?: (commands: DialogCommands) => void;
 }

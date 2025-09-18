@@ -10,7 +10,7 @@ export interface ConfirmDialogProps extends Omit<DialogProps, 'commandsRef' | 'a
     confirmButtonProps?: Omit<ButtonProps, 'children' | 'onClick'>;
     cancelButtonLabel?: ReactNode;
     cancelButtonProps?: Omit<ButtonProps, 'children' | 'onClick'>;
-    onConfirm?(commands: ConfirmDialogCommands): void;
-    onCancel?(commands: ConfirmDialogCommands): void;
-    onCommands?(commands: ConfirmDialogCommands): void;
+    onConfirm?: (commands: ConfirmDialogCommands) => void;
+    onCancel?: (commands: ConfirmDialogCommands) => void;
+    onCommands?: (commands: ConfirmDialogCommands) => void;
 }

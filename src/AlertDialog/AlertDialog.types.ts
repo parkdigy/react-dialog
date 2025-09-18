@@ -8,5 +8,5 @@ export interface AlertDialogProps
   extends Omit<DialogProps, 'commandsRef' | 'actions' | 'autoClose' | 'escapeClose' | 'onRequestClose'> {
   confirmButtonLabel?: ReactNode;
   confirmButtonProps?: Omit<ButtonProps, 'children' | 'onClick'>;
-  onCommands?(commands: AlertDialogCommands): void;
+  onCommands?: (commands: AlertDialogCommands) => void;
 }

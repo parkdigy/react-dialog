@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useMemo, useRef } from 'react';
 import { ConfirmDialogCommands, ConfirmDialogProps as Props } from './ConfirmDialog.types';
 import { Dialog, DialogCommands, DialogProps } from '../Dialog';
 import { DialogActionButton } from '../DialogActionButton';
-import { Box, TypographyProps, useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { useForwardRef } from '@pdg/react-hook';
 
 const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
@@ -78,7 +78,9 @@ const ConfirmDialog = React.forwardRef<ConfirmDialogCommands, Props>(
       theme.palette.error.main,
       theme.palette.info.main,
       theme.palette.primary.main,
+      theme.palette.secondary.main,
       theme.palette.success.main,
+      theme.palette.text.primary,
       theme.palette.warning.main,
       type,
     ]);
