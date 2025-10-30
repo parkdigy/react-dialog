@@ -11,7 +11,13 @@ import {
   DialogActions,
 } from '@mui/material';
 import { DialogProps as Props, DialogCommands } from './Dialog.types';
-import { useAutoUpdateLayoutRef, useForwardRef } from '@pdg/react-hook';
+import { useAutoUpdateLayoutRef, useAutoUpdateState, useForwardRef } from '@pdg/react-hook';
+
+let __disableEnforceFocusListeners: ((disabled: boolean) => void)[] = [];
+
+type DialogType = typeof Dialog & {
+  readonly setDisableEnforceFocus: (disabled: boolean) => void;
+};
 
 const Dialog = React.forwardRef<DialogCommands, Props>(
   (
@@ -30,6 +36,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
       backdropClose,
       escapeClose,
       fullHeight,
+      disableEnforceFocus: initDisableEnforceFocus,
       onShow,
       onRequestClose: initOnRequestClose,
       onClose: initOnClose,
@@ -63,6 +70,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
      * ******************************************************************************************************************/
 
     const [open, setOpen] = useState(true);
+    const [disableEnforceFocus, setDisableEnforceFocus] = useAutoUpdateState(initDisableEnforceFocus);
 
     /********************************************************************************************************************
      * Memo
@@ -78,6 +86,21 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
       if (onShow) onShow();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+      if (initDisableEnforceFocus === undefined) {
+        const handler = (disabled: boolean) => {
+          setDisableEnforceFocus(disabled);
+        };
+
+        __disableEnforceFocusListeners.push(handler);
+
+        return () => {
+          __disableEnforceFocusListeners = __disableEnforceFocusListeners.filter((l) => l !== handler);
+        };
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initDisableEnforceFocus]);
 
     /********************************************************************************************************************
      * Memo
@@ -172,6 +195,7 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
         open={open}
         data-margin={margin}
         aria-labelledby={`dialog-title-${id}`}
+        disableEnforceFocus={disableEnforceFocus}
         onClose={handleClose}
         {...otherProps}
       >
@@ -215,7 +239,11 @@ const Dialog = React.forwardRef<DialogCommands, Props>(
 
 Dialog.displayName = 'Dialog';
 
-export default Dialog;
+(Dialog as any).setDisableEnforceFocus = (disabled: boolean) => {
+  __disableEnforceFocusListeners.forEach((listener) => listener(disabled));
+};
+
+export default Dialog as DialogType;
 
 /********************************************************************************************************************
  * Styled Components

@@ -59,11 +59,12 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
     pushDialog: function () { },
     alertDialog: function () { },
     confirmDialog: function () { },
-};var DialogContext = React.createContext(DialogContextDefaultValue);var Dialog = React.forwardRef(function (_a, ref) {
+};var DialogContext = React.createContext(DialogContextDefaultValue);var __disableEnforceFocusListeners = [];
+var Dialog = React.forwardRef(function (_a, ref) {
     /********************************************************************************************************************
      * ID
      * ******************************************************************************************************************/
-    var content = _a.content, contentProps = _a.contentProps, _b = _a.color, color = _b === void 0 ? 'primary' : _b, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, subTitle = _a.subTitle, actions = _a.actions, _c = _a.margin, margin = _c === void 0 ? 32 : _c, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, onShow = _a.onShow, initOnRequestClose = _a.onRequestClose, initOnClose = _a.onClose, onCommands = _a.onCommands, otherProps = __rest(_a, ["content", "contentProps", "color", "titleIcon", "title", "titleProps", "subTitle", "actions", "margin", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "onShow", "onRequestClose", "onClose", "onCommands"]);
+    var content = _a.content, contentProps = _a.contentProps, _b = _a.color, color = _b === void 0 ? 'primary' : _b, initTitleIcon = _a.titleIcon, title = _a.title, titleProps = _a.titleProps, subTitle = _a.subTitle, actions = _a.actions, _c = _a.margin, margin = _c === void 0 ? 32 : _c, hideClose = _a.hideClose, autoClose = _a.autoClose, backdropClose = _a.backdropClose, escapeClose = _a.escapeClose, fullHeight = _a.fullHeight, initDisableEnforceFocus = _a.disableEnforceFocus, onShow = _a.onShow, initOnRequestClose = _a.onRequestClose, initOnClose = _a.onClose, onCommands = _a.onCommands, otherProps = __rest(_a, ["content", "contentProps", "color", "titleIcon", "title", "titleProps", "subTitle", "actions", "margin", "hideClose", "autoClose", "backdropClose", "escapeClose", "fullHeight", "disableEnforceFocus", "onShow", "onRequestClose", "onClose", "onCommands"]);
     var id = React.useId();
     /********************************************************************************************************************
      * Use
@@ -79,6 +80,7 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
      * State
      * ******************************************************************************************************************/
     var _d = React.useState(true), open = _d[0], setOpen = _d[1];
+    var _e = reactHook.useAutoUpdateState(initDisableEnforceFocus), disableEnforceFocus = _e[0], setDisableEnforceFocus = _e[1];
     /********************************************************************************************************************
      * Memo
      * ******************************************************************************************************************/
@@ -91,6 +93,18 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
             onShow();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    React.useEffect(function () {
+        if (initDisableEnforceFocus === undefined) {
+            var handler_1 = function (disabled) {
+                setDisableEnforceFocus(disabled);
+            };
+            __disableEnforceFocusListeners.push(handler_1);
+            return function () {
+                __disableEnforceFocusListeners = __disableEnforceFocusListeners.filter(function (l) { return l !== handler_1; });
+            };
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initDisableEnforceFocus]);
     /********************************************************************************************************************
      * Memo
      * ******************************************************************************************************************/
@@ -160,7 +174,7 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
     /********************************************************************************************************************
      * Render
      * ******************************************************************************************************************/
-    return (React.createElement(StyledDialog, __assign({ className: "color-".concat(color, " ").concat(fullHeight ? 'Dialog-full-height' : ''), open: open, "data-margin": margin, "aria-labelledby": "dialog-title-".concat(id), onClose: handleClose }, otherProps),
+    return (React.createElement(StyledDialog, __assign({ className: "color-".concat(color, " ").concat(fullHeight ? 'Dialog-full-height' : ''), open: open, "data-margin": margin, "aria-labelledby": "dialog-title-".concat(id), disableEnforceFocus: disableEnforceFocus, onClose: handleClose }, otherProps),
         title && (React.createElement(StyledDialogTitle, __assign({}, titleProps),
             (titleIcon || title) && (React.createElement(material.Box, { display: 'flex', fontSize: 17 },
                 titleIcon && (React.createElement(material.Box, { display: 'flex', alignItems: 'center', marginRight: '7px' },
@@ -176,6 +190,9 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
         actions && React.createElement(StyledDialogActions, null, actions)));
 });
 Dialog.displayName = 'Dialog';
+Dialog.setDisableEnforceFocus = function (disabled) {
+    __disableEnforceFocusListeners.forEach(function (listener) { return listener(disabled); });
+};
 /********************************************************************************************************************
  * Styled Components
  * ******************************************************************************************************************/
