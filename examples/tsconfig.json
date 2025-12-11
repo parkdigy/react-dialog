@@ -13,7 +13,8 @@
     "preserveSymlinks": true,
     "baseUrl": "./",
     "paths": {
-      "@comp": ["src/component"]
+      "@comp": ["src/component"],
+      "@dialog": ["src/dialog"]
     },
     "typeRoots": ["node_modules/@types", "src/@types"]
   },

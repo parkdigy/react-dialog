@@ -4,6 +4,7 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import menu from './menu.json';
 import { theme } from './DefaultLayout.types';
 import MainRouter from '../../router';
+import { DialogContextProvider } from '../../../../src';
 
 const DefaultLayout = () => {
   //--------------------------------------------------------------------------------------------------------------------
@@ -11,9 +12,11 @@ const DefaultLayout = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AdminLayout.DefaultLayout logo='react-hook' menu={menu}>
-        <MainRouter />
-      </AdminLayout.DefaultLayout>
+      <DialogContextProvider>
+        <AdminLayout.DefaultLayout logo='react-hook' menu={menu}>
+          <MainRouter />
+        </AdminLayout.DefaultLayout>
+      </DialogContextProvider>
     </ThemeProvider>
   );
 };
