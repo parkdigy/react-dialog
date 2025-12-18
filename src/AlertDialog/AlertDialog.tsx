@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { AlertDialogCommands, AlertDialogProps as Props } from './AlertDialog.types';
 import { Dialog, DialogCommands } from '../Dialog';
 import { DialogActionButton } from '../DialogActionButton';
@@ -24,14 +24,15 @@ const AlertDialog = ({
    * Commands
    * ******************************************************************************************************************/
 
-  useForwardRef<AlertDialogCommands>(
-    ref,
-    {
+  const commands = useMemo(
+    (): AlertDialogCommands => ({
       getId: () => dialogRef.current?.getId() || '',
       close: () => dialogRef.current?.close(),
-    },
-    (commands) => onCommands?.(commands)
+    }),
+    []
   );
+
+  useForwardRef(ref, commands, (commands) => onCommands?.(commands));
 
   /********************************************************************************************************************
    * Render

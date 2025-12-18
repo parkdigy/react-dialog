@@ -1,4 +1,4 @@
-import React, { CSSProperties, useCallback, useEffect, useId, useRef, useState } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import {
   Dialog as MuiDialog,
   useTheme,
@@ -127,15 +127,16 @@ const Dialog = ({
    * Commands
    * ******************************************************************************************************************/
 
-  useForwardRef<DialogCommands>(
-    ref,
-    {
+  const commands = useMemo(
+    (): DialogCommands => ({
       getId: () => id,
       close,
       scrollToTop: () => contentRef.current?.scrollTo({ top: 0 }),
-    },
-    (commands) => onCommands?.(commands)
+    }),
+    [close, id]
   );
+
+  useForwardRef(ref, commands, (cmd) => onCommands?.(cmd));
 
   /********************************************************************************************************************
    * Event Handler

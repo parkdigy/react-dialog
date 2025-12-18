@@ -2,7 +2,7 @@
   "name": "@pdg/react-dialog",
   "title": "Typescript React Dialog Module",
   "description": "Typescript React Dialog Module",
-  "version": "1.0.40",
+  "version": "1.0.41",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",

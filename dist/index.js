@@ -391,22 +391,23 @@ var Dialog = function Dialog(t0) {
   } else {
     t19 = $[48];
   }
+  var commands = t19;
   var t20;
   if ($[49] !== onCommands) {
-    t20 = function t20(commands) {
+    t20 = function t20(cmd) {
       var _onCommands;
-      return (_onCommands = onCommands) === null || _onCommands === void 0 ? void 0 : _onCommands(commands);
+      return (_onCommands = onCommands) === null || _onCommands === void 0 ? void 0 : _onCommands(cmd);
     };
     $[49] = onCommands;
     $[50] = t20;
   } else {
     t20 = $[50];
   }
-  reactHook.useForwardRef(ref, t19, t20);
+  reactHook.useForwardRef(ref, commands, t20);
   var t21;
   if ($[51] !== autoClose || $[52] !== backdropClose || $[53] !== close || $[54] !== escapeClose || $[55] !== onRequestCloseRef) {
     t21 = function t21(_, reason) {
-      bb93: switch (reason) {
+      bb95: switch (reason) {
         case "backdropClick":
           {
             if (backdropClose) {
@@ -416,7 +417,7 @@ var Dialog = function Dialog(t0) {
                 onRequestCloseRef.current && onRequestCloseRef.current();
               }
             }
-            break bb93;
+            break bb95;
           }
         case "escapeKeyDown":
           {
@@ -678,18 +679,19 @@ var AlertDialog = function AlertDialog(t0) {
   } else {
     t4 = $[9];
   }
+  var commands = t4;
   var t5;
   if ($[10] !== onCommands) {
-    t5 = function t5(commands) {
+    t5 = function t5(commands_0) {
       var _onCommands;
-      return (_onCommands = onCommands) === null || _onCommands === void 0 ? void 0 : _onCommands(commands);
+      return (_onCommands = onCommands) === null || _onCommands === void 0 ? void 0 : _onCommands(commands_0);
     };
     $[10] = onCommands;
     $[11] = t5;
   } else {
     t5 = $[11];
   }
-  reactHook.useForwardRef(ref, t4, t5);
+  reactHook.useForwardRef(ref, commands, t5);
   var t6;
   if ($[12] !== style) {
     t6 = _objectSpread2({
@@ -883,9 +885,9 @@ var ConfirmDialog = function ConfirmDialog(t0) {
   var commands = t5;
   var t6;
   if ($[17] !== onCommands) {
-    t6 = function t6(commands_0) {
+    t6 = function t6(cmd) {
       var _onCommands;
-      return (_onCommands = onCommands) === null || _onCommands === void 0 ? void 0 : _onCommands(commands_0);
+      return (_onCommands = onCommands) === null || _onCommands === void 0 ? void 0 : _onCommands(cmd);
     };
     $[17] = onCommands;
     $[18] = t6;

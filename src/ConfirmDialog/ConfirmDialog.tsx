@@ -76,15 +76,14 @@ const ConfirmDialog = ({
    * ******************************************************************************************************************/
 
   const commands = useMemo(
-    (): ConfirmDialogCommands =>
-      ({
-        getId: () => dialogRef.current?.getId() || '',
-        close: () => dialogRef.current?.close(),
-      }) as ConfirmDialogCommands,
+    (): ConfirmDialogCommands => ({
+      getId: () => dialogRef.current?.getId() || '',
+      close: () => dialogRef.current?.close(),
+    }),
     []
   );
 
-  useForwardRef<ConfirmDialogCommands>(ref, commands, (commands) => onCommands?.(commands));
+  useForwardRef(ref, commands, (cmd) => onCommands?.(cmd));
 
   /********************************************************************************************************************
    * Render
