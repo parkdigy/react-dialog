@@ -1,14 +1,4 @@
-import React, {
-  CSSProperties,
-  useCallback,
-  useEffect,
-  useId,
-  useImperativeHandle,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { CSSProperties, useCallback, useEffect, useId, useRef, useState } from 'react';
 import {
   Dialog as MuiDialog,
   useTheme,
@@ -21,7 +11,7 @@ import {
   DialogActions,
 } from '@mui/material';
 import { DialogCommands, DialogProps as Props } from './Dialog.types';
-import { useAutoUpdateRef, useAutoUpdateState } from '@pdg/react-hook';
+import { useAutoUpdateRef, useAutoUpdateState, useForwardRef } from '@pdg/react-hook';
 
 let __disableEnforceFocusListeners: ((disabled: boolean) => void)[] = [];
 
@@ -137,20 +127,15 @@ const Dialog = ({
    * Commands
    * ******************************************************************************************************************/
 
-  const commands = useMemo(
-    (): DialogCommands => ({
+  useForwardRef<DialogCommands>(
+    ref,
+    {
       getId: () => id,
       close,
       scrollToTop: () => contentRef.current?.scrollTo({ top: 0 }),
-    }),
-    [id, close]
+    },
+    (commands) => onCommands?.(commands)
   );
-
-  useImperativeHandle(ref, () => commands);
-
-  useLayoutEffect(() => {
-    onCommands && onCommands(commands);
-  }, [commands, onCommands]);
 
   /********************************************************************************************************************
    * Event Handler

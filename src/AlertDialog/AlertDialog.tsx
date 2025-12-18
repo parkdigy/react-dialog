@@ -1,7 +1,8 @@
-import React, { useImperativeHandle, useLayoutEffect, useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { AlertDialogCommands, AlertDialogProps as Props } from './AlertDialog.types';
 import { Dialog, DialogCommands } from '../Dialog';
 import { DialogActionButton } from '../DialogActionButton';
+import { useForwardRef } from '@pdg/react-hook';
 
 const AlertDialog = ({
   ref,
@@ -23,19 +24,14 @@ const AlertDialog = ({
    * Commands
    * ******************************************************************************************************************/
 
-  const commands = useMemo(
-    (): AlertDialogCommands => ({
+  useForwardRef<AlertDialogCommands>(
+    ref,
+    {
       getId: () => dialogRef.current?.getId() || '',
       close: () => dialogRef.current?.close(),
-    }),
-    []
+    },
+    (commands) => onCommands?.(commands)
   );
-
-  useImperativeHandle(ref, () => commands);
-
-  useLayoutEffect(() => {
-    onCommands?.(commands);
-  }, [commands, onCommands]);
 
   /********************************************************************************************************************
    * Render

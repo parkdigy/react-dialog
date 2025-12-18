@@ -1,8 +1,9 @@
-import React, { useImperativeHandle, useLayoutEffect, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { ConfirmDialogCommands, ConfirmDialogProps as Props } from './ConfirmDialog.types';
 import { Dialog, DialogCommands, DialogProps } from '../Dialog';
 import { DialogActionButton } from '../DialogActionButton';
 import { Box, useTheme } from '@mui/material';
+import { useForwardRef } from '@pdg/react-hook';
 
 const ConfirmDialog = ({
   ref,
@@ -83,11 +84,7 @@ const ConfirmDialog = ({
     []
   );
 
-  useImperativeHandle(ref, () => commands);
-
-  useLayoutEffect(() => {
-    onCommands && onCommands(commands);
-  }, [commands, onCommands]);
+  useForwardRef<ConfirmDialogCommands>(ref, commands, (commands) => onCommands?.(commands));
 
   /********************************************************************************************************************
    * Render
