@@ -38,38 +38,42 @@ const ConfirmDialog = ({
    * color, textColor
    * ******************************************************************************************************************/
 
-  let color: DialogProps['color'];
-  let textColor: string;
+  const { color, textColor } = useMemo(() => {
+    let _color: DialogProps['color'];
+    let _textColor: string;
 
-  switch (type) {
-    case 'primary':
-      color = 'info';
-      textColor = theme.palette.primary.main;
-      break;
-    case 'secondary':
-      color = 'secondary';
-      textColor = theme.palette.secondary.main;
-      break;
-    case 'info':
-      color = 'info';
-      textColor = theme.palette.info.main;
-      break;
-    case 'success':
-      color = 'success';
-      textColor = theme.palette.success.main;
-      break;
-    case 'warning':
-      color = 'warning';
-      textColor = theme.palette.warning.main;
-      break;
-    case 'error':
-      color = 'error';
-      textColor = theme.palette.error.main;
-      break;
-    default:
-      color = 'primary';
-      textColor = theme.palette.text.primary;
-  }
+    switch (type) {
+      case 'primary':
+        _color = 'info';
+        _textColor = theme.palette.primary.main;
+        break;
+      case 'secondary':
+        _color = 'secondary';
+        _textColor = theme.palette.secondary.main;
+        break;
+      case 'info':
+        _color = 'info';
+        _textColor = theme.palette.info.main;
+        break;
+      case 'success':
+        _color = 'success';
+        _textColor = theme.palette.success.main;
+        break;
+      case 'warning':
+        _color = 'warning';
+        _textColor = theme.palette.warning.main;
+        break;
+      case 'error':
+        _color = 'error';
+        _textColor = theme.palette.error.main;
+        break;
+      default:
+        _color = 'primary';
+        _textColor = theme.palette.text.primary;
+    }
+
+    return { color: _color, textColor: _textColor };
+  }, [theme, type]);
 
   /********************************************************************************************************************
    * Commands

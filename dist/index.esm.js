@@ -1,4 +1,4 @@
-import {c}from'react/compiler-runtime';import React,{createContext,useId,useRef,useState,useEffect,useContext}from'react';import {styled,Dialog as Dialog$1,DialogTitle,IconButton,DialogContent,DialogActions,useTheme,Box,Icon,Button}from'@mui/material';import {useAutoUpdateRef,useAutoUpdateState,useForwardRef}from'@pdg/react-hook';import {withErrorBoundary,useErrorBoundary}from'react-use-error-boundary';function _arrayLikeToArray(r, a) {
+import {c}from'react/compiler-runtime';import React,{createContext,useId,useRef,useState,useEffect,useContext}from'react';import {styled,Dialog as Dialog$1,DialogTitle,IconButton,DialogContent,DialogActions,useTheme,Box,Icon,Button}from'@mui/material';import {useAutoUpdateRef,useForwardRef}from'@pdg/react-hook';import {withErrorBoundary,useErrorBoundary}from'react-use-error-boundary';function _arrayLikeToArray(r, a) {
   (null == a || a > r.length) && (a = r.length);
   for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
   return n;
@@ -141,7 +141,7 @@ var _excluded$4 = ["ref", "content", "contentProps", "color", "titleIcon", "titl
 var __disableEnforceFocusListeners = [];
 var Dialog = function Dialog(t0) {
   var _titleProps$style$bac, _titleProps, _titleProps$style$col, _titleProps2, _contentProps;
-  var $ = c(87);
+  var $ = c(86);
   var actions;
   var autoClose;
   var backdropClose;
@@ -243,10 +243,18 @@ var Dialog = function Dialog(t0) {
     _useState2 = _slicedToArray(_useState, 2),
     open = _useState2[0],
     setOpen = _useState2[1];
-  var _useAutoUpdateState = useAutoUpdateState(initDisableEnforceFocus),
-    _useAutoUpdateState2 = _slicedToArray(_useAutoUpdateState, 2),
-    disableEnforceFocus = _useAutoUpdateState2[0],
-    setDisableEnforceFocus = _useAutoUpdateState2[1];
+  var _useState3 = useState(initDisableEnforceFocus),
+    _useState4 = _slicedToArray(_useState3, 2),
+    disableEnforceFocus = _useState4[0],
+    setDisableEnforceFocus = _useState4[1];
+  var _useState5 = useState(initDisableEnforceFocus),
+    _useState6 = _slicedToArray(_useState5, 2),
+    prevInitDisableEnforceFocus = _useState6[0],
+    setPrevInitDisableEnforceFocus = _useState6[1];
+  if (initDisableEnforceFocus !== prevInitDisableEnforceFocus) {
+    setPrevInitDisableEnforceFocus(initDisableEnforceFocus);
+    setDisableEnforceFocus(initDisableEnforceFocus);
+  }
   var t3;
   if ($[22] !== initTitleIcon) {
     var _initTitleIcon;
@@ -317,7 +325,7 @@ var Dialog = function Dialog(t0) {
   useEffect(t12, t13);
   var t14;
   var t15;
-  if ($[36] !== initDisableEnforceFocus || $[37] !== setDisableEnforceFocus) {
+  if ($[36] !== initDisableEnforceFocus) {
     t14 = function t14() {
       if (initDisableEnforceFocus === undefined) {
         var handler = function handler(disabled) {
@@ -333,81 +341,80 @@ var Dialog = function Dialog(t0) {
     };
     t15 = [initDisableEnforceFocus, setDisableEnforceFocus];
     $[36] = initDisableEnforceFocus;
-    $[37] = setDisableEnforceFocus;
-    $[38] = t14;
-    $[39] = t15;
+    $[37] = t14;
+    $[38] = t15;
   } else {
-    t14 = $[38];
-    t15 = $[39];
+    t14 = $[37];
+    t15 = $[38];
   }
   useEffect(t14, t15);
   var t16;
-  if ($[40] !== onCloseRef || $[41] !== theme.transitions.duration.leavingScreen) {
+  if ($[39] !== onCloseRef || $[40] !== theme.transitions.duration.leavingScreen) {
     t16 = function t16() {
       setOpen(false);
       setTimeout(function () {
         onCloseRef.current && onCloseRef.current();
       }, theme.transitions.duration.leavingScreen);
     };
-    $[40] = onCloseRef;
-    $[41] = theme.transitions.duration.leavingScreen;
-    $[42] = t16;
+    $[39] = onCloseRef;
+    $[40] = theme.transitions.duration.leavingScreen;
+    $[41] = t16;
   } else {
-    t16 = $[42];
+    t16 = $[41];
   }
   var close = t16;
   var t17;
-  if ($[43] !== id) {
+  if ($[42] !== id) {
     t17 = function t17() {
       return id;
     };
-    $[43] = id;
-    $[44] = t17;
+    $[42] = id;
+    $[43] = t17;
   } else {
-    t17 = $[44];
+    t17 = $[43];
   }
   var t18;
-  if ($[45] === Symbol["for"]("react.memo_cache_sentinel")) {
+  if ($[44] === Symbol["for"]("react.memo_cache_sentinel")) {
     t18 = function t18() {
       var _contentRef$current;
       return (_contentRef$current = contentRef.current) === null || _contentRef$current === void 0 ? void 0 : _contentRef$current.scrollTo({
         top: 0
       });
     };
-    $[45] = t18;
+    $[44] = t18;
   } else {
-    t18 = $[45];
+    t18 = $[44];
   }
   var t19;
-  if ($[46] !== close || $[47] !== t17) {
+  if ($[45] !== close || $[46] !== t17) {
     t19 = {
       getId: t17,
       close: close,
       scrollToTop: t18
     };
-    $[46] = close;
-    $[47] = t17;
-    $[48] = t19;
+    $[45] = close;
+    $[46] = t17;
+    $[47] = t19;
   } else {
-    t19 = $[48];
+    t19 = $[47];
   }
   var commands = t19;
   var t20;
-  if ($[49] !== onCommands) {
+  if ($[48] !== onCommands) {
     t20 = function t20(cmd) {
       var _onCommands;
       return (_onCommands = onCommands) === null || _onCommands === void 0 ? void 0 : _onCommands(cmd);
     };
-    $[49] = onCommands;
-    $[50] = t20;
+    $[48] = onCommands;
+    $[49] = t20;
   } else {
-    t20 = $[50];
+    t20 = $[49];
   }
   useForwardRef(ref, commands, t20);
   var t21;
-  if ($[51] !== autoClose || $[52] !== backdropClose || $[53] !== close || $[54] !== escapeClose || $[55] !== onRequestCloseRef) {
+  if ($[50] !== autoClose || $[51] !== backdropClose || $[52] !== close || $[53] !== escapeClose || $[54] !== onRequestCloseRef) {
     t21 = function t21(_, reason) {
-      bb95: switch (reason) {
+      bb97: switch (reason) {
         case "backdropClick":
           {
             if (backdropClose) {
@@ -417,7 +424,7 @@ var Dialog = function Dialog(t0) {
                 onRequestCloseRef.current && onRequestCloseRef.current();
               }
             }
-            break bb95;
+            break bb97;
           }
         case "escapeKeyDown":
           {
@@ -431,18 +438,18 @@ var Dialog = function Dialog(t0) {
           }
       }
     };
-    $[51] = autoClose;
-    $[52] = backdropClose;
-    $[53] = close;
-    $[54] = escapeClose;
-    $[55] = onRequestCloseRef;
-    $[56] = t21;
+    $[50] = autoClose;
+    $[51] = backdropClose;
+    $[52] = close;
+    $[53] = escapeClose;
+    $[54] = onRequestCloseRef;
+    $[55] = t21;
   } else {
-    t21 = $[56];
+    t21 = $[55];
   }
   var handleClose = t21;
   var t22;
-  if ($[57] !== autoClose || $[58] !== close || $[59] !== onRequestCloseRef) {
+  if ($[56] !== autoClose || $[57] !== close || $[58] !== onRequestCloseRef) {
     t22 = function t22() {
       if (autoClose) {
         close();
@@ -450,18 +457,18 @@ var Dialog = function Dialog(t0) {
         onRequestCloseRef.current && onRequestCloseRef.current();
       }
     };
-    $[57] = autoClose;
-    $[58] = close;
-    $[59] = onRequestCloseRef;
-    $[60] = t22;
+    $[56] = autoClose;
+    $[57] = close;
+    $[58] = onRequestCloseRef;
+    $[59] = t22;
   } else {
-    t22 = $[60];
+    t22 = $[59];
   }
   var handleCloseClick = t22;
   var t23 = "".concat(fullHeight ? "Dialog-full-height" : "");
   var t24 = "dialog-title-".concat(id);
   var t25;
-  if ($[61] !== color || $[62] !== handleCloseClick || $[63] !== hideClose || $[64] !== subTitle || $[65] !== theme.palette || $[66] !== title || $[67] !== titleIcon || $[68] !== titleProps || $[69] !== titleStyle) {
+  if ($[60] !== color || $[61] !== handleCloseClick || $[62] !== hideClose || $[63] !== subTitle || $[64] !== theme.palette || $[65] !== title || $[66] !== titleIcon || $[67] !== titleProps || $[68] !== titleStyle) {
     t25 = title && /*#__PURE__*/React.createElement(StyledDialogTitle, _extends({
       style: titleStyle
     }, titleProps), (titleIcon || title) && /*#__PURE__*/React.createElement(Box, {
@@ -488,40 +495,40 @@ var Dialog = function Dialog(t0) {
       },
       onClick: handleCloseClick
     }, /*#__PURE__*/React.createElement(Icon, null, "close")));
-    $[61] = color;
-    $[62] = handleCloseClick;
-    $[63] = hideClose;
-    $[64] = subTitle;
-    $[65] = theme.palette;
-    $[66] = title;
-    $[67] = titleIcon;
-    $[68] = titleProps;
-    $[69] = titleStyle;
-    $[70] = t25;
+    $[60] = color;
+    $[61] = handleCloseClick;
+    $[62] = hideClose;
+    $[63] = subTitle;
+    $[64] = theme.palette;
+    $[65] = title;
+    $[66] = titleIcon;
+    $[67] = titleProps;
+    $[68] = titleStyle;
+    $[69] = t25;
   } else {
-    t25 = $[70];
+    t25 = $[69];
   }
   var t26;
-  if ($[71] !== content || $[72] !== finalContentProps) {
+  if ($[70] !== content || $[71] !== finalContentProps) {
     t26 = /*#__PURE__*/React.createElement(StyledDialogContent, _extends({
       ref: contentRef
     }, finalContentProps), content);
-    $[71] = content;
-    $[72] = finalContentProps;
-    $[73] = t26;
+    $[70] = content;
+    $[71] = finalContentProps;
+    $[72] = t26;
   } else {
-    t26 = $[73];
+    t26 = $[72];
   }
   var t27;
-  if ($[74] !== actions) {
+  if ($[73] !== actions) {
     t27 = actions && /*#__PURE__*/React.createElement(StyledDialogActions, null, actions);
-    $[74] = actions;
-    $[75] = t27;
+    $[73] = actions;
+    $[74] = t27;
   } else {
-    t27 = $[75];
+    t27 = $[74];
   }
   var t28;
-  if ($[76] !== disableEnforceFocus || $[77] !== handleClose || $[78] !== margin || $[79] !== open || $[80] !== otherProps || $[81] !== t23 || $[82] !== t24 || $[83] !== t25 || $[84] !== t26 || $[85] !== t27) {
+  if ($[75] !== disableEnforceFocus || $[76] !== handleClose || $[77] !== margin || $[78] !== open || $[79] !== otherProps || $[80] !== t23 || $[81] !== t24 || $[82] !== t25 || $[83] !== t26 || $[84] !== t27) {
     t28 = /*#__PURE__*/React.createElement(StyledDialog, _extends({
       className: t23,
       open: open,
@@ -530,19 +537,19 @@ var Dialog = function Dialog(t0) {
       disableEnforceFocus: disableEnforceFocus,
       onClose: handleClose
     }, otherProps), t25, t26, t27);
-    $[76] = disableEnforceFocus;
-    $[77] = handleClose;
-    $[78] = margin;
-    $[79] = open;
-    $[80] = otherProps;
-    $[81] = t23;
-    $[82] = t24;
-    $[83] = t25;
-    $[84] = t26;
-    $[85] = t27;
-    $[86] = t28;
+    $[75] = disableEnforceFocus;
+    $[76] = handleClose;
+    $[77] = margin;
+    $[78] = open;
+    $[79] = otherProps;
+    $[80] = t23;
+    $[81] = t24;
+    $[82] = t25;
+    $[83] = t26;
+    $[84] = t27;
+    $[85] = t28;
   } else {
-    t28 = $[86];
+    t28 = $[85];
   }
   return t28;
 };
@@ -682,9 +689,9 @@ var AlertDialog = function AlertDialog(t0) {
   var commands = t4;
   var t5;
   if ($[10] !== onCommands) {
-    t5 = function t5(commands_0) {
+    t5 = function t5(cmd) {
       var _onCommands;
-      return (_onCommands = onCommands) === null || _onCommands === void 0 ? void 0 : _onCommands(commands_0);
+      return (_onCommands = onCommands) === null || _onCommands === void 0 ? void 0 : _onCommands(cmd);
     };
     $[10] = onCommands;
     $[11] = t5;
@@ -749,7 +756,7 @@ var AlertDialog = function AlertDialog(t0) {
   return t9;
 };var _excluded$1 = ["ref", "type", "content", "style", "maxWidth", "confirmButtonLabel", "confirmButtonProps", "cancelButtonLabel", "cancelButtonProps", "onShow", "onClose", "onConfirm", "onCancel", "onCommands"];
 var ConfirmDialog = function ConfirmDialog(t0) {
-  var $ = c(58);
+  var $ = c(61);
   var cancelButtonProps;
   var confirmButtonProps;
   var content;
@@ -821,54 +828,69 @@ var ConfirmDialog = function ConfirmDialog(t0) {
   var cancelButtonLabel = t4 === undefined ? "\uCDE8\uC18C" : t4;
   var theme = useTheme();
   var dialogRef = useRef(null);
-  var color;
-  var textColor;
+  var _color;
+  var _textColor;
   bb0: switch (type) {
     case "primary":
       {
-        color = "info";
-        textColor = theme.palette.primary.main;
+        _color = "info";
+        _textColor = theme.palette.primary.main;
         break bb0;
       }
     case "secondary":
       {
-        color = "secondary";
-        textColor = theme.palette.secondary.main;
+        _color = "secondary";
+        _textColor = theme.palette.secondary.main;
         break bb0;
       }
     case "info":
       {
-        color = "info";
-        textColor = theme.palette.info.main;
+        _color = "info";
+        _textColor = theme.palette.info.main;
         break bb0;
       }
     case "success":
       {
-        color = "success";
-        textColor = theme.palette.success.main;
+        _color = "success";
+        _textColor = theme.palette.success.main;
         break bb0;
       }
     case "warning":
       {
-        color = "warning";
-        textColor = theme.palette.warning.main;
+        _color = "warning";
+        _textColor = theme.palette.warning.main;
         break bb0;
       }
     case "error":
       {
-        color = "error";
-        textColor = theme.palette.error.main;
+        _color = "error";
+        _textColor = theme.palette.error.main;
         break bb0;
       }
     default:
       {
-        color = "primary";
-        textColor = theme.palette.text.primary;
+        _color = "primary";
+        _textColor = theme.palette.text.primary;
       }
   }
   var t5;
-  if ($[16] === Symbol["for"]("react.memo_cache_sentinel")) {
+  if ($[16] !== _color || $[17] !== _textColor) {
     t5 = {
+      color: _color,
+      textColor: _textColor
+    };
+    $[16] = _color;
+    $[17] = _textColor;
+    $[18] = t5;
+  } else {
+    t5 = $[18];
+  }
+  var _t2 = t5,
+    color = _t2.color,
+    textColor = _t2.textColor;
+  var t6;
+  if ($[19] === Symbol["for"]("react.memo_cache_sentinel")) {
+    t6 = {
       getId: function getId() {
         var _dialogRef$current;
         return ((_dialogRef$current = dialogRef.current) === null || _dialogRef$current === void 0 ? void 0 : _dialogRef$current.getId()) || "";
@@ -878,189 +900,189 @@ var ConfirmDialog = function ConfirmDialog(t0) {
         return (_dialogRef$current2 = dialogRef.current) === null || _dialogRef$current2 === void 0 ? void 0 : _dialogRef$current2.close();
       }
     };
-    $[16] = t5;
+    $[19] = t6;
   } else {
-    t5 = $[16];
+    t6 = $[19];
   }
-  var commands = t5;
-  var t6;
-  if ($[17] !== onCommands) {
-    t6 = function t6(cmd) {
+  var commands = t6;
+  var t7;
+  if ($[20] !== onCommands) {
+    t7 = function t7(cmd) {
       var _onCommands;
       return (_onCommands = onCommands) === null || _onCommands === void 0 ? void 0 : _onCommands(cmd);
     };
-    $[17] = onCommands;
-    $[18] = t6;
+    $[20] = onCommands;
+    $[21] = t7;
   } else {
-    t6 = $[18];
+    t7 = $[21];
   }
-  useForwardRef(ref, commands, t6);
-  var t7;
-  if ($[19] !== initStyle) {
-    t7 = _objectSpread2({
+  useForwardRef(ref, commands, t7);
+  var t8;
+  if ($[22] !== initStyle) {
+    t8 = _objectSpread2({
       zIndex: 1399
     }, initStyle);
-    $[19] = initStyle;
-    $[20] = t7;
+    $[22] = initStyle;
+    $[23] = t8;
   } else {
-    t7 = $[20];
-  }
-  var t8;
-  if ($[21] !== onShow) {
-    t8 = function t8() {
-      return onShow && onShow();
-    };
-    $[21] = onShow;
-    $[22] = t8;
-  } else {
-    t8 = $[22];
+    t8 = $[23];
   }
   var t9;
-  if ($[23] !== onClose) {
+  if ($[24] !== onShow) {
     t9 = function t9() {
-      return onClose && onClose();
+      return onShow && onShow();
     };
-    $[23] = onClose;
-    $[24] = t9;
+    $[24] = onShow;
+    $[25] = t9;
   } else {
-    t9 = $[24];
+    t9 = $[25];
   }
   var t10;
-  if ($[25] !== onCancel) {
+  if ($[26] !== onClose) {
     t10 = function t10() {
-      return onCancel && onCancel(commands);
+      return onClose && onClose();
     };
-    $[25] = onCancel;
-    $[26] = t10;
+    $[26] = onClose;
+    $[27] = t10;
   } else {
-    t10 = $[26];
+    t10 = $[27];
   }
   var t11;
-  if ($[27] !== content || $[28] !== textColor) {
-    t11 = /*#__PURE__*/React.createElement(Box, {
-      textAlign: "center",
-      py: 2,
-      fontSize: 14,
-      color: textColor
-    }, content);
-    $[27] = content;
-    $[28] = textColor;
+  if ($[28] !== onCancel) {
+    t11 = function t11() {
+      return onCancel && onCancel(commands);
+    };
+    $[28] = onCancel;
     $[29] = t11;
   } else {
     t11 = $[29];
   }
   var t12;
-  if ($[30] === Symbol["for"]("react.memo_cache_sentinel")) {
-    t12 = {
+  if ($[30] !== content || $[31] !== textColor) {
+    t12 = /*#__PURE__*/React.createElement(Box, {
+      textAlign: "center",
+      py: 2,
+      fontSize: 14,
+      color: textColor
+    }, content);
+    $[30] = content;
+    $[31] = textColor;
+    $[32] = t12;
+  } else {
+    t12 = $[32];
+  }
+  var t13;
+  if ($[33] === Symbol["for"]("react.memo_cache_sentinel")) {
+    t13 = {
       flex: 1,
       color: "#fff",
       backgroundColor: "#9f9f9f"
     };
-    $[30] = t12;
+    $[33] = t13;
   } else {
-    t12 = $[30];
-  }
-  var t13;
-  if ($[31] !== onCancel) {
-    t13 = function t13() {
-      return onCancel && onCancel(commands);
-    };
-    $[31] = onCancel;
-    $[32] = t13;
-  } else {
-    t13 = $[32];
+    t13 = $[33];
   }
   var t14;
-  if ($[33] !== cancelButtonLabel || $[34] !== cancelButtonProps || $[35] !== t13) {
-    t14 = /*#__PURE__*/React.createElement(DialogActionButton, _extends({
-      variant: "contained",
-      size: "large",
-      style: t12
-    }, cancelButtonProps, {
-      onClick: t13
-    }), cancelButtonLabel);
-    $[33] = cancelButtonLabel;
-    $[34] = cancelButtonProps;
-    $[35] = t13;
-    $[36] = t14;
+  if ($[34] !== onCancel) {
+    t14 = function t14() {
+      return onCancel && onCancel(commands);
+    };
+    $[34] = onCancel;
+    $[35] = t14;
   } else {
-    t14 = $[36];
+    t14 = $[35];
   }
   var t15;
-  if ($[37] === Symbol["for"]("react.memo_cache_sentinel")) {
-    t15 = {
-      flex: 1
-    };
-    $[37] = t15;
+  if ($[36] !== cancelButtonLabel || $[37] !== cancelButtonProps || $[38] !== t14) {
+    t15 = /*#__PURE__*/React.createElement(DialogActionButton, _extends({
+      variant: "contained",
+      size: "large",
+      style: t13
+    }, cancelButtonProps, {
+      onClick: t14
+    }), cancelButtonLabel);
+    $[36] = cancelButtonLabel;
+    $[37] = cancelButtonProps;
+    $[38] = t14;
+    $[39] = t15;
   } else {
-    t15 = $[37];
+    t15 = $[39];
   }
   var t16;
-  if ($[38] !== onConfirm) {
-    t16 = function t16() {
-      return onConfirm && onConfirm(commands);
+  if ($[40] === Symbol["for"]("react.memo_cache_sentinel")) {
+    t16 = {
+      flex: 1
     };
-    $[38] = onConfirm;
-    $[39] = t16;
+    $[40] = t16;
   } else {
-    t16 = $[39];
+    t16 = $[40];
   }
   var t17;
-  if ($[40] !== color || $[41] !== confirmButtonLabel || $[42] !== confirmButtonProps || $[43] !== t16) {
-    t17 = /*#__PURE__*/React.createElement(DialogActionButton, _extends({
+  if ($[41] !== onConfirm) {
+    t17 = function t17() {
+      return onConfirm && onConfirm(commands);
+    };
+    $[41] = onConfirm;
+    $[42] = t17;
+  } else {
+    t17 = $[42];
+  }
+  var t18;
+  if ($[43] !== color || $[44] !== confirmButtonLabel || $[45] !== confirmButtonProps || $[46] !== t17) {
+    t18 = /*#__PURE__*/React.createElement(DialogActionButton, _extends({
       variant: "contained",
       size: "large",
       color: color,
-      style: t15
+      style: t16
     }, confirmButtonProps, {
-      onClick: t16
+      onClick: t17
     }), confirmButtonLabel);
-    $[40] = color;
-    $[41] = confirmButtonLabel;
-    $[42] = confirmButtonProps;
-    $[43] = t16;
-    $[44] = t17;
-  } else {
-    t17 = $[44];
-  }
-  var t18;
-  if ($[45] !== t14 || $[46] !== t17) {
-    t18 = /*#__PURE__*/React.createElement(React.Fragment, null, t14, t17);
-    $[45] = t14;
+    $[43] = color;
+    $[44] = confirmButtonLabel;
+    $[45] = confirmButtonProps;
     $[46] = t17;
     $[47] = t18;
   } else {
     t18 = $[47];
   }
   var t19;
-  if ($[48] !== color || $[49] !== maxWidth || $[50] !== props || $[51] !== t10 || $[52] !== t11 || $[53] !== t18 || $[54] !== t7 || $[55] !== t8 || $[56] !== t9) {
-    t19 = /*#__PURE__*/React.createElement(Dialog, _extends({
+  if ($[48] !== t15 || $[49] !== t18) {
+    t19 = /*#__PURE__*/React.createElement(React.Fragment, null, t15, t18);
+    $[48] = t15;
+    $[49] = t18;
+    $[50] = t19;
+  } else {
+    t19 = $[50];
+  }
+  var t20;
+  if ($[51] !== color || $[52] !== maxWidth || $[53] !== props || $[54] !== t10 || $[55] !== t11 || $[56] !== t12 || $[57] !== t19 || $[58] !== t8 || $[59] !== t9) {
+    t20 = /*#__PURE__*/React.createElement(Dialog, _extends({
       ref: dialogRef,
       maxWidth: maxWidth,
       color: color,
       escapeClose: true,
-      style: t7,
-      onShow: t8,
-      onClose: t9,
-      onRequestClose: t10
+      style: t8,
+      onShow: t9,
+      onClose: t10,
+      onRequestClose: t11
     }, props, {
-      content: t11,
-      actions: t18
+      content: t12,
+      actions: t19
     }));
-    $[48] = color;
-    $[49] = maxWidth;
-    $[50] = props;
-    $[51] = t10;
-    $[52] = t11;
-    $[53] = t18;
-    $[54] = t7;
-    $[55] = t8;
-    $[56] = t9;
+    $[51] = color;
+    $[52] = maxWidth;
+    $[53] = props;
+    $[54] = t10;
+    $[55] = t11;
+    $[56] = t12;
     $[57] = t19;
+    $[58] = t8;
+    $[59] = t9;
+    $[60] = t20;
   } else {
-    t19 = $[57];
+    t20 = $[60];
   }
-  return t19;
+  return t20;
 };var ErrorCatcher = withErrorBoundary(function (_ref) {
   var children = _ref.children,
     onError = _ref.onError;

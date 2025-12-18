@@ -32,7 +32,7 @@ const AlertDialog = ({
     []
   );
 
-  useForwardRef(ref, commands, (commands) => onCommands?.(commands));
+  useForwardRef(ref, commands, (cmd) => onCommands?.(cmd));
 
   /********************************************************************************************************************
    * Render

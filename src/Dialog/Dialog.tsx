@@ -11,7 +11,7 @@ import {
   DialogActions,
 } from '@mui/material';
 import { DialogCommands, DialogProps as Props } from './Dialog.types';
-import { useAutoUpdateRef, useAutoUpdateState, useForwardRef } from '@pdg/react-hook';
+import { useAutoUpdateRef, useForwardRef } from '@pdg/react-hook';
 
 let __disableEnforceFocusListeners: ((disabled: boolean) => void)[] = [];
 
@@ -68,7 +68,13 @@ const Dialog = ({
    * ******************************************************************************************************************/
 
   const [open, setOpen] = useState(true);
-  const [disableEnforceFocus, setDisableEnforceFocus] = useAutoUpdateState(initDisableEnforceFocus);
+
+  const [disableEnforceFocus, setDisableEnforceFocus] = useState(initDisableEnforceFocus);
+  const [prevInitDisableEnforceFocus, setPrevInitDisableEnforceFocus] = useState(initDisableEnforceFocus);
+  if (initDisableEnforceFocus !== prevInitDisableEnforceFocus) {
+    setPrevInitDisableEnforceFocus(initDisableEnforceFocus);
+    setDisableEnforceFocus(initDisableEnforceFocus);
+  }
 
   /********************************************************************************************************************
    * Variable
@@ -142,36 +148,39 @@ const Dialog = ({
    * Event Handler
    * ******************************************************************************************************************/
 
-  const handleClose = (_: object, reason: string) => {
-    switch (reason) {
-      case 'backdropClick':
-        if (backdropClose) {
-          if (autoClose) {
-            close();
-          } else {
-            onRequestCloseRef.current && onRequestCloseRef.current();
+  const handleClose = useCallback(
+    (_: object, reason: string) => {
+      switch (reason) {
+        case 'backdropClick':
+          if (backdropClose) {
+            if (autoClose) {
+              close();
+            } else {
+              onRequestCloseRef.current && onRequestCloseRef.current();
+            }
           }
-        }
-        break;
-      case 'escapeKeyDown':
-        if (escapeClose) {
-          if (autoClose) {
-            close();
-          } else {
-            onRequestCloseRef.current && onRequestCloseRef.current();
+          break;
+        case 'escapeKeyDown':
+          if (escapeClose) {
+            if (autoClose) {
+              close();
+            } else {
+              onRequestCloseRef.current && onRequestCloseRef.current();
+            }
           }
-        }
-        break;
-    }
-  };
+          break;
+      }
+    },
+    [autoClose, backdropClose, close, escapeClose, onRequestCloseRef]
+  );
 
-  const handleCloseClick = () => {
+  const handleCloseClick = useCallback(() => {
     if (autoClose) {
       close();
     } else {
       onRequestCloseRef.current && onRequestCloseRef.current();
     }
-  };
+  }, [autoClose, close, onRequestCloseRef]);
 
   /********************************************************************************************************************
    * Render
