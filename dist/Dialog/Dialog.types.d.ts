@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { DialogContentProps, DialogProps as _DialogProps, DialogTitleProps } from '@mui/material';
 export interface DialogCommands {
     getId(): string;
@@ -6,6 +6,7 @@ export interface DialogCommands {
     scrollToTop(): void;
 }
 export interface DialogProps extends Omit<_DialogProps, 'ref' | 'open' | 'title' | 'aria-labelledby' | 'content' | 'onClose'> {
+    ref?: React.Ref<DialogCommands>;
     content: ReactNode;
     contentProps?: Partial<Omit<DialogContentProps, 'children'>>;
     color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';

@@ -6,7 +6,7 @@ const DialogActionButton = ({ variant, ...otherProps }: Props) => {
   return <StyledButton variant={variant || 'text'} {...otherProps} />;
 };
 
-export default React.memo(DialogActionButton);
+export default DialogActionButton;
 
 /********************************************************************************************************************
  * Styled Components

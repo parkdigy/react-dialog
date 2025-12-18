@@ -1,4 +1,14 @@
-import React, { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  CSSProperties,
+  useCallback,
+  useEffect,
+  useId,
+  useImperativeHandle,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   Dialog as MuiDialog,
   useTheme,
@@ -10,8 +20,8 @@ import {
   DialogContent,
   DialogActions,
 } from '@mui/material';
-import { DialogProps as Props, DialogCommands } from './Dialog.types';
-import { useAutoUpdateLayoutRef, useAutoUpdateState, useForwardRef } from '@pdg/react-hook';
+import { DialogCommands, DialogProps as Props } from './Dialog.types';
+import { useAutoUpdateRef, useAutoUpdateState } from '@pdg/react-hook';
 
 let __disableEnforceFocusListeners: ((disabled: boolean) => void)[] = [];
 
@@ -19,225 +29,214 @@ type DialogType = typeof Dialog & {
   readonly setDisableEnforceFocus: (disabled: boolean) => void;
 };
 
-const Dialog = React.forwardRef<DialogCommands, Props>(
-  (
-    {
-      content,
-      contentProps,
-      color = 'primary',
-      titleIcon: initTitleIcon,
-      title,
-      titleProps,
-      subTitle,
-      actions,
-      margin = 32,
-      hideClose,
-      autoClose,
-      backdropClose,
-      escapeClose,
-      fullHeight,
-      disableEnforceFocus: initDisableEnforceFocus,
-      onShow,
-      onRequestClose: initOnRequestClose,
-      onClose: initOnClose,
-      onCommands,
-      ...otherProps
+const Dialog = ({
+  ref,
+  content,
+  contentProps,
+  color = 'primary',
+  titleIcon: initTitleIcon,
+  title,
+  titleProps,
+  subTitle,
+  actions,
+  margin = 32,
+  hideClose,
+  autoClose,
+  backdropClose,
+  escapeClose,
+  fullHeight,
+  disableEnforceFocus: initDisableEnforceFocus,
+  onShow,
+  onRequestClose: initOnRequestClose,
+  onClose: initOnClose,
+  onCommands,
+  ...otherProps
+}: Props) => {
+  /********************************************************************************************************************
+   * ID
+   * ******************************************************************************************************************/
+
+  const id = useId();
+
+  /********************************************************************************************************************
+   * Use
+   * ******************************************************************************************************************/
+
+  const theme = useTheme();
+
+  /********************************************************************************************************************
+   * Ref
+   * ******************************************************************************************************************/
+
+  const onShowRef = useRef(onShow);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const onRequestCloseRef = useAutoUpdateRef(initOnRequestClose);
+  const onCloseRef = useAutoUpdateRef(initOnClose);
+
+  /********************************************************************************************************************
+   * State
+   * ******************************************************************************************************************/
+
+  const [open, setOpen] = useState(true);
+  const [disableEnforceFocus, setDisableEnforceFocus] = useAutoUpdateState(initDisableEnforceFocus);
+
+  /********************************************************************************************************************
+   * Variable
+   * ******************************************************************************************************************/
+
+  const titleIcon = initTitleIcon?.replace(/[A-Z]/g, (letter, idx) => `${idx > 0 ? '_' : ''}${letter.toLowerCase()}`);
+
+  const titleStyle: CSSProperties = {
+    backgroundColor: titleProps?.style?.backgroundColor ?? theme.palette[color].main,
+    color: titleProps?.style?.color ?? theme.palette[color].contrastText,
+  };
+
+  const finalContentProps = {
+    ...contentProps,
+    style: {
+      paddingTop: title ? 23 : undefined,
+      paddingBottom: actions ? 15 : undefined,
+      ...contentProps?.style,
     },
-    ref
-  ) => {
-    /********************************************************************************************************************
-     * ID
-     * ******************************************************************************************************************/
+  };
 
-    const id = useId();
+  /********************************************************************************************************************
+   * Effect
+   * ******************************************************************************************************************/
 
-    /********************************************************************************************************************
-     * Use
-     * ******************************************************************************************************************/
+  useEffect(() => {
+    onShowRef.current?.();
+  }, []);
 
-    const theme = useTheme();
+  useEffect(() => {
+    if (initDisableEnforceFocus === undefined) {
+      const handler = (disabled: boolean) => {
+        setDisableEnforceFocus(disabled);
+      };
 
-    /********************************************************************************************************************
-     * Ref
-     * ******************************************************************************************************************/
+      __disableEnforceFocusListeners.push(handler);
 
-    const contentRef = useRef<HTMLDivElement>(null);
-    const onRequestCloseRef = useAutoUpdateLayoutRef(initOnRequestClose);
-    const onCloseRef = useAutoUpdateLayoutRef(initOnClose);
+      return () => {
+        __disableEnforceFocusListeners = __disableEnforceFocusListeners.filter((l) => l !== handler);
+      };
+    }
+  }, [initDisableEnforceFocus, setDisableEnforceFocus]);
 
-    /********************************************************************************************************************
-     * State
-     * ******************************************************************************************************************/
+  /********************************************************************************************************************
+   * Function
+   * ******************************************************************************************************************/
 
-    const [open, setOpen] = useState(true);
-    const [disableEnforceFocus, setDisableEnforceFocus] = useAutoUpdateState(initDisableEnforceFocus);
+  const close = useCallback(() => {
+    setOpen(false);
+    setTimeout(() => {
+      onCloseRef.current && onCloseRef.current();
+    }, theme.transitions.duration.leavingScreen);
+  }, [onCloseRef, theme.transitions.duration.leavingScreen]);
 
-    /********************************************************************************************************************
-     * Memo
-     * ******************************************************************************************************************/
+  /********************************************************************************************************************
+   * Commands
+   * ******************************************************************************************************************/
 
-    const titleIcon = initTitleIcon?.replace(/[A-Z]/g, (letter, idx) => `${idx > 0 ? '_' : ''}${letter.toLowerCase()}`);
+  const commands = useMemo(
+    (): DialogCommands => ({
+      getId: () => id,
+      close,
+      scrollToTop: () => contentRef.current?.scrollTo({ top: 0 }),
+    }),
+    [id, close]
+  );
 
-    /********************************************************************************************************************
-     * Effect
-     * ******************************************************************************************************************/
+  useImperativeHandle(ref, () => commands);
 
-    useEffect(() => {
-      if (onShow) onShow();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  useLayoutEffect(() => {
+    onCommands && onCommands(commands);
+  }, [commands, onCommands]);
 
-    useEffect(() => {
-      if (initDisableEnforceFocus === undefined) {
-        const handler = (disabled: boolean) => {
-          setDisableEnforceFocus(disabled);
-        };
+  /********************************************************************************************************************
+   * Event Handler
+   * ******************************************************************************************************************/
 
-        __disableEnforceFocusListeners.push(handler);
-
-        return () => {
-          __disableEnforceFocusListeners = __disableEnforceFocusListeners.filter((l) => l !== handler);
-        };
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [initDisableEnforceFocus]);
-
-    /********************************************************************************************************************
-     * Memo
-     * ******************************************************************************************************************/
-
-    const finalContentProps = useMemo(() => {
-      const newContentProps = contentProps || {};
-      if (actions) {
-        newContentProps.style = {
-          paddingBottom: 15,
-          ...newContentProps.style,
-        };
-      }
-      return newContentProps;
-    }, [contentProps, actions]);
-
-    /********************************************************************************************************************
-     * Function
-     * ******************************************************************************************************************/
-
-    const close = useCallback(() => {
-      setOpen(false);
-      setTimeout(() => {
-        onCloseRef.current && onCloseRef.current();
-      }, theme.transitions.duration.leavingScreen);
-    }, [onCloseRef, theme.transitions.duration.leavingScreen]);
-
-    /********************************************************************************************************************
-     * Commands
-     * ******************************************************************************************************************/
-
-    const commands = useMemo(
-      () => ({
-        getId: () => id,
-        close,
-        scrollToTop: () => contentRef.current?.scrollTo({ top: 0 }),
-      }),
-      [id, close]
-    );
-
-    useForwardRef(ref, commands);
-
-    useLayoutEffect(() => {
-      onCommands && onCommands(commands);
-    }, [commands, onCommands]);
-
-    /********************************************************************************************************************
-     * Event Handler
-     * ******************************************************************************************************************/
-
-    const handleClose = useCallback(
-      (_: object, reason: string) => {
-        switch (reason) {
-          case 'backdropClick':
-            if (backdropClose) {
-              if (autoClose) {
-                close();
-              } else {
-                onRequestCloseRef.current && onRequestCloseRef.current();
-              }
-            }
-            break;
-          case 'escapeKeyDown':
-            if (escapeClose) {
-              if (autoClose) {
-                close();
-              } else {
-                onRequestCloseRef.current && onRequestCloseRef.current();
-              }
-            }
-            break;
+  const handleClose = (_: object, reason: string) => {
+    switch (reason) {
+      case 'backdropClick':
+        if (backdropClose) {
+          if (autoClose) {
+            close();
+          } else {
+            onRequestCloseRef.current && onRequestCloseRef.current();
+          }
         }
-      },
-      [backdropClose, escapeClose, autoClose, close, onRequestCloseRef]
-    );
+        break;
+      case 'escapeKeyDown':
+        if (escapeClose) {
+          if (autoClose) {
+            close();
+          } else {
+            onRequestCloseRef.current && onRequestCloseRef.current();
+          }
+        }
+        break;
+    }
+  };
 
-    const handleCloseClick = useCallback(() => {
-      if (autoClose) {
-        close();
-      } else {
-        onRequestCloseRef.current && onRequestCloseRef.current();
-      }
-    }, [autoClose, close, onRequestCloseRef]);
+  const handleCloseClick = () => {
+    if (autoClose) {
+      close();
+    } else {
+      onRequestCloseRef.current && onRequestCloseRef.current();
+    }
+  };
 
-    /********************************************************************************************************************
-     * Render
-     * ******************************************************************************************************************/
+  /********************************************************************************************************************
+   * Render
+   * ******************************************************************************************************************/
 
-    return (
-      <StyledDialog
-        className={`color-${color} ${fullHeight ? 'Dialog-full-height' : ''}`}
-        open={open}
-        data-margin={margin}
-        aria-labelledby={`dialog-title-${id}`}
-        disableEnforceFocus={disableEnforceFocus}
-        onClose={handleClose}
-        {...otherProps}
-      >
-        {title && (
-          <StyledDialogTitle {...titleProps}>
-            {(titleIcon || title) && (
-              <Box display='flex' fontSize={17}>
-                {titleIcon && (
-                  <Box display='flex' alignItems='center' marginRight='7px'>
-                    <Icon style={{ fontSize: '22px' }}>{titleIcon}</Icon>
-                  </Box>
-                )}
-                {title && (
-                  <Box display='flex' alignItems='center'>
-                    {title}
-                    {subTitle && <div className='Dialog-SubTitle'>&nbsp;-&nbsp;{subTitle}</div>}
-                  </Box>
-                )}
-              </Box>
-            )}
-            {!hideClose && (
-              <StyleDialogTitleCloseButton
-                className='dialog-close-btn'
-                aria-label='close'
-                style={{ color: theme.palette[color || 'primary'].contrastText }}
-                onClick={handleCloseClick}
-              >
-                <Icon>close</Icon>
-              </StyleDialogTitleCloseButton>
-            )}
-          </StyledDialogTitle>
-        )}
-        <StyledDialogContent ref={contentRef} {...finalContentProps}>
-          {content}
-        </StyledDialogContent>
-        {actions && <StyledDialogActions>{actions}</StyledDialogActions>}
-      </StyledDialog>
-    );
-  }
-);
-
-Dialog.displayName = 'Dialog';
+  return (
+    <StyledDialog
+      className={`${fullHeight ? 'Dialog-full-height' : ''}`}
+      open={open}
+      data-margin={margin}
+      aria-labelledby={`dialog-title-${id}`}
+      disableEnforceFocus={disableEnforceFocus}
+      onClose={handleClose}
+      {...otherProps}
+    >
+      {title && (
+        <StyledDialogTitle style={titleStyle} {...titleProps}>
+          {(titleIcon || title) && (
+            <Box display='flex' fontSize={17}>
+              {titleIcon && (
+                <Box display='flex' alignItems='center' marginRight='7px'>
+                  <Icon style={{ fontSize: '22px' }}>{titleIcon}</Icon>
+                </Box>
+              )}
+              {title && (
+                <Box display='flex' alignItems='center'>
+                  {title}
+                  {subTitle && <div className='Dialog-SubTitle'>&nbsp;-&nbsp;{subTitle}</div>}
+                </Box>
+              )}
+            </Box>
+          )}
+          {!hideClose && (
+            <StyleDialogTitleCloseButton
+              className='dialog-close-btn'
+              aria-label='close'
+              style={{ color: theme.palette[color || 'primary'].contrastText }}
+              onClick={handleCloseClick}
+            >
+              <Icon>close</Icon>
+            </StyleDialogTitleCloseButton>
+          )}
+        </StyledDialogTitle>
+      )}
+      <StyledDialogContent ref={contentRef} {...finalContentProps}>
+        {content}
+      </StyledDialogContent>
+      {actions && <StyledDialogActions>{actions}</StyledDialogActions>}
+    </StyledDialog>
+  );
+};
 
 (Dialog as any).setDisableEnforceFocus = (disabled: boolean) => {
   __disableEnforceFocusListeners.forEach((listener) => listener(disabled));

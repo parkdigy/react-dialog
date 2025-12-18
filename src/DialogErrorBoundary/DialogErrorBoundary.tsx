@@ -16,6 +16,4 @@ const DialogErrorBoundary = ({ onError, children }: Props) => {
   return <ErrorCatcher onError={onError}>{children}</ErrorCatcher>;
 };
 
-DialogErrorBoundary.displayName = 'DialogErrorBoundary';
-
 export default DialogErrorBoundary;

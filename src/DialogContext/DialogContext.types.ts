@@ -18,9 +18,3 @@ export interface DialogContextValue {
   alertDialog: (props: AlertDialogProps) => void;
   confirmDialog: (props: ConfirmDialogProps) => void;
 }
-
-export const DialogContextDefaultValue: DialogContextValue = {
-  pushDialog() {},
-  alertDialog() {},
-  confirmDialog() {},
-};

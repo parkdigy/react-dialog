@@ -1,4 +1,4 @@
 import React from 'react';
-import { ConfirmDialogCommands, ConfirmDialogProps as Props } from './ConfirmDialog.types';
-declare const ConfirmDialog: React.ForwardRefExoticComponent<Props & React.RefAttributes<ConfirmDialogCommands>>;
+import { ConfirmDialogProps as Props } from './ConfirmDialog.types';
+declare const ConfirmDialog: ({ ref, type, content, style: initStyle, maxWidth, confirmButtonLabel, confirmButtonProps, cancelButtonLabel, cancelButtonProps, onShow, onClose, onConfirm, onCancel, onCommands, ...props }: Props) => React.JSX.Element;
 export default ConfirmDialog;

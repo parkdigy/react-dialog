@@ -4,7 +4,7 @@ import { useContext } from 'react';
 
 export default function useConfirmDialog(): (props: ConfirmDialogProps) => void {
   const value = useContext(DialogContext);
-  if (value === undefined) {
+  if (Object.keys(value).length === 0) {
     throw new Error('useConfirmDialog should be used within DialogContext.Provider');
   }
   return value.confirmDialog;

@@ -1,4 +1,4 @@
 import React from 'react';
-import { AlertDialogCommands, AlertDialogProps as Props } from './AlertDialog.types';
-declare const AlertDialog: React.ForwardRefExoticComponent<Props & React.RefAttributes<AlertDialogCommands>>;
+import { AlertDialogProps as Props } from './AlertDialog.types';
+declare const AlertDialog: ({ ref, color, style, maxWidth, confirmButtonLabel, confirmButtonProps, onCommands, ...props }: Props) => React.JSX.Element;
 export default AlertDialog;
