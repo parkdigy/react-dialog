@@ -2,7 +2,7 @@
   "name": "@pdg/react-dialog",
   "title": "Typescript React Dialog Module",
   "description": "Typescript React Dialog Module",
-  "version": "1.0.42",
+  "version": "1.0.44",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
@@ -52,14 +52,14 @@
     "javascript"
   ],
   "peerDependencies": {
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "@mui/icons-material": "^7.0.0",
+    "@mui/material": "^7.0.0",
     "react": ">=19.0.0",
     "react-dom": ">=19.0.0"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^7.3.6",
-    "@mui/material": "^7.3.6",
     "@pdg/react-hook": "^2.0.6",
     "react-use-error-boundary": "^3.0.0"
   },
@@ -68,7 +68,11 @@
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@eslint/js": "9.39.1",
+    "@mui/icons-material": "^7.3.6",
+    "@mui/material": "^7.3.6",
     "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-commonjs": "29.0.0",
     "@rollup/plugin-eslint": "^9.2.0",
