@@ -2,7 +2,7 @@
   "name": "@pdg/react-dialog",
   "title": "Typescript React Dialog Module",
   "description": "Typescript React Dialog Module",
-  "version": "1.0.44",
+  "version": "1.0.45",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
@@ -60,7 +60,7 @@
     "react-dom": ">=19.0.0"
   },
   "dependencies": {
-    "@pdg/react-hook": "^2.0.6",
+    "@pdg/react-hook": "^2.0.8",
     "react-use-error-boundary": "^3.0.0"
   },
   "devDependencies": {
