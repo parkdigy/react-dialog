@@ -116,7 +116,7 @@ const Dialog = ({
         __disableEnforceFocusListeners = __disableEnforceFocusListeners.filter((l) => l !== handler);
       };
     }
-  }, [initDisableEnforceFocus, setDisableEnforceFocus]);
+  }, [initDisableEnforceFocus]);
 
   /********************************************************************************************************************
    * Function

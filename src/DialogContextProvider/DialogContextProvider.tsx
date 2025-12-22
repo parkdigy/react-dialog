@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef, useState } from 'react';
+import React, { ReactNode, useCallback, useRef, useState } from 'react';
 import { DialogContextProviderProps as Props } from './DialogContextProvider.types';
 import { DialogContext, DialogRequireProps, PushDialog } from '../DialogContext';
 import { AlertDialog, AlertDialogCommands, AlertDialogProps } from '../AlertDialog';
@@ -51,7 +51,7 @@ const DialogContextProvider = ({ children }: Props) => {
    * Function
    * ******************************************************************************************************************/
 
-  const alertDialog = (props: AlertDialogProps) => {
+  const alertDialog = useCallback((props: AlertDialogProps) => {
     dialogKeyRef.current += 1;
 
     const { onShow, onClose, ...otherProps } = props;
@@ -79,9 +79,9 @@ const DialogContextProvider = ({ children }: Props) => {
     setDialogs((dialogs) => {
       return [...dialogs, dialog];
     });
-  };
+  }, []);
 
-  const confirmDialog = (props: ConfirmDialogProps) => {
+  const confirmDialog = useCallback((props: ConfirmDialogProps) => {
     dialogKeyRef.current += 1;
 
     const { onShow, onClose, ...otherProps } = props;
@@ -105,9 +105,9 @@ const DialogContextProvider = ({ children }: Props) => {
     setDialogs((dialogs) => {
       return [...dialogs, dialog];
     });
-  };
+  }, []);
 
-  const pushDialog: PushDialog = (dialogComponent, props?, onErrorBoundary?) => {
+  const pushDialog: PushDialog = useCallback((dialogComponent, props?, onErrorBoundary?) => {
     dialogKeyRef.current += 1;
     const dialogId = `dig_${dialogKeyRef.current}`;
     const dialog = (
@@ -127,7 +127,7 @@ const DialogContextProvider = ({ children }: Props) => {
     setDialogs((dialogs) => {
       return [...dialogs, dialog];
     });
-  };
+  }, []);
 
   /********************************************************************************************************************
    * Render

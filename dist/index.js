@@ -339,7 +339,7 @@ var Dialog = function Dialog(t0) {
         };
       }
     };
-    t15 = [initDisableEnforceFocus, setDisableEnforceFocus];
+    t15 = [initDisableEnforceFocus];
     $[36] = initDisableEnforceFocus;
     $[37] = t14;
     $[38] = t15;
