@@ -82,6 +82,34 @@ export default defineConfig([
           defaultProps: 'static public field',
         },
       ],
+      'no-restricted-properties': [
+        'error',
+        {
+          object: 'React',
+          property: 'memo',
+          message: 'React.memo 사용이 금지되었습니다. 제거해 주세요.',
+        },
+        {
+          object: 'React',
+          property: 'forwardRef',
+          message: 'React.forwardRef 사용이 금지되었습니다. 제거해 주세요.',
+        },
+      ],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "TSTypeReference[typeName.left.name='React'][typeName.right.name='FC']",
+          message: 'React.FC 사용이 금지되었습니다. 제거해 주세요.',
+        },
+        {
+          selector: "TSTypeReference[typeName.left.name='React'][typeName.right.name='FunctionComponent']",
+          message: 'React.FunctionComponent 사용이 금지되었습니다. 제거해 주세요.',
+        },
+        {
+          selector: "TSTypeReference[typeName.name='FC'], TSTypeReference[typeName.name='FunctionComponent']",
+          message: 'React.FC 사용이 금지되었습니다. 제거해 주세요.',
+        },
+      ],
     },
   },
 ]);
