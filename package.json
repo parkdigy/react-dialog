@@ -56,7 +56,7 @@
     "@emotion/styled": "^11.0.0",
     "@mui/icons-material": "^7.0.0",
     "@mui/material": "^7.0.0",
-    "@pdg/react-hook": "^2.0.10",
+    "@pdg/react-hook": "^2.0.15",
     "react": ">=19.0.0",
     "react-dom": ">=19.0.0"
   },
@@ -73,7 +73,7 @@
     "@eslint/js": "9.39.1",
     "@mui/icons-material": "^7.3.6",
     "@mui/material": "^7.3.6",
-    "@pdg/react-hook": "^2.0.10",
+    "@pdg/react-hook": "^2.0.15",
     "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-commonjs": "29.0.0",
     "@rollup/plugin-eslint": "^9.2.0",
