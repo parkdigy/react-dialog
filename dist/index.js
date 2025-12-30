@@ -353,7 +353,8 @@ var Dialog = function Dialog(t0) {
     t16 = function t16() {
       setOpen(false);
       setTimeout(function () {
-        onCloseRef.current && onCloseRef.current();
+        var _onCloseRef$current;
+        (_onCloseRef$current = onCloseRef.current) === null || _onCloseRef$current === void 0 || _onCloseRef$current.call(onCloseRef);
       }, theme.transitions.duration.leavingScreen);
     };
     $[39] = onCloseRef;
@@ -421,7 +422,8 @@ var Dialog = function Dialog(t0) {
               if (autoClose) {
                 close();
               } else {
-                onRequestCloseRef.current && onRequestCloseRef.current();
+                var _onRequestCloseRef$cu;
+                (_onRequestCloseRef$cu = onRequestCloseRef.current) === null || _onRequestCloseRef$cu === void 0 || _onRequestCloseRef$cu.call(onRequestCloseRef);
               }
             }
             break bb97;
@@ -432,7 +434,8 @@ var Dialog = function Dialog(t0) {
               if (autoClose) {
                 close();
               } else {
-                onRequestCloseRef.current && onRequestCloseRef.current();
+                var _onRequestCloseRef$cu2;
+                (_onRequestCloseRef$cu2 = onRequestCloseRef.current) === null || _onRequestCloseRef$cu2 === void 0 || _onRequestCloseRef$cu2.call(onRequestCloseRef);
               }
             }
           }
@@ -454,7 +457,8 @@ var Dialog = function Dialog(t0) {
       if (autoClose) {
         close();
       } else {
-        onRequestCloseRef.current && onRequestCloseRef.current();
+        var _onRequestCloseRef$cu3;
+        (_onRequestCloseRef$cu3 = onRequestCloseRef.current) === null || _onRequestCloseRef$cu3 === void 0 || _onRequestCloseRef$cu3.call(onRequestCloseRef);
       }
     };
     $[56] = autoClose;
@@ -1087,7 +1091,7 @@ var ConfirmDialog = function ConfirmDialog(t0) {
   var children = _ref.children,
     onError = _ref.onError;
   var _useErrorBoundary = reactUseErrorBoundary.useErrorBoundary(function (error, errorInfo) {
-      onError && onError(error, errorInfo);
+      onError === null || onError === void 0 || onError(error, errorInfo);
     });
     _slicedToArray(_useErrorBoundary, 1);
   return children;

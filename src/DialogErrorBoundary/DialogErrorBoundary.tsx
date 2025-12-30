@@ -5,7 +5,7 @@ import { useErrorBoundary, withErrorBoundary } from 'react-use-error-boundary';
 const ErrorCatcher = withErrorBoundary(
   ({ children, onError }: { children: ReactElement; onError?(error: unknown, errorInfo: ErrorInfo): void }) => {
     const [,] = useErrorBoundary((error, errorInfo) => {
-      onError && onError(error, errorInfo);
+      onError?.(error, errorInfo);
     });
 
     return children;

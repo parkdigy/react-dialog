@@ -125,7 +125,7 @@ const Dialog = ({
   const close = useCallback(() => {
     setOpen(false);
     setTimeout(() => {
-      onCloseRef.current && onCloseRef.current();
+      onCloseRef.current?.();
     }, theme.transitions.duration.leavingScreen);
   }, [onCloseRef, theme.transitions.duration.leavingScreen]);
 
@@ -156,7 +156,7 @@ const Dialog = ({
             if (autoClose) {
               close();
             } else {
-              onRequestCloseRef.current && onRequestCloseRef.current();
+              onRequestCloseRef.current?.();
             }
           }
           break;
@@ -165,7 +165,7 @@ const Dialog = ({
             if (autoClose) {
               close();
             } else {
-              onRequestCloseRef.current && onRequestCloseRef.current();
+              onRequestCloseRef.current?.();
             }
           }
           break;
@@ -178,7 +178,7 @@ const Dialog = ({
     if (autoClose) {
       close();
     } else {
-      onRequestCloseRef.current && onRequestCloseRef.current();
+      onRequestCloseRef.current?.();
     }
   }, [autoClose, close, onRequestCloseRef]);
 
