@@ -1,8 +1,8 @@
-import React, { ReactNode, useCallback, useRef, useState } from 'react';
-import { DialogContextProviderProps as Props } from './DialogContextProvider.types';
-import { DialogContext, DialogRequireProps, PushDialog } from '../DialogContext';
-import { AlertDialog, AlertDialogCommands, AlertDialogProps } from '../AlertDialog';
-import { ConfirmDialog, ConfirmDialogCommands, ConfirmDialogProps } from '../ConfirmDialog';
+import React, { type ReactNode, useCallback, useRef, useState } from 'react';
+import { type DialogContextProviderProps as Props } from './DialogContextProvider.types';
+import { DialogContext, type DialogRequireProps, type PushDialog } from '../DialogContext';
+import { AlertDialog, type AlertDialogCommands, type AlertDialogProps } from '../AlertDialog';
+import { ConfirmDialog, type ConfirmDialogCommands, type ConfirmDialogProps } from '../ConfirmDialog';
 import DialogErrorBoundary from '../DialogErrorBoundary';
 
 const DialogContextProvider = ({ children }: Props) => {

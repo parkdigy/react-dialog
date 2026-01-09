@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { DialogContextValue } from './DialogContext.types';
+import { type DialogContextValue } from './DialogContext.types';
 
 const DialogContext = createContext<DialogContextValue>({} as DialogContextValue);
 

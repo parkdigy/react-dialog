@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
-import { ButtonProps } from '@mui/material';
-import { DialogCommands, DialogProps } from '../Dialog';
+import React, { type ReactNode } from 'react';
+import { type ButtonProps } from '@mui/material';
+import { type DialogCommands, type DialogProps } from '../Dialog';
 
 export interface AlertDialogCommands extends Omit<DialogCommands, 'scrollToTop'> {}
 

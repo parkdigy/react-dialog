@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, styled } from '@mui/material';
-import { DialogActionButtonProps as Props } from './DialogActionButton.types';
+import { type DialogActionButtonProps as Props } from './DialogActionButton.types';
 
 const DialogActionButton = ({ variant, ...otherProps }: Props) => {
   return <StyledButton variant={variant || 'text'} {...otherProps} />;

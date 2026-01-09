@@ -1,5 +1,5 @@
-import { ComponentClass, ErrorInfo, FunctionComponent, useContext } from 'react';
-import { DialogContext, DialogRequireProps } from '../DialogContext';
+import { type ComponentClass, type ErrorInfo, type FunctionComponent, useContext } from 'react';
+import { DialogContext, type DialogRequireProps } from '../DialogContext';
 import { getDialogDefault } from './dialogDefault';
 
 export default function useDialog<P extends Partial<DialogRequireProps>>(

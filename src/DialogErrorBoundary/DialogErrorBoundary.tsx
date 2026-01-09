@@ -1,5 +1,5 @@
-import React, { ErrorInfo, ReactElement } from 'react';
-import { DialogErrorBoundaryProps as Props } from './DialogErrorBoundary.types';
+import React, { type ErrorInfo, type ReactElement } from 'react';
+import { type DialogErrorBoundaryProps as Props } from './DialogErrorBoundary.types';
 import { useErrorBoundary, withErrorBoundary } from 'react-use-error-boundary';
 
 const ErrorCatcher = withErrorBoundary(

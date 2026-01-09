@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import { DialogContentProps, DialogProps as _DialogProps, DialogTitleProps } from '@mui/material';
+import React, { type ReactNode } from 'react';
+import { type DialogContentProps, type DialogProps as _DialogProps, type DialogTitleProps } from '@mui/material';
 
 export interface DialogCommands {
   getId(): string;

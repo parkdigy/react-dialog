@@ -1,4 +1,4 @@
-import { ErrorInfo } from 'react';
+import { type ErrorInfo } from 'react';
 
 export interface DialogDefault {
   onBoundaryError?(error: unknown, errorInfo: ErrorInfo): void;

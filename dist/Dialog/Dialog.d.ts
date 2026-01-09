@@ -1,5 +1,5 @@
 import React from 'react';
-import { DialogProps as Props } from './Dialog.types';
+import { type DialogProps as Props } from './Dialog.types';
 type DialogType = typeof Dialog & {
     readonly setDisableEnforceFocus: (disabled: boolean) => void;
 };

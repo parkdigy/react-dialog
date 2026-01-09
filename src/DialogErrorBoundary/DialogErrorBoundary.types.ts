@@ -1,4 +1,4 @@
-import { ErrorInfo, ReactElement } from 'react';
+import { type ErrorInfo, type ReactElement } from 'react';
 
 export interface DialogErrorBoundaryProps {
   children: ReactElement;

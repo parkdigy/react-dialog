@@ -1,5 +1,5 @@
 import DialogContext from '../DialogContext/DialogContext';
-import { ConfirmDialogProps } from '../ConfirmDialog';
+import { type ConfirmDialogProps } from '../ConfirmDialog';
 import { useContext } from 'react';
 
 export default function useConfirmDialog(): (props: ConfirmDialogProps) => void {

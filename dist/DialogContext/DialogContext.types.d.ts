@@ -1,6 +1,6 @@
-import { ComponentClass, ErrorInfo, FunctionComponent } from 'react';
-import { AlertDialogProps } from '../AlertDialog';
-import { ConfirmDialogProps } from '../ConfirmDialog';
+import { type ComponentClass, type ErrorInfo, type FunctionComponent } from 'react';
+import { type AlertDialogProps } from '../AlertDialog';
+import { type ConfirmDialogProps } from '../ConfirmDialog';
 export interface DialogRequireProps {
     onShow: () => void;
     onClose: () => void;

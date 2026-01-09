@@ -1,5 +1,5 @@
 import DialogContext from '../DialogContext/DialogContext';
-import { AlertDialogProps } from '../AlertDialog';
+import { type AlertDialogProps } from '../AlertDialog';
 import { useContext } from 'react';
 
 export default function useAlertDialog(): (props: AlertDialogProps) => void {

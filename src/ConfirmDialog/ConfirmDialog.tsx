@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from 'react';
-import { ConfirmDialogCommands, ConfirmDialogProps as Props } from './ConfirmDialog.types';
-import { Dialog, DialogCommands, DialogProps } from '../Dialog';
+import { type ConfirmDialogCommands, type ConfirmDialogProps as Props } from './ConfirmDialog.types';
+import { Dialog, type DialogCommands, type DialogProps } from '../Dialog';
 import { DialogActionButton } from '../DialogActionButton';
 import { Box, useTheme } from '@mui/material';
 import { useForwardRef } from '@pdg/react-hook';

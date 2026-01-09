@@ -1,4 +1,4 @@
-import React, { CSSProperties, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import React, { type CSSProperties, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import {
   Dialog as MuiDialog,
   useTheme,
@@ -10,7 +10,7 @@ import {
   DialogContent,
   DialogActions,
 } from '@mui/material';
-import { DialogCommands, DialogProps as Props } from './Dialog.types';
+import { type DialogCommands, type DialogProps as Props } from './Dialog.types';
 import { useAutoUpdateRef, useForwardRef } from '@pdg/react-hook';
 
 let __disableEnforceFocusListeners: ((disabled: boolean) => void)[] = [];

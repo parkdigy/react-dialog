@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from 'react';
-import { AlertDialogCommands, AlertDialogProps as Props } from './AlertDialog.types';
-import { Dialog, DialogCommands } from '../Dialog';
+import { type AlertDialogCommands, type AlertDialogProps as Props } from './AlertDialog.types';
+import { Dialog, type DialogCommands } from '../Dialog';
 import { DialogActionButton } from '../DialogActionButton';
 import { useForwardRef } from '@pdg/react-hook';
 
